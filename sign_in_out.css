@@ -1,0 +1,15 @@
+.userForms
+{
+	width: 60%;
+	padding-right: var(--bs-gutter-x,.75rem);
+	padding-left: var(--bs-gutter-x,.75rem);
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #adf5ea;
+	padding: 2%;
+	border: 5px solid #adf5ea;
+	border-radius: 5px;
+	margin-top: 2%;
+}
+
+

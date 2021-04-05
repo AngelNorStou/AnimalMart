@@ -120,7 +120,33 @@
 		</div>
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
-    	
+    <div class="card" style="width: 18rem;">
+	  <img src="..." class="card-img-top" alt="...">
+	  <div class="card-body">
+	    <p class="card-text">When a user clicks on videw details, the details of that dog will appear in the form of a modal(pop up). 
+	    After the teacher teach us how to do CRUD actions with php, I will test if this works for multiple pets.</p>
+		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+		  Launch demo modal
+		</button>
+	  </div>
+	</div>		
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        ...
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+	        <button type="button" class="btn btn-primary">Save changes</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>		
     </div>
     <div class="tab-pane fade" id="appointmentDetails" role="tabpanel" aria-labelledby="appointmentDetailsTab">
     	

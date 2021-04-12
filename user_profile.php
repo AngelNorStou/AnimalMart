@@ -95,7 +95,7 @@
 				    <div class="col-sm">
 				    <label class="form-label">City</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control" id="cityEdit" placeholder="Montreal">
+						  <input type="text" class="form-control" id="cityEdit" placeholder="Montreal">
 						  <label for="cityEdit">Montreal</label>		      		
 			    	</div>				    				    				
 				</div>
@@ -121,12 +121,19 @@
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
     <div class="card" style="width: 18rem;">
-	  <img src="..." class="card-img-top" alt="...">
+	  <img src="Images/guest.jpg" class="card-img-top" alt="...">
 	  <div class="card-body">
-	    <p class="card-text">When a user clicks on videw details, the details of that dog will appear in the form of a modal(pop up). 
-	    After the teacher teach us how to do CRUD actions with php, I will test if this works for multiple pets.</p>
+		  <div id="PetID" class="row" style="margin-bottom: 3%;">
+			<label  class="form-label card-text">Name: Max</label>
+			<label  class="form-label card-text">Type: Dog</label>
+			<label  class="form-label card-text">Breed: Bulldog</label>	
+			<label  class="form-label card-text">Gender: Male</label>
+			<label  class="form-label card-text">Size: Small</label>
+			<label  class="form-label card-text">Weight: 23kg</label>
+			<label  class="form-label card-text">Age: 5 Years Old</label>						
+		  </div>  	
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  Launch demo modal
+		  Update
 		</button>
 	  </div>
 	</div>		
@@ -134,15 +141,79 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+	        <h5 class="modal-title" id="exampleModalLabel">Edit Your Pet's Information</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	        ...
+			<form>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Name</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" id="petNameEdit" placeholder="Max">
+						  <label for="petNameEdit">Max</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Type</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" id="typeEdit" placeholder="Dog">
+						  <label for="typeEdit">Dog</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Breed</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" id="breedEdit" placeholder="Bulldog">
+						  <label for="breedEdit">Bulldog</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Gender</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" id="genderEdit" placeholder="Male">
+						  <label for="genderEdit">Male</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Size</label>
+					    <div class="form-floating">
+						  <input type="tel" class="form-control" id="sizeEdit" placeholder="small">
+						  <label for="sizeEdit">Small</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Weight</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" id="weightEdit" placeholder="23kg">
+						  <label for="weightEdit">23kg</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>
+			  <div class="row">
+				    <div class="col-sm">
+				    <label class="form-label">Age</label>
+					    <div class="form-floating">
+						  <input type="tel" class="form-control" id="ageEdit" placeholder="5yo">
+						  <label for="ageEdit">5 Years Old</label>		      		
+			    	</div>				    				    				
+				</div>
+			  </div>		    	
+				</form>	
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="button" class="btn btn-primary">Save changes</button>
+	        <button type="submit" class="btn btn-primary">Save changes</button>
 	      </div>
 	    </div>
 	  </div>

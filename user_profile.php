@@ -220,7 +220,26 @@
 	</div>		
     </div>
     <div class="tab-pane fade" id="appointmentDetails" role="tabpanel" aria-labelledby="appointmentDetailsTab">
-    	
+	   <table class="table">
+	  <thead>
+	    <tr>
+	      <th scope="col">Service</th>
+	      <th scope="col">Time</th>
+	      <th scope="col">Expiry</th>
+	      <th scope="col">Employee</th>
+	      <th scope="col">Pet</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr>
+	      <td>Cleaning</td>
+	      <td>Sunday April 11 2021,2:00pm</td>
+	      <td>Sunday April 11 2021,6:00pm</td>
+	      <td>Linda</td>
+	      <td>Max</td>
+	    </tr>
+	  </tbody>
+	</table> 	
     </div>
   </div>
 </div>

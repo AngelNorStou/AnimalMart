@@ -1,6 +1,11 @@
 <?php
 
 
+if(isset($_POST['login']))
+{
+    // Verify data
+}
+
 
 ?>
  <!DOCTYPE html>
@@ -38,18 +43,18 @@
 	<form class="userForms">
 	<h5 class="text-center">Welcome Back!</h5>		
 	  <div class="mb-3">
-	    <label class="form-label">Email address</label>
-	    <input type="email" class="form-control" id="emailLogin">
-	    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+	    <label for="vemail" class="form-label">Email address</label>
+	    <input type="email" class="form-control" name="vemail">
+	    <div  class="form-text">We'll never share your email with anyone else.</div>
 	  </div>
 
 	  <div class="mb-3">
-	    <label class="form-label">Password</label>
-	    <input type="password" class="form-control" id="passwordLogin">
+	    <label for="vpassword" class="form-label">Password</label>
+	    <input type="password" class="form-control" name="vpassword">
 	  </div>
 
 	  <div class="d-grid gap-2">
-	  	<button id="loginButton" type="submit" class="btn btn-primary">Login</button>
+	  	<button value="login" type="submit" class="btn btn-primary">Login</button>
 	  </div>
 	</form>	
 </div>

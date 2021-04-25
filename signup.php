@@ -1,6 +1,12 @@
 <?php
 
+//include 'User.php';
 
+
+if(isset($_POST['signUp']))
+{
+    // Insert Data
+}
 
 ?>
  <!DOCTYPE html>
@@ -39,48 +45,48 @@
 	<h5 class="text-center">Create an Account</h5>	
 	<div class="row">	
 	  <div class="mb-3 col">
-	    <label class="form-label">First Name</label>
-	    <input type="text" class="form-control" id="firstNameSignUp">
+	    <label for="firstname" class="form-label">First Name</label>
+	    <input type="text" class="form-control" name="firstname" >
 	  </div>
 	  <div class="mb-3 col">
-	    <label class="form-label">Last Name</label>
-	    <input type="text" class="form-control" id="lastNameSignUp">
+	    <label for="lastname" class="form-label">Last Name</label>
+	    <input type="text" class="form-control" name="lastname" >
 	  </div>	  
 	</div>
 
 	  <div class="mb-3">
-	    <label class="form-label">Username</label>
-	    <input type="text" class="form-control" id="usernameSignUp">
+	    <label for="username" class="form-label">Username</label>
+	    <input type="text" class="form-control" name="username" >
 	  </div>	
 
 	  <div class="mb-3">
-	    <label class="form-label">Email address</label>
-	    <input type="email" class="form-control" id="emailSignUp">
-	    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+	    <label for="email" class="form-label">Email address</label>
+	    <input type="email" class="form-control" name="email">
+	    <div  class="form-text">We'll never share your email with anyone else.</div>
 	  </div>
 
 	  <div class="mb-3">
-	    <label class="form-label">Password</label>
-	    <input type="password" class="form-control" id="passwordSignUp">
+	    <label for="password" class="form-label">Password</label>
+	    <input type="password" class="form-control" name="password">
 	  </div>
 
 	  <div class="mb-3">
-	    <label class="form-label">City</label>
-	    <input type="text" class="form-control" id="citySignUp">
+	    <label for="city" class="form-label">City</label>
+	    <input type="text" class="form-control" name="city">
 	  </div>
 
 	  <div class="mb-3">
-	    <label class="form-label">Phone Number</label>
-	    <input type="tel" class="form-control" id="phoneSignUp">
+	    <label for="phone" class="form-label">Phone Number</label>
+	    <input type="tel" class="form-control" name="phone">
 	  </div>
 
 	  <div class="mb-3">
-		<label  class="form-label">Profile Picture</label>
-		<input class="form-control form-control-lg" id="picSignUp" type="file" />
+		<label for="profilepic" class="form-label">Profile Picture</label>
+		<input class="form-control form-control-lg" name="profilepic" type="file" />
 	  </div>		  		  		  
 
 	  <div class="d-grid gap-2">
-	  	<button id="signUpButton" type="submit" class="btn btn-primary">Join us!</button>
+	  	<button value="signUp" type="submit" class="btn btn-primary">Join us!</button>
 	  </div>
 	</form>	
 </div>

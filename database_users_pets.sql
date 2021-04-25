@@ -22,8 +22,8 @@ CREATE TABLE `pets` (
   `pet_type` varchar(30) NOT NULL,  
   `breed` varchar(64) NOT NULL,
   `gender` char(1) NOT NULL,  
-  `size` decimal(3,2) NOT NULL,
-  `weight` decimal(3,2) NOT NULL,
+  `size` decimal(6,2) NOT NULL,
+  `weight` decimal(6,2) NOT NULL,
   `age` int NOT NULL,  
   `user_id` int NOT NULL 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

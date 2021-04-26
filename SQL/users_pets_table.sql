@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 26, 2021 at 12:10 AM
+-- Generation Time: Apr 26, 2021 at 07:08 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.0
 
@@ -28,7 +28,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `pets` (
-  `pet_id` int(11) NOT NULL,
+  `pet_id` int(10) UNSIGNED NOT NULL,
   `pet_name` varchar(30) NOT NULL,
   `pet_type` varchar(30) NOT NULL,
   `breed` varchar(64) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `pets` (
   `size` decimal(6,2) NOT NULL,
   `weight` decimal(6,2) NOT NULL,
   `age` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -56,7 +56,7 @@ INSERT INTO `pets` (`pet_id`, `pet_name`, `pet_type`, `breed`, `gender`, `size`,
 --
 
 CREATE TABLE `users` (
-  `user_id` int(11) NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
   `first_name` varchar(30) NOT NULL,
   `last_name` varchar(100) NOT NULL,
   `username` varchar(32) NOT NULL,
@@ -75,7 +75,8 @@ INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `username`, `email`, 
 (1, 'Guillermo', 'Tremols Suarez', 'KubrayKan', 'guillermo@gmail.com', 'guillermobeta', 'Montreal', '514-123-4567', 'Images/guest.jpg'),
 (2, 'Hina', 'Ou', 'LunarStar', 'hina@yahoo.com', 'hina', 'Montreal', '514-795-3476', NULL),
 (3, 'Neelu', 'Vaghela', 'ShadowHouse', 'neelu@gmail.com', 'neelu', 'New York', '212-574-2365', NULL),
-(4, 'Steve', 'Ataky', 'Teacher', 'steve@gmail.com', 'steven', 'Montreal', '514-847-4535', 'Images/guest.jpg');
+(4, 'Steve', 'Ataky', 'Teacher', 'steve@gmail.com', 'steven', 'Montreal', '514-847-4535', 'Images/guest.jpg'),
+(5, 'Tania', 'Ivanov', 'Tan', 'tania@gmail.com', '123456', 'Montreal', '438-575-2685', 'Images/swan.jpg');
 
 --
 -- Indexes for dumped tables
@@ -93,6 +94,22 @@ ALTER TABLE `pets`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`user_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `pets`
+--
+ALTER TABLE `pets`
+  MODIFY `pet_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `user_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables

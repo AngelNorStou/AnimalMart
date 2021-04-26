@@ -1,9 +1,12 @@
 <?php
 
+include 'users.php';
 
-if(isset($_POST['login']))
+$userObj = new Users();
+
+if(isset($_POST['vemail'] , $_POST['vpassword']))
 {
-    // Verify data
+    $userObj->login($_POST);
 }
 
 
@@ -40,17 +43,17 @@ if(isset($_POST['login']))
 	</ul>	
 </div>	
 <div class="container">	
-	<form class="userForms">
+	<form class="userForms" action="login.php" method="POST">
 	<h5 class="text-center">Welcome Back!</h5>		
 	  <div class="mb-3">
 	    <label for="vemail" class="form-label">Email address</label>
-	    <input type="email" class="form-control" name="vemail">
+	    <input type="email" class="form-control" name="vemail" required>
 	    <div  class="form-text">We'll never share your email with anyone else.</div>
 	  </div>
 
 	  <div class="mb-3">
 	    <label for="vpassword" class="form-label">Password</label>
-	    <input type="password" class="form-control" name="vpassword">
+	    <input type="password" class="form-control" name="vpassword" required>
 	  </div>
 
 	  <div class="d-grid gap-2">

@@ -1,12 +1,21 @@
 <?php
 
-//include 'User.php';
+include 'users.php';
 
+$userObj = new Users();
 
-if(isset($_POST['signUp']))
+if(isset($_POST['firstname'] , $_POST['lastname'], $_POST['username'],
+		$_POST['email'] ,$_POST['password'], $_POST['city'],
+		$_POST['phone'],$_FILES['profilepic']['name']) )
 {
-    // Insert Data
-}
+    $userObj->insertUser($_POST,$_FILES);
+} 
+/*
+if(isset($_POST["submit"]) )
+{
+    $userObj->insertUser($_POST);
+}*/
+
 
 ?>
  <!DOCTYPE html>
@@ -41,7 +50,7 @@ if(isset($_POST['signUp']))
 	</ul>	
 </div>	
 <div class="container">		
-	<form class="userForms">
+	<form class="userForms" action="signup.php" method="POST" enctype="multipart/form-data">
 	<h5 class="text-center">Create an Account</h5>	
 	<div class="row">	
 	  <div class="mb-3 col">

@@ -55,8 +55,9 @@ class Pets
 
     public function displayPetsByUsername($user_name)
     {
-        $user_id = "1";     
-        $query = "SELECT * FROM pets WHERE user_id = '$user_id'";
+   
+        $query = "SELECT * FROM pets WHERE user_id IN 
+                    (SELECT user_id FROM users WHERE username = '$user_name')";
         $result = $this->con->query($query);
         if($result->num_rows > 0)
         {

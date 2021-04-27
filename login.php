@@ -14,10 +14,7 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 {
     $userObj->login($_POST);
 }
-else 
-{
-	echo "oopsie";
-}
+
 /* 
 
 

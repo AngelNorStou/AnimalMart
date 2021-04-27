@@ -51,7 +51,7 @@ class Users
         if($sql->num_rows > 0)
         {
            
-            echo "You have logged in! Welcome". $username;
+            //echo "You have logged in! Welcome". $username;
             header("Location:user_profile.php?login=".$username);
         }
         else{

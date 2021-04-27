@@ -12,10 +12,10 @@ if(isset($_GET['login']) && !empty($_GET['login']))
 }
 else
 {
-	echo "You have to log in first";
+	header("Location:login.php");
 }
 
-if(isset($_POST['update'])) 
+if(isset($_POST['uusername'])) 
 {
 	$userObj->updateUser($_POST);
 }  
@@ -97,7 +97,7 @@ if(isset($_POST['update']))
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control"  name="uemailname">
+						  <input type="email" class="form-control"  name="uemail">
 						  <label for="emailEdit"><?php echo $user['email']; ?></label>		      		
 			    	</div>				    				    				
 				</div>
@@ -142,7 +142,7 @@ if(isset($_POST['update']))
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
     <div class="card" style="width: 18rem;">
-	  <img src="Images/guest.jpg" class="card-img-top" alt="...">
+
 	  <div class="card-body">
 		  <div id="PetID" class="row" style="margin-bottom: 3%;">
 			<label  class="form-label card-text">Name: Max</label>

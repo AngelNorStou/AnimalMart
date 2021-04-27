@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 // Create the class Customers
 class Users
 {
@@ -26,9 +26,9 @@ class Users
     }
 
     // Get data account by email.
-    public function displayRecordByUsername($username)
+    public function displayRecordByUsername($user_name)
     {     
-        $query = "SELECT * FROM users WHERE username = '$username'";
+        $query = "SELECT * FROM users WHERE username = '$user_name'";
         $result = $this->con->query($query);
         if($result->num_rows > 0){
             $data = $result->fetch_assoc();           
@@ -43,16 +43,16 @@ class Users
     public function login($postData)
     {
 
-        $username = $this->con->real_escape_string($_POST['login_username']); 
+        $user_name = $this->con->real_escape_string($_POST['login_username']); 
         $email = $this->con->real_escape_string($_POST['login_email']);
         $password = $this->con->real_escape_string($_POST['login_password']);          
-        $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' AND username = '$username'";
+        $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' AND username = '$user_name'";
         $sql = $this->con->query($query);
         if($sql->num_rows > 0)
         {
            
             //echo "You have logged in! Welcome". $username;
-            header("Location:user_profile.php?login=".$username);
+            header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Not match found!"."<br>";
@@ -66,7 +66,7 @@ class Users
 
         $firstname = $this->con->real_escape_string($_POST['firstname']);
         $lastname = $this->con->real_escape_string($_POST['lastname']); 
-        $username = $this->con->real_escape_string($_POST['username']); 
+        $user_name = $this->con->real_escape_string($_POST['username']); 
 
         $email = $this->con->real_escape_string($_POST['email']);
         $password= $this->con->real_escape_string($_POST['password']);
@@ -76,7 +76,7 @@ class Users
 
         $picture =  $this->target_dir.basename($_FILES['profilepic']['name']); 
  
-        $query = " INSERT INTO users(first_name, last_name, username, email, password, city, phone_number,profile_picture) VALUES ('$firstname','$lastname', '$username', '$email', '$password', '$city', '$phone','$picture')";
+        $query = " INSERT INTO users(first_name, last_name, username, email, password, city, phone_number,profile_picture) VALUES ('$firstname','$lastname', '$user_name', '$email', '$password', '$city', '$phone','$picture')";
         $sql = $this->con->query($query);
         if($sql == true)
         {
@@ -94,7 +94,7 @@ class Users
 
         $firstname = $this->con->real_escape_string($_POST['ufirstname']);
         $lastname = $this->con->real_escape_string($_POST['ulastname']); 
-        $username = $this->con->real_escape_string($_POST['uusername']); 
+        $user_name = $this->con->real_escape_string($_POST['uusername']); 
 
         $email = $this->con->real_escape_string($_POST['uemail']);
         $password= $this->con->real_escape_string($_POST['upassword']);
@@ -103,13 +103,13 @@ class Users
         $phone= $this->con->real_escape_string($_POST['uphone']);
 
  
-        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  email = '$email', password = '$password',city = '$city', phone_number = '$phone' WHERE username = '$username'";
+        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  email = '$email', password = '$password',city = '$city', phone_number = '$phone' WHERE username = '$user_name'";
 
         $sql = $this->con->query($query);
         if($sql == true)
         {
             echo "Update Complete.". $username;
-            header("Location:user_profile.php?login=".$username);
+            header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Update failed, please try again!"."<br>";

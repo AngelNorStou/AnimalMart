@@ -1,14 +1,17 @@
 <?php
 
  include 'users.php';
-
+ include 'pets.php';
 
 $userObj = new Users();
+$petObj = new Pets();
 $user = null;
+$pets = null;
 
 if(isset($_GET['login']) && !empty($_GET['login']))
 {
 	$user = $userObj->displayRecordByUsername($_GET['login']);
+	$pets = $petObj->displayPetsByUsername($_GET['login']);
 }
 else
 {
@@ -141,23 +144,30 @@ if(isset($_POST['uusername']))
 		</div>
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
-    <div class="card" style="width: 18rem;">
+ <div class="row row-cols-3">   	
+	<?php 
+	  foreach ($pets as $pet) 
+	  {
 
-	  <div class="card-body">
+	?>      	
+    <div class="card col" style="width: 18rem;margin: 2%;">	
+	  <div class="card-body">	  	
 		  <div id="PetID" class="row" style="margin-bottom: 3%;">
-			<label  class="form-label card-text">Name: Max</label>
-			<label  class="form-label card-text">Type: Dog</label>
-			<label  class="form-label card-text">Breed: Bulldog</label>	
-			<label  class="form-label card-text">Gender: Male</label>
-			<label  class="form-label card-text">Size: Small</label>
-			<label  class="form-label card-text">Weight: 23kg</label>
-			<label  class="form-label card-text">Age: 5 Years Old</label>						
+			<label  class="form-label card-text"><?php echo "Name: ".$pet['pet_name']; ?></label>
+			<label  class="form-label card-text"><?php echo "Type: ".$pet['pet_type']; ?></label>
+			<label  class="form-label card-text"><?php echo "Breed: ".$pet['breed']; ?></label>
+			<label  class="form-label card-text"><?php echo "Gender: ".$pet['gender']; ?></label>
+			<label  class="form-label card-text"><?php echo "Size: ".$pet['size']." cm"; ?></label>
+			<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
+			<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
 		  </div>  	
 		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
 		  Update
-		</button>
-	  </div>
-	</div>		
+		</button>			
+	  </div>    
+	</div>	
+      <?php } ?>	
+  </div>    		
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
 	    <div class="modal-content">

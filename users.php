@@ -51,7 +51,8 @@ class Users
         if($sql->num_rows > 0)
         {
            
-            echo "You have logged in!";
+            echo "You have logged in! Welcome". $username;
+            header("Location:user_profile.php?login=".$username);
         }
         else{
             echo "Not match found!"."<br>";
@@ -107,7 +108,8 @@ class Users
         $sql = $this->con->query($query);
         if($sql == true)
         {
-            echo "Update successful!"."<br>";
+            echo "Update Complete.". $username;
+            header("Location:user_profile.php?login=".$username);
         }
         else{
             echo "Update failed, please try again!"."<br>";

@@ -17,7 +17,7 @@ else
 
 if(isset($_POST['update'])) 
 {
-	$user = $userObj->updateUser($_POST);
+	$userObj->updateUser($_POST);
 }  
 
 

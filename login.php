@@ -10,16 +10,13 @@ $username = null;
 
 
 
-
 if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password']))
 {
-    $username = $userObj->login($_POST);
-
-    echo $username;
+    $userObj->login($_POST);
 }
 else 
 {
-	echo "kms";
+	echo "oopsie";
 }
 /* 
 
@@ -78,7 +75,7 @@ else
 	    <input type="password" class="form-control" name="login_password" required>
 	  </div>		
 	  <div class="d-grid gap-2">
-		<a class="btn btn-primary" href="user_profile.php?login=<?php echo $username; ?>"  > Login</a> 
+			<button value="login" type="submit" class="btn btn-primary">Login</button>
 	  </div>
 	</form>	
 </div>

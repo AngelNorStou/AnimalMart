@@ -25,33 +25,7 @@ class Pets
         }
     }
 
-    // Get data account by email.
-    /*public function displayPetsByUsername($user_name)
-    { 
-        $query = "SELECT user_id FROM users WHERE username = '$user_name'";
-        $result = $this->con->query($query);
-        $user = null;
-        if($result->num_rows > 0)
-        {
-            $user = $result->fetch_assoc(); 
-            $user_id = $user['user_id'];     
-            $query = "SELECT * FROM pets WHERE user_id = '$user_id'";
-            $result = $this->con->query($query);
-            if($result->num_rows > 0){
-                $data = $result->fetch_assoc();           
-                return $data;
-            }
-            else{
-                echo "Account not found";
-            }                
 
-        }
-        else{
-            echo "There is more than one user.";
-        }       
-
-      
-    } */
 
     public function displayPetsByUsername($user_name)
     {
@@ -68,14 +42,7 @@ class Pets
             }
             return $data;
         }
-        else{
-            echo "Pets not found";
-        }                
 
-        
-     
-
-      
     }    
 
 

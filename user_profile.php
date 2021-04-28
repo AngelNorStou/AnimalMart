@@ -63,7 +63,7 @@ if(isset($_POST['uusername']))
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
     <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
-  <a class="nav-link" aria-selected="false" href="view_appointments.php">View Appointments</a>   
+  <a class="nav-link"  style="color: black;" aria-selected="false" href="view_appointments.php">View Appointments</a>   
   <a class="nav-link" style="display: none;" aria-selected="false" href="view_appointments.php">View Employees</a> 
   </div>
   <div class="tab-content" id="v-pills-tabContent">
@@ -147,6 +147,9 @@ if(isset($_POST['uusername']))
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
 	 <div class="row row-cols-3">   	
 		<?php 
+
+		if ($pets != null)
+		{
 		  foreach ($pets as $pet) 
 		  {
 
@@ -165,7 +168,7 @@ if(isset($_POST['uusername']))
 				<a class="btn btn-primary" href=".php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
 		  </div>    
 		</div>	
-	      <?php } ?>	
+	      <?php } } ?>	
 	  </div>    				
     </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
@@ -185,12 +188,14 @@ if(isset($_POST['uusername']))
 					  <input type="password" class="form-control"  name="new_password">
 					  <label for="new_password"></label>		      		
 		    		</div>		      		
-	    		</div>	    			
+	    		</div>
+		    <div class="row">
+	      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>		
+	    	</div>	 	    			    			
 	    	</div>			    				    				
 		</div>	
     </div>
   </div>
-</div>
 </div>
 </body>
 </html> 

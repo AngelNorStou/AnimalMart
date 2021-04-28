@@ -62,7 +62,9 @@ if(isset($_POST['uusername']))
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
     <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
-    <button class="nav-link" id="appointmentDetailsTab" data-bs-toggle="pill" data-bs-target="#appointmentDetails" type="button" role="tab" aria-controls="appointmentDetails" aria-selected="false">Appointments</button>
+    <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
+  <a class="nav-link" aria-selected="false" href="view_appointments.php">View Appointments</a>   
+  <a class="nav-link" style="display: none;" aria-selected="false" href="view_appointments.php">View Employees</a> 
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
@@ -89,28 +91,10 @@ if(isset($_POST['uusername']))
 			</div>
 			  <div class="row">
 				    <div class="col-sm">
-				    <label class="form-label">Username</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" name="uusername">
-						  <label for="usernameEdit"><?php echo $user['username']; ?></label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
 						  <input type="email" class="form-control"  name="uemail">
 						  <label for="emailEdit"><?php echo $user['email']; ?></label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Password</label>
-					    <div class="form-floating">
-						  <input type="password" class="form-control"  name="upassword">
-						  <label for="passwordEdit"></label>		      		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -138,139 +122,72 @@ if(isset($_POST['uusername']))
 			  </div>
 			  <br/>
 			  <div class="row">
-			  	<button value="update" type="submit" class="btn btn-primary">Confirm Changes</button>				  	
-			  </div>		  		  		  		  	
+			  	<label class="form-label">Enter your current username and password to confirm the changes.</label>
+				    <div class="col-sm">
+				    <label class="form-label">Username</label>
+					    <div class="form-floating">
+						  <input type="text" class="form-control" name="uusername">
+						  <label for="usernameEdit"><?php echo $user['username']; ?></label>		      		
+			    		</div>	
+			    	</div>			    				    				
+				</div>
+				<div class="col-sm">
+				    <label class="form-label">Password</label>
+					    <div class="form-floating">
+						  <input type="password" class="form-control"  name="upassword">
+						  <label for="passwordEdit"></label>		      		
+			    		</div>		    									  				  	
+			  </div>
+				  <div class="row">
+			  		<button style="float: left;margin: 2%;" value="update" type="submit" class="btn btn-primary">Confirm Changes</button>					  	
+				  </div>			  		  		  		  		  	
 			</form>	
 		</div>
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
- <div class="row row-cols-3">   	
-	<?php 
-	  foreach ($pets as $pet) 
-	  {
+	 <div class="row row-cols-3">   	
+		<?php 
+		  foreach ($pets as $pet) 
+		  {
 
-	?>      	
-    <div class="card col" style="width: 18rem;margin: 2%;">	
-	  <div class="card-body">	  	
-		  <div id="PetID" class="row" style="margin-bottom: 3%;">
-			<label  class="form-label card-text"><?php echo "Name: ".$pet['pet_name']; ?></label>
-			<label  class="form-label card-text"><?php echo "Type: ".$pet['pet_type']; ?></label>
-			<label  class="form-label card-text"><?php echo "Breed: ".$pet['breed']; ?></label>
-			<label  class="form-label card-text"><?php echo "Gender: ".$pet['gender']; ?></label>
-			<label  class="form-label card-text"><?php echo "Size: ".$pet['size']." cm"; ?></label>
-			<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
-			<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
-		  </div>  	
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-		  Update
-		</button>			
-	  </div>    
-	</div>	
-      <?php } ?>	
-  </div>    		
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">Edit Your Pet's Information</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-			<form>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Name</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" id="petNameEdit" placeholder="Max">
-						  <label for="petNameEdit">Max</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Type</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" id="typeEdit" placeholder="Dog">
-						  <label for="typeEdit">Dog</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Breed</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" id="breedEdit" placeholder="Bulldog">
-						  <label for="breedEdit">Bulldog</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Gender</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" id="genderEdit" placeholder="Male">
-						  <label for="genderEdit">Male</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Size</label>
-					    <div class="form-floating">
-						  <input type="tel" class="form-control" id="sizeEdit" placeholder="small">
-						  <label for="sizeEdit">Small</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Weight</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" id="weightEdit" placeholder="23kg">
-						  <label for="weightEdit">23kg</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Age</label>
-					    <div class="form-floating">
-						  <input type="tel" class="form-control" id="ageEdit" placeholder="5yo">
-						  <label for="ageEdit">5 Years Old</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>		    	
-				</form>	
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-	        <button type="submit" class="btn btn-primary">Save changes</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>		
+		?>      	
+	    <div class="card col" style="width: 18rem;margin: 2%;">	
+		  <div class="card-body">	  	
+			  <div class="row" style="margin-bottom: 3%;">
+				<label  class="form-label card-text"><?php echo "Name: ".$pet['pet_name']; ?></label>
+				<label  class="form-label card-text"><?php echo "Type: ".$pet['pet_type']; ?></label>
+				<label  class="form-label card-text"><?php echo "Breed: ".$pet['breed']; ?></label>
+				<label  class="form-label card-text"><?php echo "Gender: ".$pet['gender']; ?></label>
+				<label  class="form-label card-text"><?php echo "Size: ".$pet['size']." cm"; ?></label>
+				<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
+				<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
+			  </div>  	
+				<a class="btn btn-primary" href=".php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
+		  </div>    
+		</div>	
+	      <?php } ?>	
+	  </div>    				
     </div>
-    <div class="tab-pane fade" id="appointmentDetails" role="tabpanel" aria-labelledby="appointmentDetailsTab">
-	   <table class="table">
-	  <thead>
-	    <tr>
-	      <th scope="col">Service</th>
-	      <th scope="col">Time</th>
-	      <th scope="col">Expiry</th>
-	      <th scope="col">Employee</th>
-	      <th scope="col">Pet</th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>Cleaning</td>
-	      <td>Sunday April 11 2021,2:00pm</td>
-	      <td>Sunday April 11 2021,6:00pm</td>
-	      <td>Linda</td>
-	      <td>Max</td>
-	    </tr>
-	  </tbody>
-	</table> 	
+    <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
+	  <div class="row">
+	  	<label class="form-label">Enter your current password and a new password to confirm the changes.</label>
+		    <div class="row">
+			    <label class="form-label">Current Password</label>
+				    <div class="form-floating">
+					  <input type="password" class="form-control"  name="current_password">
+					  <label for="current_password"></label>		      		
+		    		</div>		      		
+	    	</div>
+	    	<br/>
+		    <div class="row">
+			    <label class="form-label">New Password</label>
+				    <div class="form-floating">
+					  <input type="password" class="form-control"  name="new_password">
+					  <label for="new_password"></label>		      		
+		    		</div>		      		
+	    		</div>	    			
+	    	</div>			    				    				
+		</div>	
     </div>
   </div>
 </div>

@@ -103,7 +103,8 @@ class Users
         $phone= $this->con->real_escape_string($_POST['uphone']);
 
  
-        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  email = '$email', password = '$password',city = '$city', phone_number = '$phone' WHERE username = '$user_name'";
+        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  email = '$email', city = '$city', phone_number = '$phone' 
+                    WHERE username = '$user_name' AND password = '$password'";
 
         $sql = $this->con->query($query);
         if($sql == true)
@@ -115,7 +116,16 @@ class Users
             echo "Update failed, please try again!"."<br>";
             echo "Error: " . $sql . "<br>" . $this->con->error;
         }
-    }    
+    }
+
+    public function changePassword($postData)
+    {
+
+        $current_password= $this->con->real_escape_string($_POST['current_password']);
+
+        $new_password= $this->con->real_escape_string($_POST['new_password']);
+
+    }         
 
 
 }

@@ -165,7 +165,7 @@ if(isset($_POST['uusername']))
 				<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
 				<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
 			  </div>  	
-				<a class="btn btn-primary" href=".php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
+				<a class="btn btn-primary" href="edit_pet.php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
 		  </div>    
 		</div>	
 	      <?php } } ?>	

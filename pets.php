@@ -100,9 +100,13 @@ class Pets
         $weight = $this->con->real_escape_string($_POST['weight']);        
         $age= $this->con->real_escape_string($_POST['age']);
 
+        $age += 0;
+
         $user_name = $this->con->real_escape_string($_POST['user']);
+
+        $id = $this->getUserID($user_name);
  
-        $query = " INSERT INTO pets(pet_name, pet_type, breed, gender, size, weight, age) VALUES ('$name','$type', '$breed', '$gender', '$size', '$weight', $age)";
+        $query = "INSERT INTO pets(pet_name, pet_type, breed, gender, size, weight, age,user_id) VALUES ('$name','$type', '$breed', '$gender', '$size', '$weight', $age,$id)";
 
         $sql = $this->con->query($query);
         if($sql == true)
@@ -127,7 +131,18 @@ class Pets
 
         return $row[0];
  
-    } 
+    }
+
+     public function getUserID($user_name)
+    {
+        $query = "SELECT user_id FROM users WHERE username = '$user_name'";
+        $result = $this->con->query($query);
+
+        $row = $result->fetch_row();
+
+        return $row[0];
+ 
+    }     
 
 
 

@@ -12,12 +12,14 @@ $user = $_GET['user'];
 
 } 
 
-  if(isset($_POST['pet_name'],   $_POST['type'], $_POST['breed'],
-		   $_POST['gender'], $_POST['size'], $_POST['weight'],
-		   $_POST['age'], $_POST['user'])) 
+  if($_SERVER['REQUEST_METHOD'] == 'POST') 
   {
 
     $petObj->insertPet($_POST);
+  }
+  else 
+  {
+  	echo "Empty fields?";
   }
 
 
@@ -74,7 +76,7 @@ $user = $_GET['user'];
 		</div>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
-			<select class="form-select" name="edit_pet_gender" aria-label="gender">
+			<select class="form-select" name="gender" aria-label="gender">
 				<option selected value="M">Male</option>				
 				<option value="F">Female</option>			  			  
 			</select>     	
@@ -93,7 +95,8 @@ $user = $_GET['user'];
 		</div>	  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="add" type="submit" class="btn btn-primary">Confirm Changes</button>
-  		<input type="hidden" class="form-control" value="<?php echo $user; ?>"  name="user">	 </div>			  		  		  		  		  	
+  		<input type="text" class="form-control" value="<?php echo $user; ?>"  name="user">	 
+  	</div>			  		  		  		  		  	
 	</form>
 	</div>		
 </div>

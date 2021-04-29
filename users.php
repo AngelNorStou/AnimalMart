@@ -103,7 +103,8 @@ class Users
         $phone= $this->con->real_escape_string($_POST['uphone']);
 
  
-        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  email = '$email', city = '$city', phone_number = '$phone' 
+        $query = " UPDATE users SET  first_name = '$firstname', last_name = '$lastname',  
+                                     email = '$email', city = '$city', phone_number = '$phone' 
                     WHERE username = '$user_name' AND password = '$password'";
 
         $sql = $this->con->query($query);

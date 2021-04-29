@@ -11,15 +11,17 @@ if(isset($_GET['petEdit']) && !empty($_GET['petEdit'])) {
 $id = $_GET['petEdit'];
 $pet = $petObj->displayPetById($id);
 
+
 } 
 
-  if(isset($_POST['update_pet'])) {
-    $petObj->updatePet($_POST, $id);
-  }
-  else 
+  if(isset($_POST['edit_pet_name'],   $_POST['edit_pet_type'], $_POST['edit_pet_breed'],
+		   $_POST['edit_pet_gender'], $_POST['edit_pet_size'], $_POST['edit_pet_weight'],
+		   $_POST['edit_pet_age'], $_POST['edit_pet_id'])) 
   {
-  	echo "what";
+
+    $petObj->updatePet($_POST);
   }
+
 
 
 ?>
@@ -57,31 +59,18 @@ $pet = $petObj->displayPetById($id);
 </div>
 <div class="container">
 	<form action="edit_pet.php" method="POST">
-		<div class="row">	
-		    <div class="col-sm">
-			    <label class="form-label">Pet Name</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_name">
-				  <label for="edit_pet_name"><?php echo $pet['pet_name']; ?></label>
-				</div>	
-		    <div class="">
-		    <label class="form-label">Pet Type</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_type" >
-				  <label for="edit_pet_type"><?php echo $pet['pet_type']; ?></label>		      		
-	    	</div>											    		      		
-	    	</div>			    				    				
+	    <div class="row">
+		    <label class="form-label">Pet Name</label>
+			<input type="text" class="form-control" value="<?php echo $pet['pet_name']; ?>"  name="edit_pet_name"  required="">	
 		</div>
-	</div>
+	    <div class="row">
+	    	<label class="form-label">Pet Type</label>
+			<input type="text" class="form-control" value="<?php echo $pet['pet_type']; ?>" name="edit_pet_type" required="">
+		</div>			    				    				
 	  <div class="row">
-		    <div class="col-sm">
 		    <label class="form-label">Breed</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_breed">
-				  <label for="edit_pet_breed"><?php echo $pet['breed']; ?></label>		      		
-	    	</div>				    				    				
+			<input type="text" class="form-control" value="<?php echo $pet['breed']; ?>" name="edit_pet_breed" required="">	    				
 		</div>
-	  </div>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
 			<select class="form-select" name="edit_pet_gender" aria-label="edit_pet_gender">
@@ -100,34 +89,20 @@ $pet = $petObj->displayPetById($id);
 			</select>     	
 	    </div>				    				    				
 	  <div class="row">
-		    <div class="col-sm">
 		    <label class="form-label">Size (cm)</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_size">
-				  <label for="edit_pet_size"><?php echo $pet['size']; ?></label>		      		
-	    	</div>				    				    				
+			<input type="text" class="form-control" value="<?php echo $pet['size']; ?>" name="edit_pet_size" required="">      					    				    		
 		</div>
-	  </div>
 	  <div class="row">
-		    <div class="col-sm">
 		    <label class="form-label">Weight (kg)</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_weight">
-				  <label for="edit_pet_weight"><?php echo $pet['weight']; ?></label>		      		
-	    	</div>				    				    				
-		</div>
+			<input type="text" class="form-control" value="<?php echo $pet['weight']; ?>"  name="edit_pet_weight" required="">				    				  		
 	  </div>
 	  <div class="row">
-		    <div class="col-sm">
 		    <label class="form-label">Age</label>
-			    <div class="form-floating">
-				  <input type="text" class="form-control"  name="edit_pet_age">
-				  <label for="edit_pet_age"><?php echo $pet['age']; ?></label>		      		
-	    	</div>				    				    				
-		</div>
-	  </div>	  	  
-	  <div class="row">	  	
-  		<button style="float: left;margin: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>				  	
+			<input type="text" class="form-control" value="<?php echo $pet['age']; ?>"  name="edit_pet_age"  required="">	      						    				
+		</div>	  	  
+	  <div class="row">	 	    	   	
+  		<button style="float: left;margin-top: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>
+  		<input type="hidden" class="form-control" value="<?php echo $id; ?>"  name="edit_pet_id">						  	
 	  </div>			  		  		  		  		  	
 	</form>
 	</div>		

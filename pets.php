@@ -58,7 +58,7 @@ class Pets
     }
 
      // Updates a user from the database
-    public function updatePet($postData, $id)
+    public function updatePet($postData)
     {
 
         $petname = $this->con->real_escape_string($_POST['edit_pet_name']);
@@ -70,6 +70,7 @@ class Pets
 
         $weight= $this->con->real_escape_string($_POST['edit_pet_weight']);        
         $age= $this->con->real_escape_string($_POST['edit_pet_age']);
+        $id= $this->con->real_escape_string($_POST['edit_pet_id']);
 
  
         $query = " UPDATE pets SET  pet_name = '$petname', pet_type = '$type', breed = '$breed',             gender = '$gender', size = '$size' , weight = '$weight', age = '$age'
@@ -78,8 +79,7 @@ class Pets
         $sql = $this->con->query($query);
         if($sql == true)
         {
-            $user_name = getUsername($id);  
-            //echo   $user_name;
+            $user_name = $this->getUsername($id);  
             header("Location:user_profile.php?login=".$user_name);
         }
         else{
@@ -92,8 +92,12 @@ class Pets
     {
         $query = "SELECT DISTINCT username FROM users WHERE user_id IN 
                     (SELECT user_id FROM pets WHERE pet_id = '$id')";
-        $result = $this->con->mysql_result($query);
-        return  $result;  
+        $result = $this->con->query($query);
+
+        $row = $result->fetch_row();
+
+        return $row[0];
+ 
     } 
 
 

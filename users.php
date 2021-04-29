@@ -51,7 +51,7 @@ class Users
         if($sql->num_rows > 0)
         {
            
-            //echo "You have logged in! Welcome". $username;
+            //echo "You have logged in! Welcome". $user_name;
             header("Location:user_profile.php?login=".$user_name);
         }
         else{
@@ -80,7 +80,7 @@ class Users
         $sql = $this->con->query($query);
         if($sql == true)
         {
-            header("Location:user_profile.php");
+            header("Location:login.php");
         }
         else{
             echo "Registration failed, please try again!"."<br>";

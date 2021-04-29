@@ -88,6 +88,35 @@ class Pets
         }
     }
 
+    public function insertPet($postData)
+    {
+
+        $name = $this->con->real_escape_string($_POST['pet_name']);
+        $type = $this->con->real_escape_string($_POST['type']); 
+        $breed = $this->con->real_escape_string($_POST['breed']); 
+
+        $gender = $this->con->real_escape_string($_POST['gender']);
+        $size= $this->con->real_escape_string($_POST['size']);
+        $weight = $this->con->real_escape_string($_POST['weight']);        
+        $age= $this->con->real_escape_string($_POST['age']);
+
+        $user_name = $this->con->real_escape_string($_POST['user']);
+ 
+        $query = " INSERT INTO pets(pet_name, pet_type, breed, gender, size, weight, age) VALUES ('$name','$type', '$breed', '$gender', '$size', '$weight', $age)";
+
+        $sql = $this->con->query($query);
+        if($sql == true)
+        {
+            header("Location:user_profile.php?login=".$user_name);
+        }
+        else{
+            echo "Pet creation failed, please try again!"."<br>";
+            echo "Error: " . $sql . "<br>" . $this->con->error;
+        }
+    }
+
+
+
     public function getUsername($id)
     {
         $query = "SELECT DISTINCT username FROM users WHERE user_id IN 

@@ -15,7 +15,7 @@ if(isset($_GET['login']) && !empty($_GET['login']))
 }
 else
 {
-	header("Location:login.php");
+	//header("Location:login.php");
 }
 
 if(isset($_POST['uusername'])) 
@@ -145,6 +145,9 @@ if(isset($_POST['uusername']))
 		</div>
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
+	<div class = "row">
+		<a class="btn btn-primary" href="add_pet.php?user=<?php echo $_GET['login']; ?>">Add Pet</a> 
+	</div>    	
 	 <div class="row row-cols-3">   	
 		<?php 
 

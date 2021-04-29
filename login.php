@@ -4,12 +4,6 @@ include 'users.php';
 
 $userObj = new Users();
 
-//session_start();
-
-$username = null;
-
-
-
 if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password']))
 {
     $userObj->login($_POST);
@@ -72,7 +66,7 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 	    <input type="password" class="form-control" name="login_password" required>
 	  </div>		
 	  <div class="d-grid gap-2">
-			<button value="login" type="submit" class="btn btn-primary">Login</button>
+			<button value="login"  type="submit" class="btn btn-primary">Login</button>
 	  </div>
 	</form>	
 </div>

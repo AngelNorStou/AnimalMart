@@ -36,19 +36,22 @@ if(isset($_POST["submit"]) )
 <div class="container">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
+	    <a class="nav-link " href="home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="contact.php">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	    <a class="nav-link" href="login.php" tabindex="-1">Login</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link active" aria-current="page" href="#" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
-</div>	
+</div>
 <div class="container">		
 	<form class="userForms" action="signup.php" method="POST" enctype="multipart/form-data">
 	<h5 class="text-center">Create an Account</h5>	

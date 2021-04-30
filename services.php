@@ -17,19 +17,19 @@
 <div class="container">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Home</a>
+	    <a class="nav-link" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link active" aria-current="page"href="#">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Contact</a>
+	    <a class="nav-link" href="contact.php">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Login</a>
+	    <a class="nav-link " href="login.php" tabindex="-1">Login</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Sign Up</a>
+	    <a class="nav-link " href="signup.php" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
 </div>

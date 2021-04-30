@@ -11,7 +11,6 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 
 /* 
 
-
 	  	<button value="login" type="submit" class="btn btn-primary">Login</button>
 
 		<a class="btn btn-primary" href="user_profile.php?login=<?php echo $username; ?>"  > Login</a> 
@@ -36,19 +35,22 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 <div class="container">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
+	    <a class="nav-link " href="home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" href="contact.php">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	    <a class="nav-link active" aria-current="page" href="#" tabindex="-1">Login</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" href="signup.php" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
-</div>	
+</div>
 <div class="container">	
 	<form class="userForms" action="login.php" method="POST">
 	<h5 class="text-center">Welcome Back!</h5>	

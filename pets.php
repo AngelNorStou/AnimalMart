@@ -25,8 +25,6 @@ class Pets
         }
     }
 
-
-
     public function displayPetsByUsername($user_name)
     {
    
@@ -106,7 +104,7 @@ class Pets
 
         $id = $this->getUserID($user_name);
  
-        $query = "INSERT INTO pets(pet_name, pet_type, breed, gender, size, weight, age,user_id) VALUES ('$name','$type', '$breed', '$gender', '$size', '$weight', $age,$id)";
+        $query = "INSERT INTO pets(pet_name, pet_type, breed, gender, size, weight, age,user_id) VALUES ('$name','$type', '$breed', '$gender', '$size', '$weight', $age,$id);";
 
         $sql = $this->con->query($query);
         if($sql == true)

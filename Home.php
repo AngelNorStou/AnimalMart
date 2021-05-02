@@ -129,7 +129,10 @@
 	<p style="width: 200px;">
 </div>
 
-<footer style="background-color: lightblue;">Address</footer>
+<footer style="background-color: lightblue;">
+	Address<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </div>
 </body>
 </html>

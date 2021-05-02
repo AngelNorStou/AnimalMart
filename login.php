@@ -70,6 +70,8 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 	  <div class="d-grid gap-2">
 			<button value="login"  type="submit" class="btn btn-primary">Login</button>
 	  </div>
+	  <br>
+	  <p>Don't have an account? <a href="signup.php" style="text-decoration: none;"><span style="color: red;">Register Now!</span></a></p>
 	</form>	
 </div>
 </body>

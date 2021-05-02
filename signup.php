@@ -100,6 +100,8 @@ if(isset($_POST["submit"]) )
 	  <div class="d-grid gap-2">
 	  	<button value="signUp" type="submit" class="btn btn-primary">Join us!</button>
 	  </div>
+	  <br>
+	  <p>Already have an account? <a href="signup.php" style="text-decoration: none;"><span style="color: red;">Sign In!</span></a></p>
 	</form>	
 </div>
 </body>

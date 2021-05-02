@@ -149,9 +149,26 @@ class Users
     public function changePassword($postData)
     {
 
-        $current_password= $this->con->real_escape_string($_POST['current_password']);
+        $current_password = $this->con->real_escape_string($_POST['current_password']);
 
-        $new_password= $this->con->real_escape_string($_POST['new_password']);
+        $new_password = $this->con->real_escape_string($_POST['new_password']);
+
+        $current_user = $this->con->real_escape_string($_POST['current_user']);
+
+        $query = "UPDATE users SET  password = '$new_password'
+                   WHERE username = '$current_user' AND password = '$current_password'";
+
+        $sql = $this->con->query($query);
+
+        if($sql == true)
+        {
+
+            echo "Password Changed!"."<br>";
+        }
+        else{
+            echo "Update failed, please try again!"."<br>";
+            echo "Error: " . $sql . "<br>" . $this->con->error;
+        }      
 
     }         
 

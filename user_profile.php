@@ -27,13 +27,12 @@ if(isset($_POST['uusername'],$_POST['upassword']))
 } 
 
 
-
-if(isset($_FILES['upicture']['type']) ) 
+if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'] )) 
 {
-
-	$userObj->updatePicture($_FILES['upicture']['name'] , $user_name);
-	move_uploaded_file($_FILES['upicture']['name'], "Images/");
+	$userObj->changePassword($_POST);
+	
 } 
+
 
 
 
@@ -186,27 +185,38 @@ if(isset($_FILES['upicture']['type']) )
 	  </div>    				
     </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
-	  <div class="row">
-	  	<label class="form-label">Enter your current password and a new password to confirm the changes.</label>
-		    <div class="row">
-			    <label class="form-label">Current Password</label>
-				    <div class="form-floating">
-					  <input type="password" class="form-control"  name="current_password">
-					  <label for="current_password"></label>		      		
-		    		</div>		      		
-	    	</div>
-	    	<br/>
-		    <div class="row">
-			    <label class="form-label">New Password</label>
-				    <div class="form-floating">
-					  <input type="password" class="form-control"  name="new_password">
-					  <label for="new_password"></label>		      		
-		    		</div>		      		
-	    		</div>
-		    <div class="row">
-	      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>		
-	    	</div>	 	    			    			
-	    	</div>			    				    				
+		 <form id="changePass"  action="user_profile.php" method="POST">
+		 	  <div class="row">
+			  	<label class="form-label">Enter your current password and username to add a new password.</label>
+				    <div class="row">
+				    	<div class="col-sm">
+				    	<label class="form-label">Current Username</label>
+						    <div class="form-floating">
+							  <input type="text" class="form-control" name="current_user">
+							  <label for="current_username"><?php echo $user['username']; ?></label>		      		
+				    		</div>
+			    		</div>	
+			    	</div>			  	
+				    <div class="row">
+					    <label class="form-label">Current Password</label>
+						    <div class="form-floating">
+							  <input type="password" class="form-control"  name="current_password">
+							  <label for="current_password"></label>		      		
+				    		</div>		      		
+			    	</div>
+			    	<br/>
+				    <div class="row">
+					    <label class="form-label">New Password</label>
+						    <div class="form-floating">
+							  <input type="password" class="form-control"  name="new_password">
+							  <label for="new_password"></label>		      		
+				    		</div>		      		
+			    		</div>
+				    <div class="row">
+			      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>		
+			    	</div>	 	    			    			
+			    </div>	
+		 </form>   				    				    				
 		</div>			    				    				
 	</div>		
     </div>

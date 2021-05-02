@@ -3,18 +3,18 @@
 include 'users.php';
 
 $userObj = new Users();
-
+/*
 if(isset($_POST['firstname'] , $_POST['lastname'], $_POST['username'],
 		$_POST['email'] ,$_POST['password'], $_POST['city'],
 		$_POST['phone'],$_FILES['profilepic']['name']) )
 {
     $userObj->insertUser($_POST,$_FILES);
 } 
-/*
-if(isset($_POST["submit"]) )
+*/
+if($_SERVER['REQUEST_METHOD'] == 'POST' )
 {
     $userObj->insertUser($_POST);
-}*/
+}
 
 
 ?>

@@ -14,22 +14,22 @@
 	<title>Our Services</title>
 </head>
 <body>
-<div class="container">
+<div style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link" href="Home.php">Home</a>
+	    <a class="nav-link" style="color: blue;"  href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page"href="#">Services Offered</a>
+	    <a class="nav-link active" style="color: darkblue;" aria-current="page"href="#">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link " href="login.php" tabindex="-1">Login</a>
+	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link " href="signup.php" tabindex="-1">Sign Up</a>
+	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
 </div>

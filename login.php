@@ -32,22 +32,22 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 	<title>Login to AnimalMart!</title>	
 </head>
 <body>
-<div class="container">
+<div style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link " href="home.php">Home</a>
+	    <a class="nav-link" style="color: blue;" href="home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#" tabindex="-1">Login</a>
+	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="#" tabindex="-1">Login</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="signup.php" tabindex="-1">Sign Up</a>
+	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
 </div>

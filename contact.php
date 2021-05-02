@@ -11,35 +11,37 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
+		<link href="CSS/sign_in_out.css" rel="stylesheet">	
+
 	<title>Contact Us</title>
 </head>
 <body>
-<div class="container">
+<div style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link " href="home.php">Home</a>
+	    <a class="nav-link" style="color: blue;" href="home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active"  aria-current="page" href="#">Contact</a>
+	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="#">Contact</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link " href="login.php" tabindex="-1">Login</a>
+	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link " href="signup.php" tabindex="-1">Sign Up</a>
+	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 	  </li>
 	</ul>	
 </div>
-<div class="header" align="center">
-	<h3>Contact Us</h3>
-</div>
+<div class="header">
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
 		<div class="container">		
-			<form>
+			<form class="userForms" >
+				<h3 align="center">Contact Us</h3>
+				<p align="center" style="line-height: 0px;padding-bottom: 10px;">__________________________</p>
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
@@ -50,6 +52,7 @@
 				    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
 				  </div>
 				</div>
+				<br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
@@ -59,6 +62,7 @@
 			    	</div>				    				    				
 				</div>
 			  </div>
+			  <br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
@@ -68,6 +72,7 @@
 			    	</div>				    				    				
 				</div>
 			  </div>
+			  <br>
 			   <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Message</label>
@@ -75,11 +80,14 @@
 				</div>
 			  </div>
 			  <br>
-			  	<button id="updateButton" type="submit" href="" class="btn btn-primary">Send</button>
+			  	<button id="updateButton" type="submit" href="" class="btn btn-primary">Send Message</button>
 			</form>	
 		</div>
     </div>
 </div>
+</div>
+<div>
+	<br><br>
 </div>
 </body>
 </html>

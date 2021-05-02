@@ -41,23 +41,26 @@ if(isset($_POST['uusername']))
 	<title>View Account</title>	
 </head>
 <body>
-<div class="container">
+<div  style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
+	    <a class="nav-link" style="color: blue;" aria-current="page" href="#">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	  </li>
+	  <li class="nav-item" >
+	    <a class="nav-link active" style="color: darkblue;" href="user_profile.php?login=<?php echo $_GET['login']; ?>" tabindex="-1"><?php echo $user['first_name']; ?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	    <a class="nav-link" style="color: red;" href="Home.php" tabindex="-1">Log Out</a>
 	  </li>
 	</ul>	
 </div>	
-<div class="container">	
+<div class="container" style="padding-top: 16px;">	
 <div class="d-flex align-items-start">
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>

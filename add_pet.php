@@ -17,10 +17,6 @@ $user = $_GET['user'];
 
     $petObj->insertPet($_POST);
   }
-  else 
-  {
-  	echo "Empty fields?";
-  }
 
 
 
@@ -95,7 +91,7 @@ $user = $_GET['user'];
 		</div>	  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="add" type="submit" class="btn btn-primary">Confirm Changes</button>
-  		<input type="text" class="form-control" value="<?php echo $user; ?>"  name="user">	 
+  		<input type="hidden" class="form-control" value="<?php echo $user; ?>"  name="user">	 
   	</div>			  		  		  		  		  	
 	</form>
 	</div>		

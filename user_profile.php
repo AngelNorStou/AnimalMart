@@ -7,21 +7,34 @@ $userObj = new Users();
 $petObj = new Pets();
 $user = null;
 $pets = null;
+$user_name = null;
 
 if(isset($_GET['login']) && !empty($_GET['login']))
 {
+	$user_name = $_GET['login'];
 	$user = $userObj->displayRecordByUsername($_GET['login']);
 	$pets = $petObj->displayPetsByUsername($_GET['login']);
 }
 else
 {
-	//header("Location:login.php");
+	header("Location:login.php");
 }
 
-if(isset($_POST['uusername'])) 
+if(isset($_POST['uusername'],$_POST['upassword'])) 
 {
 	$userObj->updateUser($_POST);
-}  
+	
+} 
+
+
+
+if(isset($_FILES['upicture']['type']) ) 
+{
+
+	$userObj->updatePicture($_FILES['upicture']['name'] , $user_name);
+	move_uploaded_file($_FILES['upicture']['name'], "Images/");
+} 
+
 
 
 ?>
@@ -36,7 +49,7 @@ if(isset($_POST['uusername']))
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="CSS/account.css" rel="stylesheet" >	
+	<link href="CSS/account.css" rel="stylesheet" >		
 
 	<title>View Account</title>	
 </head>
@@ -66,16 +79,17 @@ if(isset($_POST['uusername']))
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
     <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
+  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a> 
   <a class="nav-link"  style="color: black;" aria-selected="false" href="view_appointments.php">View Appointments</a>   
   <a class="nav-link" style="display: none;" aria-selected="false" href="view_appointments.php">View Employees</a> 
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
 		<div class="container">			
-			<form action="user_profile.php" method="POST">
+			<form id="userProfile"  action="user_profile.php" method="POST" >
 				<div class="row">
 				    <div class="col-3">
-			      		<img src="Images/guest.jpg" class="img-thumbnail" alt="...">
+			      		<img src="<?php echo $user['profile_picture']; ?>" class="img-thumbnail" alt="No Picture Found.">
 			    	</div>	
 				    <div class="col-sm">
 					    <label class="form-label">First Name</label>
@@ -111,19 +125,13 @@ if(isset($_POST['uusername']))
 				</div>
 			  </div>
 			  <div class="row">
-				    <div class="col-sm">
+			  	<div class="col-sm">
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
 						  <input type="tel" class="form-control"  name="uphone">
-						  <label for="phoneEdit"><?php echo $user['phone_number']; ?></label>		      		
+					  <label for="phoneEdit"><?php echo $user['phone_number']; ?></label>	 </div>     		
 			    	</div>				    				    				
-				</div>
 			  </div>
-			  <div class="row">
-				<label class="form-label">Profile Picture</label>
-				<input class="form-control form-control-lg" value="<?php echo $user['profile_picture']; ?>" type="file" />
-			  </div>
-			  <br/>
 			  <div class="row">
 			  	<label class="form-label">Enter your current username and password to confirm the changes.</label>
 				    <div class="col-sm">
@@ -142,7 +150,7 @@ if(isset($_POST['uusername']))
 			    		</div>		    									  				  	
 			  </div>
 				  <div class="row">
-			  		<button style="float: left;margin: 2%;" value="update" type="submit" class="btn btn-primary">Confirm Changes</button>					  	
+			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>					  	
 				  </div>			  		  		  		  		  	
 			</form>	
 		</div>
@@ -199,7 +207,8 @@ if(isset($_POST['uusername']))
 	      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>		
 	    	</div>	 	    			    			
 	    	</div>			    				    				
-		</div>	
+		</div>			    				    				
+	</div>		
     </div>
   </div>
 </div>

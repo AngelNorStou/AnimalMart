@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 ?>
 <!DOCTYPE HTML>
@@ -15,29 +16,48 @@
 	<title>Animal Mart</title>
 
 </head>
-<body>
-<div  style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<body>	
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="#">Home</a>
+	    <a class="nav-link active" style="color: white;" aria-current="page" href="#">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
 	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+             <?php
+		if (!isset($_SESSION['username'])) {  
+			
+		?>
+		  <li class="nav-item" >
+		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
+		  </li>
+		<?php } else{?>
 	  <li class="nav-item" >
-	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1">Sabrina</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
+	    <a class="nav-link" style="color: red;" href="Home.php" tabindex="-1">Logout</a>
 	  </li>
-	</ul>	
-</div>	
-<div align="center" class="header">
-	<h3 style="background-color: darkblue; color: #fff;padding:5px;">Welcome To AnimalMart !</h3>
-</div>
+	<?php }?>
+	
+        </ul>
+    </div>
+</nav>
 <div align="center">
 	<div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
 	  <div class="carousel-indicators">

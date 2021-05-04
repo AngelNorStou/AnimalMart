@@ -1,4 +1,19 @@
 <?php
+include 'services_controller.php';
+include 'pets.php';
+
+$petObj = new Pets();
+$serviceObj = new Service();
+
+//TO BE CHANGED USING CALL METHOD
+$pets = $petObj->displayPetsByUsername('KubrayKan');
+$services = $serviceObj->displayService();
+
+session_start();
+
+if (!isset($_SESSION['username'])) {  
+	header("Location: login.php");
+}
 
 ?>
 <!DOCTYPE HTML>
@@ -11,35 +26,36 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
+		<link href="CSS/sign_in_out.css" rel="stylesheet">	
 	<title>Make an Appointment</title>
 </head>
 <body>
-<div class="container">
+<div  style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Home</a>
+	    <a class="nav-link active" style="color: blue;" aria-current="page" href="#">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Services Offered</a>
+	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Contact</a>
+	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	  </li>
+	  <li class="nav-item" >
+	    <a class="nav-link" style="color: red;" href="login.php" >Login</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Login</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Sign Up</a>
+	    <a class="nav-link" style="color: red;" href="signup.php" >Sign Up</a>
 	  </li>
 	</ul>	
-</div>
-<div class="header" align="center">
-	<h3>Appointment</h3>
 </div>	
-<div class="tab-content" id="v-pills-tabContent">
-    <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
+<div class="header">
+	<div class="tab-content" id="v-pills-tabContent">
+    <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form>
+			<form class="userForms">
+				<h3 align="center">Book an appointment</h3>
+				<p align="center" style="line-height: 0px;padding-bottom: 10px;">_________________________________________</p>
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
@@ -50,6 +66,7 @@
 				    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
 				  </div>
 				</div>
+				<br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
@@ -59,6 +76,7 @@
 			    	</div>				    				    				
 				</div>
 			  </div>
+			  <br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
@@ -68,19 +86,24 @@
 			    	</div>				    				    				
 				</div>
 			  </div>
+			  <br>
 			 <div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">Pet</label>
 				    <select id="inputState" class="form-select">
 				      <option selected>Choose...</option>
-				      <option>...</option>
+				      <?php foreach($pets as $pet){ ?>
+				      <option><?php echo $pet['pet_name']; ?></option>
+				      <?php }?>
 				    </select>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Service</label>
 				   <select id="inputState" class="form-select">
 				      <option selected>Choose...</option>
-				      <option>...</option>
+				      <?php foreach($services as $service){ ?>
+				      <option><?php echo $service['service_name']; ?></option>
+				      <?php }?>
 				    </select>
 				  </div>
 			 <div class="col">
@@ -92,9 +115,12 @@
 			  </div>
 			</div>
 			  <br>
-			  	<button id="updateButton" type="submit" href="" class="btn btn-primary">Confirm Appointment</button>
+			  	<button id="updateButton" type="submit" href="" class="btn btn-danger">Confirm Appointment</button>
 			</form>	
 		</div>
     </div>
+</div>
+</div>
+<div><p><br></p></div>
 </body>
 </html>

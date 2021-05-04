@@ -1,8 +1,6 @@
 <?php
 include 'services_controller.php';
 $serviceObj = new Service();
-$services = null;
-
 $services = $serviceObj->displayService();
 
 ?>
@@ -25,7 +23,7 @@ $services = $serviceObj->displayService();
 	    <a class="nav-link" style="color: blue;"  href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" style="color: darkblue;" aria-current="page"href="#">Services Offered</a>
+	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
@@ -53,7 +51,8 @@ $services = $serviceObj->displayService();
 	</ul>
 	 <div class="tab-content" id="v-pills-tabContent">
 	<div class="tab-pane fade show active" id="grooming" role="tabpanel" aria-labelledby="grooming-tab">
-	<table >
+		<br>
+	<table width="400">
 		<?php 
 
 		if ($services != null)
@@ -63,10 +62,20 @@ $services = $serviceObj->displayService();
 		  	if($service['service_type'] == 'grooming'){
 
 		?>      	
-	  <tr>
-	   	<td align="center" style="border-width: 1px;" width="250" class="form-label card-text"><?php echo $service['service_name'];?>
+	  <tr style="border-width: 1px;" >
+	   	<td align="center" width="250" class="form-label card-text">
+	   		<?php 
+	   			if($service['service_length'] != '')
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   			else
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   		?>
 	   		<br>
-
+	   	</td>
+	   	<td>
+	   		 <?php
+	   		 	if($service['service_description'] != ''){
+			  ?>
 			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
@@ -81,7 +90,9 @@ $services = $serviceObj->displayService();
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-			        <?php echo $service['service_description'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes'; ?>
+			        <?php  
+			        	echo $service['service_description'];
+			       	?>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
@@ -91,14 +102,17 @@ $services = $serviceObj->displayService();
 			  </div>
 			</div>
 			<br>
+			<?php } ?>
 	   	</td>
+	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
 		</tr>
 	      
 	</table>
 </div>
 <div class="tab-pane fade" id="training" role="tabpanel" aria-labelledby="training-tab">
-	<table>
+	<br>
+	<table width="400">
 		<?php 
 
 		if ($services != null)
@@ -106,12 +120,23 @@ $services = $serviceObj->displayService();
 		  foreach ($services as $service) 
 		  {
 		  	if($service['service_type'] == 'training'){
-
 		?>      	
-	   <tr>
-	   	<td align="center" style="border-width: 1px;" width="250" class="form-label card-text"><?php echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';?>
+	   <tr style="border-width: 1px;" >
+	   	<td align="center" width="250" class="form-label card-text">
+	   		<?php 
+	   			if($service['service_length'] != '')
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   			else
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   		?>
 	   		<br>
-	   		<!-- Button trigger modal -->
+	   		</td>
+	   	<td>
+	   		
+	   		 <?php
+	   		 	if($service['service_description'] != ''){
+			  ?>
+			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
@@ -125,22 +150,27 @@ $services = $serviceObj->displayService();
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-			        <?php echo $service['service_description']; ?>
+			        <?php  
+			        	echo $service['service_description'];
+			       	?>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button type="button" class="btn btn-outline-danger btn-sm">Book an appointment</button>
+			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
+			<?php } ?>
+			<br>
 	   	</td>
-		</tr>
-	      <?php } } } ?>
+	   	<tr><td><br></td></tr>
+	   	<?php } } } ?>
 	</table>
 </div>
 <div  class="tab-pane fade" id="vet" role="tabpanel" aria-labelledby="vet-tab">
-	<table >
+	<br>
+	<table width="400">
 		<?php 
 
 		if ($services != null)
@@ -148,12 +178,23 @@ $services = $serviceObj->displayService();
 		  foreach ($services as $service) 
 		  {
 		  	if($service['service_type'] == 'vet'){
-
 		?>      	
-	   <tr>
-	   	<td align="center" style="border-width: 1px;" width="250" class="form-label card-text"><?php echo $service['service_name'].'<br>Price: '.$service['service_price'];?>
+	   <tr style="border-width: 1px;">
+	   	<td align="center"  width="250" class="form-label card-text">
+	   		<?php 
+	   			if($service['service_length'] != '')
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   			else
+	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   		?>
 	   		<br>
-	   			<!-- Button trigger modal -->
+	   	</td>
+	   	<td>
+
+	   		<?php
+	   		 	if($service['service_description'] != ''){
+			  ?>
+			<!-- Button trigger modal -->
 			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
@@ -167,18 +208,22 @@ $services = $serviceObj->displayService();
 			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			      </div>
 			      <div class="modal-body">
-			        <?php echo $service['service_description']; ?>
+			        <?php  
+			        	echo $service['service_description'];
+			       	?>
 			      </div>
 			      <div class="modal-footer">
 			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button type="" class="btn btn-outline-danger btn-sm">Book an appointment</button>
+			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
 			      </div>
 			    </div>
 			  </div>
 			</div>
+			<?php } ?>
+			<br>
 	   	</td>
-		</tr>
-	      <?php } } } ?>
+	   	<tr><td><br></td></tr>
+	   	<?php } } } ?>
 	</table>
 	 </div>
 	</div>

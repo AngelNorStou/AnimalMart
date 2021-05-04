@@ -37,7 +37,7 @@
 </div>
 <div class="header">
 	<div class="tab-content" id="v-pills-tabContent">
-    <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
+    <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
 			<form class="userForms" >
 				<h3 align="center">Contact Us</h3>
@@ -80,7 +80,7 @@
 				</div>
 			  </div>
 			  <br>
-			  	<button id="updateButton" type="submit" href="" class="btn btn-primary">Send Message</button>
+			  	<button id="sendMessagebtn" type="submit" href="" class="btn btn-primary">Send Message</button>
 			</form>	
 		</div>
     </div>

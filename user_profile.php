@@ -9,15 +9,22 @@ $user = null;
 $pets = null;
 $user_name = null;
 
-if(isset($_GET['login']) && !empty($_GET['login']))
-{
-	$user_name = $_GET['login'];
-	$user = $userObj->displayRecordByUsername($_GET['login']);
-	$pets = $petObj->displayPetsByUsername($_GET['login']);
-}
-else
-{
-	header("Location:login.php");
+session_start();
+if (!isset($_SESSION['username'])) {  
+
+	if(isset($_GET['login']) && !empty($_GET['login']))
+	{
+		$user_name = $_GET['login'];
+		$user = $userObj->displayRecordByUsername($_GET['login']);
+		$pets = $petObj->displayPetsByUsername($_GET['login']);
+
+		$_SESSION['username'] = $user['username'];
+
+	}
+	else
+	{
+		header("Location:login.php");
+	}
 }
 
 if(isset($_POST['uusername'],$_POST['upassword'])) 
@@ -32,8 +39,6 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	$userObj->changePassword($_POST);
 	
 } 
-
-
 
 
 ?>
@@ -56,7 +61,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 <div  style="background-color: lightblue;">
 	<ul class="nav justify-content-center">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" aria-current="page" href="#">Home</a>
+	    <a class="nav-link" style="color: blue;" aria-current="page" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>

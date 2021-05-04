@@ -53,8 +53,14 @@ class Users
         if($sql->num_rows > 0)
         {
            
-            //echo "You have logged in! Welcome". $user_name;
-            header("Location:user_profile.php?login=".$user_name);
+            if (strcmp($user_name , "Admin") !== 0) 
+            {
+                header("Location:user_profile.php?login=".$user_name);
+            }
+            else {
+                header("Location:admin_profile.php?login=".$user_name);
+            }
+            
         }
         else{
             echo "Not match found!"."<br>";
@@ -112,8 +118,14 @@ class Users
         $sql = $this->con->query($query);
         if($sql == true)
         {
-            echo "Update Complete.". $username;
-            header("Location:user_profile.php?login=".$user_name);
+            if (strcmp($user_name , "Admin") !== 0) 
+            {
+                header("Location:user_profile.php?login=".$user_name);
+            }
+            else {
+                header("Location:admin_profile.php?login=".$user_name);
+            }
+
         }
         else{
             echo "Update failed, please try again!"."<br>";
@@ -136,7 +148,14 @@ class Users
         if($sql == true)
         {
 
-            header("Location:user_profile.php?login=".$user_name);
+            if (strcmp($user_name , "Admin") !== 0) 
+            {
+                header("Location:user_profile.php?login=".$user_name);
+            }
+            else {
+                header("Location:admin_profile.php?login=".$user_name);
+            }
+
         }
         else{
             echo "Update failed, please try again!"."<br>";

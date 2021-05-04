@@ -9,7 +9,7 @@ $user = null;
 $pets = null;
 $user_name = null;
 
-session_start();
+//session_start();
 if (!isset($_SESSION['username'])) {  
 
 	if(isset($_GET['login']) && !empty($_GET['login']))
@@ -95,7 +95,6 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a> 
   <a class="nav-link"  style="color: black;" aria-selected="false" href="view_appointments.php">View Appointments</a>   
-  <a class="nav-link" style="display: none;" aria-selected="false" href="view_appointments.php">View Employees</a> 
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">

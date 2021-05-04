@@ -12,8 +12,15 @@ if(isset($_POST['firstname'] , $_POST['lastname'], $_POST['username'],
 } 
 */
 if($_SERVER['REQUEST_METHOD'] == 'POST' )
-{
-    $userObj->insertUser($_POST);
+{	
+
+	if (!($_FILES['profilepic']['size'] == 0 && $_FILES['profilepic']['error'] == 0))
+	{
+	    $target = $userObj->target_dir.$_FILES["profilepic"]["name"];
+	    move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target); 
+	}	
+		
+    $userObj->insertUser($_POST,$_FILES); 
 }
 
 

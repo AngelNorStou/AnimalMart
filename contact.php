@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -11,35 +11,57 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-		<link href="CSS/sign_in_out.css" rel="stylesheet">	
+	<link href="CSS/sign_in_out.css" rel="stylesheet">	
 
 	<title>Contact Us</title>
 </head>
 <body>
-<div style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="home.php">Home</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="#">Contact</a>
+	    <a class="nav-link active" style="color: white;" aria-current="page" href="">Contact</a>
+	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+             <?php
+		if (!isset($_SESSION['username'])) {  
+			
+		?>
+		  <li class="nav-item" >
+		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
+		  </li>
+		<?php } else{?>
+	  <li class="nav-item" >
+	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
-	  </li>
-	</ul>	
-</div>
+	<?php }?>
+	
+        </ul>
+    </div>
+</nav>
 <div class="header">
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms" >
+			<form class="userForms" style="background-color: lightblue; border-color: lightblue;" >
 				<h3 align="center">Contact Us</h3>
 				<p align="center" style="line-height: 0px;padding-bottom: 10px;">__________________________</p>
 				<div class="row g-3">
@@ -80,7 +102,7 @@
 				</div>
 			  </div>
 			  <br>
-			  	<button id="sendMessagebtn" type="submit" href="" class="btn btn-primary">Send Message</button>
+			  	<button id="sendMessagebtn" type="submit" href="" class="btn btn-danger">Send Message</button>
 			</form>	
 		</div>
     </div>
@@ -89,5 +111,9 @@
 <div>
 	<br><br>
 </div>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </body>
 </html>

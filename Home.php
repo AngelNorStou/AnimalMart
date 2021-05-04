@@ -48,58 +48,53 @@ session_start();
 		  </li>
 		<?php } else{?>
 	  <li class="nav-item" >
-	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1">Sabrina</a>
+	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="Home.php" tabindex="-1">Logout</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
 	<?php }?>
 	
         </ul>
     </div>
 </nav>
-<div align="center">
-	<div id="carouselExampleCaptions" class="carousel carousel-dark slide" data-bs-ride="carousel">
-	  <div class="carousel-indicators">
-	    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-	    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-	    <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-	  </div>
-	  <div class="carousel-inner">
-	    <div class="carousel-item active">
-	      <img src="./Images/pet_store.jpg" class="d-block w-75" alt="...">
-	      <div class="carousel-caption d-none d-md-block">
-	        <h5>First slide label</h5>
-	        <p>Some representative placeholder content for the first slide.</p>
-	      </div>
-	    </div>
-	    <div class="carousel-item">
-	      <img src="./Images/pet_store1.jpg" class="d-block w-75" alt="...">
-	      <div class="carousel-caption d-none d-md-block">
-	        <h5>Second slide label</h5>
-	        <p>Some representative placeholder content for the second slide.</p>
-	      </div>
-	    </div>
-	    <div class="carousel-item">
-	      <img src="./Images/pet_store2.jpg" class="d-block w-75" alt="...">
-	      <div class="carousel-caption d-none d-md-block">
-	        <h5>Third slide label</h5>
-	        <p>Some representative placeholder content for the third slide.</p>
-	      </div>
-	    </div>
-	  </div>
-	  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-	    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Previous</span>
-	  </button>
-	  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-	    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-	    <span class="visually-hidden">Next</span>
-	  </button>
-	</div>
-	<div align="center" class="header">
-	<h4 style="background-color: darkblue; color: #fff;padding:10px;">Reviews from our customers!</h4>
+<div style="background-color: lightblue;">
+	<table align="center">
+		<tr>
+			<td width="400" style="background-color: lightblue;">
+				<table align="center">
+					<th>PROMOTIONS</th>
+					<tr>
+						<td>lines 1</td>
+					</tr>
+					<tr>
+						<td>
+							test 2
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td >
+				<img width="750" height="400" src="./Images/pet_store1.jpg" alt="Animal">
+			</td>
+			<td  width="400" style="background-color: lightblue;">
+				<table align="center">
+					<th>PROMOTIONS</th>
+					<tr>
+						<td>lines 1</td>
+					</tr>
+					<tr>
+						<td>
+							test 2
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
 </div>
+<div style="background-color: red;"  align="center">
+	<h4 style="background-color: darkblue; color: #fff;padding:10px;">Reviews from our customers!</h4>
 	<div class="card-group">
 		<p style="width: 200px;">
 	<div class="card mb-3">
@@ -149,8 +144,8 @@ session_start();
 	<p style="width: 200px;">
 </div>
 
-<footer style="background-color: lightblue;">
-	Address<br>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.
 </footer>
 </div>

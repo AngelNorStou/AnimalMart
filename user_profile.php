@@ -58,25 +58,35 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	<title>View Account</title>	
 </head>
 <body>
-<div  style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" aria-current="page" href="Home.php">Home</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
 	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: darkblue;" href="user_profile.php?login=<?php echo $_GET['login']; ?>" tabindex="-1"><?php echo $user['first_name']; ?></a>
+	    <a class="nav-link active" style="color: white;" href="user_profile.php" aria-current="page" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="Home.php" tabindex="-1">Log Out</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
-	</ul>	
-</div>	
+	
+        </ul>
+    </div>
+</nav>
 <div class="container" style="padding-top: 16px;">	
 <div class="d-flex align-items-start">
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
@@ -227,5 +237,9 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
     </div>
   </div>
 </div>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </body>
 </html> 

@@ -40,25 +40,34 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 	<title>Join AnimalMart!</title>	
 </head>
 <body>
-<div style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="home.php">Home</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="#" tabindex="-1">Sign Up</a>
-	  </li>
-	</ul>	
-</div>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+		  <li class="nav-item" >
+		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link active" style="color: white;" aria-current="page" href="" tabindex="-1">Sign Up</a>
+		  </li>	
+        </ul>
+    </div>
+</nav>
 <div class="container">		
 	<form class="userForms" action="signup.php" method="POST" enctype="multipart/form-data">
 	<h5 class="text-center">Create an Account</h5>	
@@ -108,8 +117,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 	  	<button value="signUp" type="submit" class="btn btn-primary">Join us!</button>
 	  </div>
 	  <br>
-	  <p>Already have an account? <a href="signup.php" style="text-decoration: none;"><span style="color: red;">Sign In!</span></a></p>
+	  <p>Already have an account? <a href="login.php" style="text-decoration: none;"><span style="color: red;">Sign In!</span></a></p>
 	</form>	
 </div>
+<div><p><br></p></div>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </body>
 </html> 

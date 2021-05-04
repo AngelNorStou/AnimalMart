@@ -2,7 +2,7 @@
 include 'services_controller.php';
 $serviceObj = new Service();
 $services = $serviceObj->displayService();
-
+session_start();
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -17,30 +17,52 @@ $services = $serviceObj->displayService();
 	<title>Our Services</title>
 </head>
 <body>
-<div style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;"  href="Home.php">Home</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link active" style="color: darkblue;" aria-current="page" href="">Services Offered</a>
+	    <a class="nav-link active" style="color: white;" aria-current="page"  href="">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
+	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+             <?php
+		if (!isset($_SESSION['username'])) {  
+			
+		?>
+		  <li class="nav-item" >
+		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+		  </li>
+		  <li class="nav-item">
+		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
+		  </li>
+		<?php } else{?>
+	  <li class="nav-item" >
+	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
+	    <a class="nav-link" style="color: red;" href="logout.php"  tabindex="-1">Logout</a>
 	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
-	  </li>
-	</ul>	
-</div>
+	<?php }?>
+	
+        </ul>
+    </div>
+</nav>
 <div align="center">
-	<h3 style="color: darkblue;">Our Services</h3>
+	<h3 style="color: red;">Our Services</h3>
 	<ul  class="nav nav-tabs justify-content-center">
 	  <li class="nav-item">
-	    <a style="color: red;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
+	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
 	  </li>
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link" id="training-tab" data-bs-toggle="tab" data-bs-target="#training" type="button" role="tab" aria-controls="training" aria-selected="false">Training</a>
@@ -49,7 +71,7 @@ $services = $serviceObj->displayService();
 	    <a style="color: blue;" class="nav-link" id="vet-tab" data-bs-toggle="tab" data-bs-target="#vet" type="button" role="tab" aria-controls="vet" aria-selected="false">Vet</a>
 	  </li>
 	</ul>
-	 <div class="tab-content" id="v-pills-tabContent">
+	<div class="tab-content" id="v-pills-tabContent">
 	<div class="tab-pane fade show active" id="grooming" role="tabpanel" aria-labelledby="grooming-tab">
 		<br>
 	<table width="400">
@@ -77,7 +99,7 @@ $services = $serviceObj->displayService();
 	   		 	if($service['service_description'] != ''){
 			  ?>
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
+			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
 
@@ -137,7 +159,7 @@ $services = $serviceObj->displayService();
 	   		 	if($service['service_description'] != ''){
 			  ?>
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
+			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
 
@@ -195,7 +217,7 @@ $services = $serviceObj->displayService();
 	   		 	if($service['service_description'] != ''){
 			  ?>
 			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
+			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
 
@@ -228,5 +250,9 @@ $services = $serviceObj->displayService();
 	 </div>
 	</div>
 </div>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </body>
 </html>

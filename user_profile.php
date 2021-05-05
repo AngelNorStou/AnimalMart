@@ -26,6 +26,10 @@ if (!isset($_SESSION['username'])) {
 		header("Location:login.php");
 	}
 }
+else{
+	$user = $userObj->displayRecordByUsername($_SESSION['username']);
+	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
+}
 
 if(isset($_POST['uusername'],$_POST['upassword'])) 
 {
@@ -94,7 +98,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
     <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a> 
-  <a class="nav-link"  style="color: black;" aria-selected="false" href="view_appointments.php">View Appointments</a>   
+  <button class="nav-link" id="viewAppointmentsTab" data-bs-toggle="pill" data-bs-target="#viewAppointments" type="button" role="tab" aria-controls="viewAppointments" aria-selected="false">View Appointments</button> 
   <a class="nav-link" style="display: none;" aria-selected="false" href="view_appointments.php">View Employees</a> 
   </div>
   <div class="tab-content" id="v-pills-tabContent">
@@ -171,7 +175,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
 	<div class = "row">
-		<a class="btn btn-primary" href="add_pet.php?user=<?php echo $_GET['login']; ?>">Add Pet</a> 
+		<a class="btn btn-primary" href="add_pet.php?user=<?php echo $_SESSION['username']; ?>">Add Pet</a> 
 	</div>    	
 	 <div class="row row-cols-3">   	
 		<?php 
@@ -232,7 +236,38 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 			    	</div>	 	    			    			
 			    </div>	
 		 </form>   				    				    				
-		</div>			    				    				
+		</div>	
+		 <div class="tab-pane fade" id="viewAppointments" role="tabpanel" aria-labelledby="viewAppointmentsTab">  	
+		 <table class="table table-borderless table-hover">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">First</th>
+		      <th scope="col">Last</th>
+		      <th scope="col">Handle</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <th scope="row">1</th>
+		      <td>Mark</td>
+		      <td>Otto</td>
+		      <td>@mdo</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">2</th>
+		      <td>Jacob</td>
+		      <td>Thornton</td>
+		      <td>@fat</td>
+		    </tr>
+		    <tr>
+		      <th scope="row">3</th>
+		      <td colspan="2">Larry the Bird</td>
+		      <td>@twitter</td>
+		    </tr>
+		  </tbody>
+		</table>  				
+    </div>		    				    				
 	</div>		
     </div>
   </div>

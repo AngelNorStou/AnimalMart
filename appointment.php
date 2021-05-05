@@ -1,18 +1,26 @@
 <?php
 include 'services_controller.php';
 include 'pets.php';
+include 'controller/controller_appointments.php';
 
 $petObj = new Pets();
 $serviceObj = new Service();
-
-//TO BE CHANGED USING CALL METHOD
-$pets = $petObj->displayPetsByUsername('KubrayKan');
-$services = $serviceObj->displayService();
+$appointmentObj = new Appointments();
 
 session_start();
 
 if (!isset($_SESSION['username'])) {  
 	header("Location: login.php");
+}
+else{
+	//TO BE CHANGED USING CALL METHOD
+	$services = $serviceObj->displayService();
+	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
+}
+
+if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['service_id']) && $_POST['service_id'] != 'choose')){
+	echo 'hello';
+	$params = $appointmentObj->addAppointment();
 }
 
 ?>
@@ -40,7 +48,7 @@ if (!isset($_SESSION['username'])) {
 	    <a class="nav-link" style="color: lightblue;" href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
 	  </li>
 	</ul>
     </div>
@@ -112,32 +120,32 @@ if (!isset($_SESSION['username'])) {
 			 <div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">Pet</label>
-				    <select id="inputState" class="form-select">
-				      <option selected>Choose...</option>
+				    <select name="pet_id" id="inputState" class="form-select">
+				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($pets as $pet){ ?>
-				      <option><?php echo $pet['pet_name']; ?></option>
+				      <option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
 				      <?php }?>
 				    </select>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Service</label>
-				   <select id="inputState" class="form-select">
-				      <option selected>Choose...</option>
+				   <select name="service_id" id="inputState" class="form-select">
+				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($services as $service){ ?>
-				      <option><?php echo $service['service_name']; ?></option>
+				      <option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
 				      <?php }?>
 				    </select>
 				  </div>
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="date" class="form-control" id="emailEdit" placeholder="example@web.ca">	      		
+					<input type="date" class="form-control" value="appointment_date" id="emailEdit" placeholder="">	      		
 			    				    				    				
 				</div>
 			  </div>
 			</div>
 			  <br>
-			  	<button id="updateButton" type="submit" href="" class="btn btn-danger">Confirm Appointment</button>
+			  	<button value="appointment" id="appointmentBtn" type="submit" href="" class="btn btn-danger">Confirm Appointment</button>
 			</form>	
 		</div>
     </div>

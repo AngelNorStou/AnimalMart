@@ -15,6 +15,7 @@ session_start();
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
 	<title>Our Services</title>
+
 </head>
 <body>
 <nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
@@ -58,9 +59,11 @@ session_start();
         </ul>
     </div>
 </nav>
-<div align="center">
-	<h3 style="color: red;">Our Services</h3>
-	<ul  class="nav nav-tabs justify-content-center">
+
+<div align="left" style="padding-left: 30px;">
+	<h3 align="center" style="color: red;">Our Services</h3>
+	<p align="center" style="line-height: 0px;padding-bottom: 10px;">_____________________</p>
+	<ul class="nav nav-tabs">
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
 	  </li>
@@ -250,6 +253,7 @@ session_start();
 	 </div>
 	</div>
 </div>
+
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.

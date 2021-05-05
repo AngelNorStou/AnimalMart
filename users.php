@@ -1,14 +1,12 @@
 <?php
 
-
-
 // Create the class Customers
 class Users
 {
     private $servername = "localhost";
     private $username = "root";
     private $password ="";
-    private $database ="animalmartdatabase";
+   private $database ="animalmartdatabase";
 
     public $target_dir = "Images/";  
     public $con;
@@ -121,54 +119,12 @@ class Users
         }
     }
 
-     // Updates a user from the database
-    public function updatePicture($fileName,$user_name)
-    {
-     
-        $picture = $this->target_dir.basename($fileName); 
-
- 
-        $query = " UPDATE users SET  profile_picture = '$picture'
-                    WHERE username = '$user_name'";
-
-        $sql = $this->con->query($query);
-
-        if($sql == true)
-        {
-
-            header("Location:user_profile.php?login=".$user_name);
-        }
-        else{
-            echo "Update failed, please try again!"."<br>";
-            echo "Error: " . $sql . "<br>" . $this->con->error;
-        } 
-
-
-    }    
-
     public function changePassword($postData)
     {
 
-        $current_password = $this->con->real_escape_string($_POST['current_password']);
+        $current_password= $this->con->real_escape_string($_POST['current_password']);
 
-        $new_password = $this->con->real_escape_string($_POST['new_password']);
-
-        $current_user = $this->con->real_escape_string($_POST['current_user']);
-
-        $query = "UPDATE users SET  password = '$new_password'
-                   WHERE username = '$current_user' AND password = '$current_password'";
-
-        $sql = $this->con->query($query);
-
-        if($sql == true)
-        {
-
-            echo "Password Changed!"."<br>";
-        }
-        else{
-            echo "Update failed, please try again!"."<br>";
-            echo "Error: " . $sql . "<br>" . $this->con->error;
-        }      
+        $new_password= $this->con->real_escape_string($_POST['new_password']);
 
     }         
 

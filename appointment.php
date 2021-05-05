@@ -1,11 +1,10 @@
 <?php
 include 'services_controller.php';
 include 'pets.php';
-include 'controller/controller_appointments.php';
+include './controller/controller_appointments.php';
 
 $petObj = new Pets();
 $serviceObj = new Service();
-$appointmentObj = new Appointments();
 
 session_start();
 
@@ -18,10 +17,6 @@ else{
 	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
 }
 
-if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['service_id']) && $_POST['service_id'] != 'choose')){
-	echo 'hello';
-	$params = $appointmentObj->addAppointment();
-}
 
 ?>
 <!DOCTYPE HTML>
@@ -83,7 +78,7 @@ if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['ser
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms">
+			<form class="userForms" action="appointment.php" method="POST">
 				<h3 align="center">Book an appointment</h3>
 				<p align="center" style="line-height: 0px;padding-bottom: 10px;">_________________________________________</p>
 				<div class="row g-3">
@@ -120,7 +115,7 @@ if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['ser
 			 <div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">Pet</label>
-				    <select name="pet_id" id="inputState" class="form-select">
+				    <select name="pet_id" id="inputState" class="form-select" required="required">
 				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($pets as $pet){ ?>
 				      <option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
@@ -129,7 +124,7 @@ if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['ser
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Service</label>
-				   <select name="service_id" id="inputState" class="form-select">
+				   <select name="service_id" id="inputState" class="form-select" required="required">
 				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($services as $service){ ?>
 				      <option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
@@ -145,7 +140,7 @@ if(isset($_POST['pet_id']) && $_POST['pet_id'] != 'choose' && (isset($_POST['ser
 			  </div>
 			</div>
 			  <br>
-			  	<button value="appointment" id="appointmentBtn" type="submit" href="" class="btn btn-danger">Confirm Appointment</button>
+			  	<button value="submit" name="submit" id="appointmentBtn" type="submit" class="btn btn-danger">Confirm Appointment</button>
 			</form>	
 		</div>
     </div>

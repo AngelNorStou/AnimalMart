@@ -2,6 +2,7 @@
 
  include 'users.php';
  include 'pets.php';
+include './controller/controller_appointments.php';
 
 $userObj = new Users();
 $petObj = new Pets();
@@ -43,6 +44,9 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	$userObj->changePassword($_POST);
 	
 } 
+
+$appointments = $app->getAppointmentsByUsername($_SESSION['username']);
+
 
 
 ?>
@@ -241,30 +245,21 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 		 <table class="table table-borderless table-hover">
 		  <thead>
 		    <tr>
-		      <th scope="col">#</th>
-		      <th scope="col">First</th>
-		      <th scope="col">Last</th>
-		      <th scope="col">Handle</th>
+		      <th scope="col">Appointment Date</th>
+		      <th scope="col">Pet</th>
+		      <th scope="col">Service</th>
 		    </tr>
 		  </thead>
 		  <tbody>
+		  	<?php foreach($appointments as $appt) {
+		  	
+		  	 ?> 
 		    <tr>
-		      <th scope="row">1</th>
-		      <td>Mark</td>
-		      <td>Otto</td>
-		      <td>@mdo</td>
+		      <td scope="row"><?php echo $appt['appointment_datetime']; ?></td>
+		      <td><?php echo $appt['pet_id']; ?></td>
+		      <td><?php echo $appt['service_id']; ?></td>
 		    </tr>
-		    <tr>
-		      <th scope="row">2</th>
-		      <td>Jacob</td>
-		      <td>Thornton</td>
-		      <td>@fat</td>
-		    </tr>
-		    <tr>
-		      <th scope="row">3</th>
-		      <td colspan="2">Larry the Bird</td>
-		      <td>@twitter</td>
-		    </tr>
+		<?php } ?>
 		  </tbody>
 		</table>  				
     </div>		    				    				

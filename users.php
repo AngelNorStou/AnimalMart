@@ -1,12 +1,12 @@
 <?php
 
-// Create the class Customers
+// Create the class Users
 class Users
 {
     private $servername = "localhost";
     private $username = "root";
     private $password ="";
-   private $database ="animalmartdatabase";
+    private $database ="animalmartdatabase";
 
     public $target_dir = "Images/";  
     public $con;
@@ -50,9 +50,8 @@ class Users
         $sql = $this->con->query($query);
         if($sql->num_rows > 0)
         {
-           
-            //echo "You have logged in! Welcome". $user_name;
-            header("Location:user_profile.php?login=".$user_name);
+            $this->isAdmin($user_name);
+            //header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Not match found!"."<br>";
@@ -110,8 +109,9 @@ class Users
         $sql = $this->con->query($query);
         if($sql == true)
         {
-            echo "Update Complete.". $username;
-            header("Location:user_profile.php?login=".$user_name);
+            $this->isAdmin($user_name);
+            //echo "Update Complete.". $username;
+            //header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Update failed, please try again!"."<br>";
@@ -122,11 +122,79 @@ class Users
     public function changePassword($postData)
     {
 
-        $current_password= $this->con->real_escape_string($_POST['current_password']);
+        $current_password = $this->con->real_escape_string($_POST['current_password']);
 
-        $new_password= $this->con->real_escape_string($_POST['new_password']);
+        $new_password = $this->con->real_escape_string($_POST['new_password']);
 
-    }         
+        $current_user = $this->con->real_escape_string($_POST['current_user']);
+
+        $query = "UPDATE users SET  password = '$new_password'
+                   WHERE username = '$current_user' AND password = '$current_password'";
+
+        $sql = $this->con->query($query);
+
+        if($sql == true)
+        {
+
+            echo "Password Changed!"."<br>";
+        }
+        else{
+            echo "Update failed, please try again!"."<br>";
+            echo "Error: " . $sql . "<br>" . $this->con->error;
+        }      
+
+    }
+
+    public function updatePicture($fileName,$user_name)
+    {
+     
+        $picture = $this->target_dir.basename($fileName); 
+
+ 
+        $query = " UPDATE users SET  profile_picture = '$picture'
+                    WHERE username = '$user_name'";
+
+        $sql = $this->con->query($query);
+
+        if($sql == true)
+        {
+            $this->isAdmin($user_name);
+            //header("Location:user_profile.php?login=".$user_name);
+        }
+        else{
+            echo "Update failed, please try again!"."<br>";
+            echo "Error: " . $sql . "<br>" . $this->con->error;
+        } 
+
+
+    } 
+
+    private function isAdmin($user)
+    {
+        $query = "SELECT `isAdmin` 
+                    FROM `employees` 
+                   WHERE `user_id` IN 
+                                    (SELECT `user_id` 
+                                       FROM `users` 
+                                      WHERE `username` = '$user') ";
+
+        $result = $this->con->query($query);
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc(); 
+
+            if($data['isAdmin'] == 1)
+            {
+                header("Location:admin_profile.php?login=".$user);
+            }
+            else{
+
+                header("Location:user_profile.php?login=".$user);
+            } 
+        }       
+    }  
+
+
 
 }
 

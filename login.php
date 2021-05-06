@@ -9,12 +9,6 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
     $userObj->login($_POST);
 }
 
-/* 
-
-	  	<button value="login" type="submit" class="btn btn-primary">Login</button>
-
-		<a class="btn btn-primary" href="user_profile.php?login=<?php echo $username; ?>"  > Login</a> 
-*/
 
 ?>
  <!DOCTYPE html>

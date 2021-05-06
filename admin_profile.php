@@ -2,13 +2,11 @@
 
  include 'users.php';
  include 'pets.php';
-  include 'employees.php';
+ include 'employees.php';
 
 $userObj = new Users();
-$petObj = new Pets();
 $empObj = new Employees();
 $user = null;
-$pets = null;
 $user_name = null;
 
 //session_start();
@@ -18,7 +16,6 @@ if (!isset($_SESSION['username'])) {
 	{
 		$user_name = $_GET['login'];
 		$user = $userObj->displayRecordByUsername($_GET['login']);
-		$pets = $petObj->displayPetsByUsername($_GET['login']);
 
 		$_SESSION['username'] = $user['username'];
 
@@ -83,16 +80,14 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 <div class="d-flex align-items-start">
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
-    <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
      <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button>   
-  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a> 
-  <a class="nav-link"  style="color: black;" aria-selected="false" href="view_appointments.php">View Appointments</a>   
+  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a>  
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
 		<div class="container">			
-			<form id="userProfile"  action="user_profile.php" method="POST" >
+			<form id="userProfile"  action="admin_profile.php" method="POST" >
 				<div class="row">
 				    <div class="col-3">
 			      		<img src="<?php echo $user['profile_picture']; ?>" class="img-thumbnail" alt="No Picture Found.">
@@ -161,38 +156,8 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 			</form>	
 		</div>
     </div>
-    <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
-	<div class = "row">
-		<a class="btn btn-primary" href="add_pet.php?user=<?php echo $_GET['login']; ?>">Add Pet</a> 
-	</div>    	
-	 <div class="row row-cols-3">   	
-		<?php 
-
-		if ($pets != null)
-		{
-		  foreach ($pets as $pet) 
-		  {
-
-		?>      	
-	    <div class="card col" style="width: 18rem;margin: 2%;">	
-		  <div class="card-body">	  	
-			  <div class="row" style="margin-bottom: 3%;">
-				<label  class="form-label card-text"><?php echo "Name: ".$pet['pet_name']; ?></label>
-				<label  class="form-label card-text"><?php echo "Type: ".$pet['pet_type']; ?></label>
-				<label  class="form-label card-text"><?php echo "Breed: ".$pet['breed']; ?></label>
-				<label  class="form-label card-text"><?php echo "Gender: ".$pet['gender']; ?></label>
-				<label  class="form-label card-text"><?php echo "Size: ".$pet['size']." cm"; ?></label>
-				<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
-				<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
-			  </div>  	
-				<a class="btn btn-primary" href="edit_pet.php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
-		  </div>    
-		</div>	
-	      <?php } } ?>	
-	  </div>    				
-    </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
-		 <form id="changePass"  action="user_profile.php" method="POST">
+		 <form id="changePass"  action="admin_profile.php" method="POST">
 		 	  <div class="row">
 			  	<label class="form-label">Enter your current password and username to add a new password.</label>
 				    <div class="row">
@@ -226,6 +191,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 		 </form>   				    				    				
 		</div>
     <div class="tab-pane fade" id="employeesEdit" role="tabpanel" aria-labelledby="employeesEditTab">
+ 	<a class="btn btn-primary" href="add_emp.php?user=<?php echo $user_name;?>">Add an Employee Here!</a>   	
 	  <table class="table table-hover">
 	    <thead>
 	      <tr>
@@ -249,8 +215,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	          <td><?php echo $emp['start_date'] ?></td>          
 	          <td><?php echo $emp['end_date'] ?></td>
 	          <td>
-	            <a href="edit.php?editId=<?php echo $emp['employee_id'] ?>" style="color:green">
-	              <i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp
+	            <a href="edit_emp.php?editId=<?php echo $emp['employee_id'] ?>" style="color:green">Edit?</a>
 	            </a>
 	          </td>
 	        </tr>

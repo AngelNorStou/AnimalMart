@@ -20,6 +20,7 @@ if (!isset($_SESSION['username'])) {
 		$pets = $petObj->displayPetsByUsername($_GET['login']);
 
 		$_SESSION['username'] = $user['username'];
+		$_SESSION['isAdmin'] = 0;
 
 	}
 	else

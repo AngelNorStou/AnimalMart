@@ -46,8 +46,15 @@ session_start();
 		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 		  </li>
 		<?php } else{?>
-	  <li class="nav-item" >
-	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	 <li class="nav-item" >
+	  	 <?php
+		if ($_SESSION['isAdmin'] == 1) {  
+			
+		?>
+	    <a class="nav-link" style="color: white;" href="admin_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    <?php } else{?>
+	    	 <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    <?php } ?>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
@@ -102,7 +109,7 @@ session_start();
 				</div>
 			  </div>
 			  <br>
-			  	<button id="sendMessagebtn" type="submit" href="" class="btn btn-danger">Send Message</button>
+			  	<button id="sendMessagebtn" value="submit" type="submit" href="" class="btn btn-danger">Send Message</button>
 			</form>	
 		</div>
     </div>

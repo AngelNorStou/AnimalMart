@@ -48,8 +48,15 @@ session_start();
 		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 		  </li>
 		<?php } else{?>
-	  <li class="nav-item" >
-	    <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	 <li class="nav-item" >
+	  	 <?php
+		if ($_SESSION['isAdmin'] == 1) {  
+			
+		?>
+	    <a class="nav-link" style="color: white;" href="admin_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    <?php } else{?>
+	    	 <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    <?php } ?>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php"  tabindex="-1">Logout</a>
@@ -60,9 +67,8 @@ session_start();
     </div>
 </nav>
 
-<div align="left" style="padding-left: 100px;padding-right: 100px;">
-	<h3 align="center" style="color: red;">Our Services</h3>
-	<p align="center" style="line-height: 0px;padding-bottom: 10px;">_____________________</p>
+<div align="left" style="font-family: 'Verdana'; padding-left: 100px;padding-right: 100px;">
+	<h3 align="center" style="color: red;padding-top: 30px;line-height: 16px;">Our Services</h3>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
@@ -75,9 +81,16 @@ session_start();
 	  </li>
 	</ul>
 	<div class="tab-content" id="v-pills-tabContent">
+	
 	<div class="tab-pane fade show active" id="grooming" role="tabpanel" aria-labelledby="grooming-tab">
 		<br>
-	<table width="400">
+		<div id="header" style="width:100%;">
+    		<div style='float:right'>
+        		<img src="./Images/grooming.jpg" style="padding-top: 16px; margin-right:25%;margin-top:5%"/>
+    		</div>
+		</div>
+		
+	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 
 		if ($services != null)
@@ -91,9 +104,9 @@ session_start();
 	   	<td align="center" width="250" class="form-label card-text">
 	   		<?php 
 	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
 	   		<br>
 	   	</td>
@@ -127,17 +140,28 @@ session_start();
 			  </div>
 			</div>
 			<br>
+			<?php } else{ ?>
+				<button type="button" class="btn btn-outline-danger btn-sm"  type="submit" onclick="location.href = 'appointment.php'" >
+			  Book Appointment
+			</button>
+
 			<?php } ?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
 		</tr>
-	      
 	</table>
+
 </div>
-<div class="tab-pane fade" id="training" role="tabpanel" aria-labelledby="training-tab">
-	<br>
-	<table width="400">
+
+	<div class="tab-pane fade fade" id="training" role="tabpanel" aria-labelledby="training-tab">
+		<br>
+			<div id="header" style="width:100%;">
+    		<div style='float:right'>
+        		<img src="./Images/training.jpg" width="600" height="350"  alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
+    		</div>
+		</div>
+	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 
 		if ($services != null)
@@ -150,9 +174,9 @@ session_start();
 	   	<td align="center" width="250" class="form-label card-text">
 	   		<?php 
 	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
 	   		<br>
 	   		</td>
@@ -186,8 +210,13 @@ session_start();
 			    </div>
 			  </div>
 			</div>
-			<?php } ?>
 			<br>
+			<?php } else{ ?>
+				<button type="button" class="btn btn-outline-danger btn-sm" type="submit" onclick="location.href = 'appointment.php'" >
+			  Book Appointment
+			</button>
+
+			<?php } ?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
@@ -195,7 +224,13 @@ session_start();
 </div>
 <div  class="tab-pane fade" id="vet" role="tabpanel" aria-labelledby="vet-tab">
 	<br>
-	<table width="400">
+	<div id="header" style="width:100%;">
+    		<div style='float:right'>
+        		<img src="./Images/vet.jpg" width="500" height="350" alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
+    		</div>
+		</div>
+		
+	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 
 		if ($services != null)
@@ -208,9 +243,9 @@ session_start();
 	   	<td align="center"  width="250" class="form-label card-text">
 	   		<?php 
 	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
-	   				echo $service['service_name'].'<br>Price: '.$service['service_price'];
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
 	   		<br>
 	   	</td>
@@ -244,16 +279,21 @@ session_start();
 			    </div>
 			  </div>
 			</div>
-			<?php } ?>
 			<br>
+			<?php } else{ ?>
+				<button type="button"  type="submit" onclick="location.href = 'appointment.php'"  class="btn btn-outline-danger btn-sm">
+			  Book Appointment
+			</button>
+
+			<?php } ?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
+	   </tr>
 	</table>
 	 </div>
 	</div>
 </div>
-
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.

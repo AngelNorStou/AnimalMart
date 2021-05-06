@@ -60,7 +60,7 @@ session_start();
     </div>
 </nav>
 
-<div align="left" style="padding-left: 30px;">
+<div align="left" style="padding-left: 100px;padding-right: 100px;">
 	<h3 align="center" style="color: red;">Our Services</h3>
 	<p align="center" style="line-height: 0px;padding-bottom: 10px;">_____________________</p>
 	<ul class="nav nav-tabs">

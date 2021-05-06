@@ -5,8 +5,7 @@ class Appointment {
 	private $servername = "localhost";
     private $username = "root";
     private $password ="";
-    private $database ="p_animalmart";
-    //private $database ="animalmartdatabase";
+    private $database ="animalmartdatabase";
 
     public $target_dir = "Images/";  
     public $con;

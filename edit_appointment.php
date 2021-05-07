@@ -20,6 +20,16 @@ else{
 	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
 
+if(isset($_GET['appt_id'])) 
+ {
+	$appointment = $app->getAppointmentsById($_GET['appt_id']);
+}
+
+if(isset($_POST['editAppointment'])){
+
+}
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -122,32 +132,38 @@ else{
 				  <div class="col">
 				  	 <label class="form-label">Pet</label>
 				    <select name="pet_id" id="inputState" class="form-select" required="required">
-				      <option value="choose" selected>Choose...</option>
-				      <?php foreach($pets as $pet){ ?>
-				      <option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
-				      <?php }?>
+				      <option value="choose" >Choose...</option>
+				      <?php foreach($pets as $pet){ 
+				      	if($pet['pet_id'] == $appointment['pet_id']){?>
+				     	 <option value="<?php echo $pet['pet_id']; ?>" selected><?php echo $pet['pet_name']; ?></option>
+				      <?php } else{ ?>
+				      	<option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
+				      <?php } } ?>
 				    </select>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Service</label>
 				   <select name="service_id" id="inputState" class="form-select" required="required">
-				      <option value="choose" selected>Choose...</option>
-				      <?php foreach($services as $service){ ?>
-				      <option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
-				      <?php }?>
+				      <option value="choose">Choose...</option>
+				      <?php foreach($services as $service){
+					      if($service['service_id'] == $appointment['service_id']){ ?>
+				     	 <option value="<?php echo $service['service_id']; ?>" selected><?php echo $service['service_name']; ?></option>
+				      <?php } else { ?>
+				      	<option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
+				      <?php } } ?>
 				    </select>
 				  </div>
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="date" class="form-control" value="appointment_date" id="emailEdit" placeholder="">	      		
+					<input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo $appointment['appointment_datetime']; ?>" id="emailEdit" placeholder="">	      		
 			    				    				    				
 				</div>
 			  </div>
 			</div>
 			  <br>
 			  	<button id="editAppointment" value="" name="editAppointment" value="submit" type="submit" class="btn btn-danger">Save Changes</button>
-			  	<input type="hidden" class="form-control" value="<?php echo $appointment['appointment_id']; ?>"  name="service_id">	
+			  	<input type="hidden" class="form-control" value="<?php echo $appointment['appointment_id']; ?>"  name="appointment_id">	
 			</form>	
 		</div>
     </div>

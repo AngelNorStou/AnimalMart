@@ -1,11 +1,12 @@
 <?php
-
+include 'model_services.php';
  include 'users.php';
  include 'pets.php';
 include './controller/controller_appointments.php';
 
 $userObj = new Users();
 $petObj = new Pets();
+$serviceObj = new Service();
 $user = null;
 $pets = null;
 $user_name = null;
@@ -251,13 +252,13 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 		    </tr>
 		  </thead>
 		  <tbody>
-		  	<?php foreach($appointments as $appt) {
+		  	<?php foreach((array)$appointments as $appt) {
 		  	
 		  	 ?> 
 		    <tr>
 		      <td scope="row"><?php echo $appt['appointment_datetime']; ?></td>
-		      <td><?php echo $appt['pet_id']; ?></td>
-		      <td><?php echo $appt['service_id']; ?></td>
+		      <td><?php $pet = $petObj->displayPetById($appt['pet_id']); echo $pet['pet_name']; ?></td>
+		      <td><?php $service = $serviceObj->displayServiceById($appt['service_id']); echo $service['service_name']; ?></td>
 		      <td><a href="edit_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:green">Edit</a></td>
 		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:red">Cancel</a></td>
 		    </tr>

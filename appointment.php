@@ -106,8 +106,7 @@ else{
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
-						  <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca">
-						    			    				    				
+						 <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca">    			    				    				
 				</div>
 			  </div>
 			  <br>
@@ -141,7 +140,7 @@ else{
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="date" class="form-control" value="appointment_date" id="emailEdit" placeholder="">	      		
+					<input type="datetime-local" class="form-control" value="appointment_date" id="emailEdit" placeholder="">	      		
 			    				    				    				
 				</div>
 			  </div>

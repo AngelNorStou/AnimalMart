@@ -24,10 +24,9 @@ class Appointment {
         }
     }
 
-    // to edit
-    function getAppointmentsByUsername($user_name){
+    public function getAppointmentsByUsername($username){
 
-    	$query = "SELECT * FROM appointments";
+    	$query = "SELECT * FROM appointments WHERE pet_id IN (SELECT pet_id FROM pets WHERE user_id IN (SELECT user_id FROM users WHERE username = '$username'))";
         $result = $this->con->query($query);
          if($result->num_rows > 0)
         {
@@ -38,6 +37,16 @@ class Appointment {
             }
             return $data;
         }
+    }
+
+    public function getAppointmentsById($id){
+
+        $query = "SELECT * FROM appointments WHERE appointment_id = '$id'";
+        $result = $this->con->query($query);
+        if($result->num_rows> 0){
+            $data = $result->fetch_assoc();           
+            return $data;
+        }  
     }
 
 	public function createAppointment($post){
@@ -63,13 +72,10 @@ class Appointment {
     public function updateAppointment($post){
 
         $date = $this->con->real_escape_string($_POST['appointment_datetime']);
-        $name = $this->con->real_escape_string($_POST['name']);
-        $desc = $this->con->real_escape_string($_POST['desc']);
-        $length = $this->con->real_escape_string($_POST['length']);
-        $price = $this->con->real_escape_string($_POST['price']);
-        $id = $this->con->real_escape_string($_POST['id']); 
+        $pet = $this->con->real_escape_string($_POST['pet']);
+        $service = $this->con->real_escape_string($_POST['service']);
 
-        $query = "UPDATE appointments SET appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) WHERE appointment_id = '$id'";
+        $query = "UPDATE appointments SET appointment_datetime = '$date', pet_id = '$pet', service_id = '$service' WHERE appointment_id = '$id'";
         $sql = $this->con->query($query);
         if($sql == true)
         {

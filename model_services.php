@@ -51,6 +51,15 @@ class Service{
         }
     }
 
+    public function displayServiceById($id){
+       $query = "SELECT * FROM services WHERE service_id = '$id'";
+        $result = $this->con->query($query);
+        if($result->num_rows > 0){
+            $data = $result->fetch_assoc();           
+            return $data;
+        }  
+    }
+
     public function addService($post){
 
         $type = $this->con->real_escape_string($_POST['service_type']);
@@ -73,14 +82,13 @@ class Service{
 
     public function editService($post){
 
-        $type = $this->con->real_escape_string($_POST['service_type']);
-        $name = $this->con->real_escape_string($_POST['edit_name']);
-        $desc = $this->con->real_escape_string($_POST['edit_desc']);
-        $length = $this->con->real_escape_string($_POST['edit_length']);
-        $price = $this->con->real_escape_string($_POST['edit_price']);
-        $id = $this->con->real_escape_string($_POST['edit_id']);
+        $name = $this->con->real_escape_string($_POST['name']);
+        $desc = $this->con->real_escape_string($_POST['desc']);
+        $length = $this->con->real_escape_string($_POST['length']);
+        $price = $this->con->real_escape_string($_POST['price']);
+        $id = $this->con->real_escape_string($_POST['service_id']);
 
-        $query = " UPDATE services SET service_type = '$type', service_name = '$name', service_description = '$desc', service_length = '$length', service_price = '$price'  WHERE service_id = '$id' ";
+        $query = " UPDATE services SET service_name = '$name', service_description = '$desc', service_length = '$length', service_price = '$price'  WHERE service_id = '$id' ";
 
         $sql = $this->con->query($query);
         if ($sql == true){
@@ -92,13 +100,13 @@ class Service{
     }
 
     public function deleteService($id){
-        $query = "DELETE FROM services WHERE id = '$id'";
+        $query = "DELETE FROM services WHERE service_id = '$id'";
         $sql = $this->con->query($query);
         if ($sql == true){
             return 1;
         }
         else{
-            return 0;
+            return 0;   
         }
     }
 }

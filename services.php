@@ -68,7 +68,15 @@ session_start();
 </nav>
 
 <div align="left" style="font-family: 'Verdana'; padding-left: 100px;padding-right: 100px;">
+
 	<h3 align="center" style="color: red;padding-top: 30px;line-height: 16px;">Our Services</h3>
+	<?php
+	if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
+		?>
+		<a href="add_service.php" ><button type="button" style="float: right;" class="btn btn-outline-danger" >
+			Add a Service
+		</button></a>
+	<?php }?>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
@@ -118,7 +126,7 @@ session_start();
 			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
 			  More info
 			</button>
-
+			
 			<!-- Modal -->
 			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 			  <div class="modal-dialog">
@@ -144,8 +152,16 @@ session_start();
 				<button type="button" class="btn btn-outline-danger btn-sm"  type="submit" onclick="location.href = 'appointment.php'" >
 			  Book Appointment
 			</button>
+			<?php } 
+				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
+					?>
+					<div style="padding-top: 5px;">
+						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
+							Edit Service
+						</button></a>
+					</div>
+				<?php }?>
 
-			<?php } ?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
@@ -216,7 +232,15 @@ session_start();
 			  Book Appointment
 			</button>
 
-			<?php } ?>
+			<?php } 
+				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
+					?>
+					<div style="padding-top: 5px;">
+						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
+							Edit Service
+						</button></a>
+					</div>
+				<?php }?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>
@@ -284,8 +308,15 @@ session_start();
 				<button type="button"  type="submit" onclick="location.href = 'appointment.php'"  class="btn btn-outline-danger btn-sm">
 			  Book Appointment
 			</button>
-
-			<?php } ?>
+			<?php } 
+				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
+					?>
+					<div style="padding-top: 5px;">
+						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
+							Edit Service
+						</button></a>
+					</div>
+			<?php }?>
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php } } } ?>

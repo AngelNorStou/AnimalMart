@@ -56,16 +56,16 @@ class Appointment {
 
     }
 
-    // public function deleteAppointment(){
+    public function deleteAppointment(){
 
-    // }
+    }
 
-    // public function searchPastAppointments(){
+    public function searchPastAppointments(){
 
-    // }
+    }
 
-    // public function searchUpcomingAppointments(){
+    public function searchUpcomingAppointments(){
 
-    // }
+    }
 }
 ?>

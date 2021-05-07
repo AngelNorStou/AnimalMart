@@ -1,10 +1,13 @@
 <?php
-include 'services_controller.php';
+include 'model_services.php';
 include 'pets.php';
+include 'users.php';
 include './controller/controller_appointments.php';
 
 $petObj = new Pets();
+$usersObj = new Users();
 $serviceObj = new Service();
+
 
 session_start();
 
@@ -15,6 +18,7 @@ else{
 	//TO BE CHANGED USING CALL METHOD
 	$services = $serviceObj->displayService();
 	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
+	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
 
 
@@ -91,11 +95,11 @@ else{
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+				    <input type="text" class="form-control" placeholder="First Name" value="<?php echo $user['first_name'] ?>" aria-label="First name">
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+				    <input type="text" class="form-control" placeholder="Last name"  value="<?php echo $user['last_name'] ?>"  aria-label="Last name">
 				  </div>
 				</div>
 				<br>
@@ -103,7 +107,7 @@ else{
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control" id="emailEdit" placeholder="example@web.ca">
+						  <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca">
 						  <label for="emailEdit">example@web.ca</label>		      		
 			    	</div>				    				    				
 				</div>
@@ -113,7 +117,7 @@ else{
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
-						  <input type="tel" class="form-control" id="phoneEdit" placeholder="999-999-9999">
+						  <input type="tel" class="form-control" id="phoneEdit"  value="<?php echo $user['phone'] ?>"  placeholder="999-999-9999">
 						  <label for="phoneEdit">999-999-9999</label>		      		
 			    	</div>				    				    				
 				</div>

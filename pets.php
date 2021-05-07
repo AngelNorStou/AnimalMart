@@ -8,7 +8,6 @@ class Pets
     private $password ="";
     private $database ="animalmartdatabase";
 
-    public $target_dir = "Images/";  
     public $con;
 
     // Create connection string (Database connection)

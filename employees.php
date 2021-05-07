@@ -29,7 +29,7 @@ class Employees
     // Display Employees
     public function displayEmployees()
     {     
-        $query = "SELECT employee_id, first_name, last_name, start_date, end_date 
+        $query = "SELECT username, first_name, last_name, start_date, end_date 
                     FROM employees INNER JOIN users 
                       ON ( employees.user_id = users.user_id)";
 
@@ -46,6 +46,24 @@ class Employees
 
       
     }
+
+    // Display Employees
+    public function selectEmployee($user_name)
+    {     
+        $user_id = $this->getUserId($user_name);
+        $query = "SELECT start_date, end_date, isAdmin 
+                    FROM employees WHERE user_id = '$user_id'";
+
+        $result = $this->con->query($query);
+        if($result->num_rows > 0)
+        {
+            $data = $result->fetch_assoc();  
+            echo   $data['start_date'];       
+            return $data;
+        }
+
+      
+    }    
 
     public function insertEmp($postData, $admin)
     {
@@ -70,6 +88,35 @@ class Employees
         }
     } 
 
+   public function updateEmp($postData)
+    {
+
+        $user_id = $this->getUserId($_POST['emp_editusername']);
+
+        $start_date = $_POST['emp_date_start'];         
+
+        $end_date = $_POST['emp_date_end'];
+
+        $isAdmin = $_POST['adminOption']; 
+
+ 
+        $query = " UPDATE employees SET start_date = '$start_date', 
+                                        end_date = '$end_date', 
+                                        isAdmin =  '$isAdmin'
+                                        WHERE user_id = '$user_id'";
+
+        $sql = $this->con->query($query);
+        if($sql == true)
+        {
+            header("Location:admin_profile.php?login=".$admin);
+        }
+        else{
+            echo "Update failed, please try again!"."<br>";
+            echo "Error: " . $sql . "<br>" . $this->con->error;
+        }
+    }
+
+
     public function getUserId($user_name)
     {
 
@@ -81,10 +128,26 @@ class Employees
         {
             $data = $sql->fetch_assoc(); 
 
+            echo $data['user_id'];
+
             return $data['user_id'];
         }           
 
-    } 
+    }
+
+
+    public function deleteEmp($user_name)
+    {
+        $id = $this->getUserId($user_name);
+        $query = "DELETE FROM employees WHERE user_id = '$id'";
+        $sql = $this->con->query($query);
+        if($sql==true){
+            echo "Record deleted sucessfully";
+        }
+        else{
+            echo "Not possible to delete, please try again!";
+        }
+    }   
 
 
     public function displayEmployee($employee_id)
@@ -103,4 +166,11 @@ class Employees
 
 }
 
+/*
+SELECT `employee_id`, `first_name`, `last_name`, `start_date`, `end_date` FROM `employees` INNER JOIN `users` ON ( `employees`.`user_id` = `users`.`user_id` AND `users`.`username` = 'sabpags') 
+
+
+ */
+
 ?>
+

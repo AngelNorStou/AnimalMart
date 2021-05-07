@@ -1,7 +1,6 @@
 <?php
 
  include 'users.php';
- include 'pets.php';
  include 'employees.php';
 
 $userObj = new Users();
@@ -42,6 +41,11 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	$userObj->changePassword($_POST);
 	
 } 
+
+  if(isset($_GET['deleteId']) ) 
+  {
+      $empObj->deleteEmp($_GET['deleteId']);
+  }
 
 
 ?>
@@ -229,8 +233,12 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 	          <td><?php echo $emp['start_date'] ?></td>          
 	          <td><?php echo $emp['end_date'] ?></td>
 	          <td>
-	            <a href="edit_emp.php?editId=<?php echo $emp['employee_id'] ?>" style="color:green">Edit?</a>
+	            <a href="edit_emp.php?editId=<?php echo $emp['username'] ?>">Edit?</a>
 	            </a>
+            <a href="admin_profile.php?login=<?php echo $user_name ?>&deleteId=<?php echo $emp['username'] ?>" 
+            	style="color:red" onclick="confirm('Are you sure want to remove this employee ?')">
+              DELETE
+            </a>	            
 	          </td>
 	        </tr>
 	      <?php } ?>

@@ -8,7 +8,6 @@ $petObj = new Pets();
 $usersObj = new Users();
 $serviceObj = new Service();
 
-
 session_start();
 
 if (!isset($_SESSION['username'])) {  
@@ -21,9 +20,8 @@ else{
 	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
 
-
 ?>
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -34,7 +32,8 @@ else{
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
 		<link href="CSS/sign_in_out.css" rel="stylesheet">	
-	<title>Make an Appointment</title>
+
+	<title>Edit appointment</title>
 </head>
 <body>
 <nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
@@ -89,8 +88,8 @@ else{
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms" action="appointment.php" method="POST">
-				<h3 align="center">Book an appointment</h3>
+			<form class="userForms" action="edit_appointment.php" method="POST" style="background-color: lightblue; border-color: lightblue;" >
+				<h3 align="center">Edit an appointment</h3>
 				<p align="center" style="line-height: 0px;padding-bottom: 10px;">_________________________________________</p>
 				<div class="row g-3">
 				  <div class="col">
@@ -147,7 +146,8 @@ else{
 			  </div>
 			</div>
 			  <br>
-			  	<button value="submit" name="submit" id="appointmentBtn" type="submit" class="btn btn-danger">Confirm Appointment</button>
+			  	<button id="editAppointment" value="" name="editAppointment" value="submit" type="submit" class="btn btn-danger">Save Changes</button>
+			  	<input type="hidden" class="form-control" value="<?php echo $appointment['appointment_id']; ?>"  name="service_id">	
 			</form>	
 		</div>
     </div>

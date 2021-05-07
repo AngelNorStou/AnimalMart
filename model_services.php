@@ -85,7 +85,7 @@ class Service{
         $name = $this->con->real_escape_string($_POST['name']);
         $desc = $this->con->real_escape_string($_POST['desc']);
         $length = $this->con->real_escape_string($_POST['length']);
-        $price = $this->con->real_escape_string($_POST['price']);
+        $price = $this->con->real_escape_string($_POST['price']); 
         $id = $this->con->real_escape_string($_POST['service_id']);
 
         $query = " UPDATE services SET service_name = '$name', service_description = '$desc', service_length = '$length', service_price = '$price'  WHERE service_id = '$id' ";

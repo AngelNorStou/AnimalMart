@@ -48,8 +48,6 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 
 $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 
-
-
 ?>
 
  <!DOCTYPE html>
@@ -249,6 +247,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 		      <th scope="col">Appointment Date</th>
 		      <th scope="col">Pet</th>
 		      <th scope="col">Service</th>
+		      <th scope="col">Actions</th>
 		    </tr>
 		  </thead>
 		  <tbody>
@@ -259,6 +258,8 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 		      <td scope="row"><?php echo $appt['appointment_datetime']; ?></td>
 		      <td><?php echo $appt['pet_id']; ?></td>
 		      <td><?php echo $appt['service_id']; ?></td>
+		      <td><a href="edit_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:green">Edit</a></td>
+		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:red">Cancel</a></td>
 		    </tr>
 		<?php } ?>
 		  </tbody>

@@ -26,6 +26,7 @@ class Appointment {
 
     // to edit
     function getAppointmentsByUsername($user_name){
+
     	$query = "SELECT * FROM appointments";
         $result = $this->con->query($query);
          if($result->num_rows > 0)
@@ -39,7 +40,14 @@ class Appointment {
         }
     }
 
-	public function createAppointment(){
+	public function createAppointment($post){
+
+        $date = $this->con->real_escape_string($_POST['appointment_datetime']);
+        $name = $this->con->real_escape_string($_POST['name']);
+        $desc = $this->con->real_escape_string($_POST['desc']);
+        $length = $this->con->real_escape_string($_POST['length']);
+        $price = $this->con->real_escape_string($_POST['price']);
+
         $query = "INSERT INTO appointments (appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) VALUES ('2021-7-23','2021-7-26', '1', '2', '1');";
         $sql = $this->con->query($query);
         if($sql == true)
@@ -52,19 +60,42 @@ class Appointment {
     }
 
 
-    public function updateAppointment(){
+    public function updateAppointment($post){
+
+        $date = $this->con->real_escape_string($_POST['appointment_datetime']);
+        $name = $this->con->real_escape_string($_POST['name']);
+        $desc = $this->con->real_escape_string($_POST['desc']);
+        $length = $this->con->real_escape_string($_POST['length']);
+        $price = $this->con->real_escape_string($_POST['price']);
+        $id = $this->con->real_escape_string($_POST['id']); 
+
+        $query = "UPDATE appointments SET appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) WHERE appointment_id = '$id'";
+        $sql = $this->con->query($query);
+        if($sql == true)
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        } 
+    }
+
+    public function deleteAppointment($id){
+        $query = "DELETE FROM appointments WHERE appointment_id = '$id'";
+        $sql = $this->con->query($query);
+        if ($sql == true){
+            return 1;
+        }
+        else{
+            return 0;   
+        }
+    }
+
+    public function searchPastAppointments($id){
 
     }
 
-    public function deleteAppointment(){
-
-    }
-
-    public function searchPastAppointments(){
-
-    }
-
-    public function searchUpcomingAppointments(){
+    public function searchUpcomingAppointments($id){
 
     }
 }

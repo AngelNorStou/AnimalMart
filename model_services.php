@@ -1,0 +1,87 @@
+<?php 
+
+class Service{
+    private $servername = "localhost";
+    private $username = "root";
+    private $password ="";
+    private $database ="animalmartdatabase";
+
+    public $con;
+
+    // Create connection string (Database connection)
+    public function __construct()
+    {
+        $this->con = new mysqli($this->servername, $this->username, $this->password, $this->database);
+        if(mysqli_connect_error())
+        {
+            trigger_error("Not possible to connect to MySQL: ".mysqli_connect_error());
+        }
+        else
+        {
+            return $this->con;
+        }
+    }
+
+    public function displayService()
+    {     
+        $query = "SELECT * FROM services";
+        $result = $this->con->query($query);
+        if($result->num_rows > 0)
+        {
+            $data = array();
+            while($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
+
+    public function addService($postdata){
+
+        $name = $this->con->real_escape_string($_POST['name']);
+        $desc = $this->con->real_escape_string($_POST['desc']);
+        $length = $this->con->real_escape_string($_POST['length']);
+        $price = $this->con->real_escape_string($_POST['price']);
+
+        $query = "INSERT INTO services (service_name, service_description, service_length, service_price) VALUES ('$name', '$desc', '$length', '$price');";
+        $sql = $this->con->query($query);
+        if ($sql == true){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public function editService($postdata){
+
+        $name = $this->con->real_escape_string($_POST['edit_name']);
+        $desc = $this->con->real_escape_string($_POST['edit_desc']);
+        $length = $this->con->real_escape_string($_POST['edit_length']);
+        $price = $this->con->real_escape_string($_POST['edit_price']);
+        $id = $this->con->real_escape_string($_POST['edit_id']);
+
+        $query = " UPDATE services SET  service_name = '$name', service_description = '$desc', service_length = '$length', service_price = '$price'  WHERE service_id = '$id' ";
+
+        $sql = $this->con->query($query);
+        if ($sql == true){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+    public function deleteService($id){
+        $query = "DELETE FROM services WHERE id = '$id'";
+        $sql = $this->con->query($query);
+        if ($sql == true){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+}
+?>

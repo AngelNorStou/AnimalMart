@@ -1,5 +1,5 @@
 <?php
-include 'services_controller.php';
+include 'model_services.php';
 $serviceObj = new Service();
 $services = $serviceObj->displayService();
 session_start();

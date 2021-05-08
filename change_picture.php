@@ -40,36 +40,44 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	<title>Change Picture</title>	
 </head>
 <body>
-<div  style="background-color: lightblue;">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" aria-current="page" href="#">Home</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: blue;" href="contact.php">Contact</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
 	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: darkblue;" href="user_profile.php?login=<?php echo $user_name; ?>" tabindex="-1"><?php echo $user_name; ?></a>
+	    <a class="nav-link active" style="color: white;" href="user_profile.php" aria-current="page" tabindex="-1"><?php echo $user_name ?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="Home.php" tabindex="-1">Log Out</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
-	</ul>	
-</div>
+	
+        </ul>
+    </div>
+</nav>
 <div class="container">
-    	<form id="userPicture"  action="change_picture.php" method="POST" enctype="multipart/form-data">
+    	<form id="userPicture"  style="margin-top: 2%;" action="change_picture.php" method="POST" enctype="multipart/form-data">
 			  <div class="row">
-			  	<label class="form-label">Select a new image file.</label>
+			  	<h3 style="margin-bottom: 1%;">Select a new image file for your profile picture.</h3>
 			  	<div class="row">
-				<label class="form-label">Profile Picture</label>
-				<input class="form-control form-control-lg" name="upicture" id="upicture" type="file" /> 			  		
-			  	</div>
+				<input style="margin-left: 1%;" class="form-control form-control-lg" name="upicture" id="upicture" type="file" /></div>
 		  </div>
 		  <div class="row">
-	  		<button style="float: left;margin-top: 2%;" name="selectImage"  value="selectImage" type="submit" class="btn btn-primary selectImage">Confirm Changes</button>			
+	  		<button style="float: left;margin-top: 2%;margin-left: 1%;" name="selectImage"  value="selectImage" type="submit" class="btn btn-primary selectImage">Confirm Changes</button>			
 			<input type="hidden" class="form-control" value="<?php echo $user_name; ?>"  name="current_user">		  			
 		  </div>	    		
     	</form>

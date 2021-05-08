@@ -1,11 +1,11 @@
 <?php
 
-include './model/users.php';
+include 'pets.php';
 
 
 class ControllerUser
 {
-	public $userObj ;
+	public $petObj ;
 
     public function __construct()
     {
@@ -45,11 +45,6 @@ class ControllerUser
 		    }
 		}
 	
-    }
-
-    public function start_session()
-    {
-
     }
 }
 

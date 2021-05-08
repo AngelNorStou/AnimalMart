@@ -25,7 +25,7 @@ class Users
         }
     }
 
-    // Get data account by email.
+    // Get data account by username.
     public function displayRecordByUsername($user_name)
     {     
         $query = "SELECT * FROM users WHERE username = '$user_name'";

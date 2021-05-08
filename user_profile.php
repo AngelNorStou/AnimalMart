@@ -1,7 +1,7 @@
 <?php
 include 'model_services.php';
- include 'users.php';
- include 'pets.php';
+include './controller/controller_user.php';
+include './controller/controller_pet.php';
 include './controller/controller_appointments.php';
 
 $userObj = new Users();

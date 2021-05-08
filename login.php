@@ -1,13 +1,10 @@
 <?php
 
-include 'users.php';
 
-$userObj = new Users();
+include './controller/controller_user.php';
+//include 'users.php';
 
-if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password']))
-{
-    $userObj->login($_POST);
-}
+$controller_user = new ControllerUser();
 
 
 ?>
@@ -73,6 +70,11 @@ if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password
 	  <div class="d-grid gap-2">
 			<button value="login"  type="submit" class="btn btn-primary">Login</button>
 	  </div>
+	<div class="mb-3">	
+		<?php
+		 	echo $controller_user->verify_login($_POST);
+		?>
+	</div>  
 	  <br>
 	  <p>Don't have an account? <a href="signup.php" style="text-decoration: none;"><span style="color: red;">Register Now!</span></a></p>
 	</form>	

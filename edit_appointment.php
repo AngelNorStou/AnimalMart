@@ -26,7 +26,10 @@ if(isset($_GET['appt_id']))
 }
 
 if(isset($_POST['editAppointment'])){
-
+	$appointment = $app->updateAppointment($_POST);
+	if($appointment == 1){
+		header("Location: user_profile.php");
+	}
 }
 
 
@@ -156,7 +159,7 @@ if(isset($_POST['editAppointment'])){
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo $appointment['appointment_datetime']; ?>" id="emailEdit" placeholder="">	      		
+					<input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo $appointment['appointment_datetime']; ?>" id="appointment_date" placeholder="">	      		
 			    				    				    				
 				</div>
 			  </div>

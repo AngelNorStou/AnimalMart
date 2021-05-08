@@ -51,13 +51,13 @@ class Appointment {
 
 	public function createAppointment($post){
 
-        $date = $this->con->real_escape_string($_POST['appointment_datetime']);
-        $name = $this->con->real_escape_string($_POST['name']);
-        $desc = $this->con->real_escape_string($_POST['desc']);
-        $length = $this->con->real_escape_string($_POST['length']);
-        $price = $this->con->real_escape_string($_POST['price']);
+        $date = $this->con->real_escape_string($_POST['appointment_date']);
+        $dateexpiry = $this->con->real_escape_string($_POST['appointment_date']);
+        $pet = $this->con->real_escape_string($_POST['pet_id']);
+        $service = $this->con->real_escape_string($_POST['service_id']);
+      //  $employee = $this->con->real_escape_string($_POST['employee']);
 
-        $query = "INSERT INTO appointments (appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) VALUES ('2021-7-23','2021-7-26', '1', '2', '1');";
+        $query = "INSERT INTO appointments (appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) VALUES ('$date', '$dateexpiry', '$pet', '$service', '1');";
         $sql = $this->con->query($query);
         if($sql == true)
 	    {
@@ -71,9 +71,10 @@ class Appointment {
 
     public function updateAppointment($post){
 
-        $date = $this->con->real_escape_string($_POST['appointment_datetime']);
-        $pet = $this->con->real_escape_string($_POST['pet']);
-        $service = $this->con->real_escape_string($_POST['service']);
+        $date = $this->con->real_escape_string($_POST['appointment_date']);
+        $pet = $this->con->real_escape_string($_POST['pet_id']);
+        $service = $this->con->real_escape_string($_POST['service_id']);
+        $id = $this->con->real_escape_string($_POST['appointment_id']);
 
         $query = "UPDATE appointments SET appointment_datetime = '$date', pet_id = '$pet', service_id = '$service' WHERE appointment_id = '$id'";
         $sql = $this->con->query($query);

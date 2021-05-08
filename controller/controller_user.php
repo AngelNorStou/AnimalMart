@@ -1,16 +1,15 @@
 <?php
 
-include './model/users.php';
-
-
 class ControllerUser
 {
 	public $userObj ;
 
-    public function __construct()
+    public function __construct(Users $user_obj)
     {
     	//Set connection
-        $this->userObj = new Users();
+
+    	$this->userObj = $user_obj;
+    	
     }
 
     public function verify_login($post)
@@ -47,10 +46,6 @@ class ControllerUser
 	
     }
 
-    public function start_session()
-    {
-
-    }
 }
 
 

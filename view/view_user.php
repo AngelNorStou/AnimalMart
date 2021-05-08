@@ -1,56 +1,29 @@
 <?php
 
-include './model/users.php';
-
-
-class ControllerUser
+class ViewUser
 {
 	public $userObj ;
 
-    public function __construct()
-    {
-    	//Set connection
-        $this->userObj = new Users();
-    }
-
-    public function verify_login($post)
-    {
-    	// Checks if the data is empty.
-    	// The 'required' Attribute of the input fields
-    	// ensure that the user fills the textboxes.
-
-		if(isset($_POST['login_username'],$_POST['login_email'] , $_POST['login_password']))
-		{
-		    $UserExist = $this->userObj->login($_POST);
-
-		    // Checks if user exists
-		    if ($UserExist)
-		    {
-		    	$isAdmin = $this->userObj->isAdmin($_POST['login_username']);
-
-		    	if ($isAdmin)
-		    	{
-		    		header("Location:admin_profile.php?login=".$_POST['login_username']);
-		    	}
-		    	else
-		    	{
-		    		header("Location:user_profile.php?login=".$_POST['login_username']);
-		    	}
-
-		    	return "";
-		    }
-		    else
-		    {
-		    	return "Not match found in our database. Please create an account." ;
-		    }
-		}
-	
-    }
-
-    public function start_session()
+    public function __construct(Users $user_obj)
     {
 
+    	$this->userObj = $user_obj;
+        
     }
+
+    public function displayItem($get,$item)
+    {
+    	
+    	$user =  $this->userObj->displayRecordByUsername($get);
+
+		$label = "<label>".$user[$item]."</label>";
+
+		return $label;
+    }
+
+
+
+
 }
 
 

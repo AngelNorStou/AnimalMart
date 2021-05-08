@@ -1,18 +1,33 @@
 <?php
 include 'model_services.php';
+
 include './controller/controller_user.php';
-include './controller/controller_pet.php';
+include './model/users.php';
+include './view/view_user.php';
+
+
+include './view/view_pet.php';
+include './model/pets.php';
+
 include './controller/controller_appointments.php';
 
+// MVC in OOP for Users
 $userObj = new Users();
+$controller_user = new ControllerUser($userObj);
+$userView = new ViewUser($userObj);
+
+// MVC in OOP for Pets
 $petObj = new Pets();
+$petView = new ViewPet($petObj);
+
 $serviceObj = new Service();
 $user = null;
 $pets = null;
 $user_name = null;
 
 session_start();
-if (!isset($_SESSION['username'])) {  
+if (!isset($_SESSION['username'])) 
+{  
 
 	if(isset($_GET['login']) && !empty($_GET['login']))
 	{
@@ -29,9 +44,12 @@ if (!isset($_SESSION['username'])) {
 		header("Location:login.php");
 	}
 }
-else{
-	$user = $userObj->displayRecordByUsername($_SESSION['username']);
-	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
+else
+{
+
+
+	//$user = $userObj->displayRecordByUsername($_SESSION['username']);
+	//$pets = $petObj->displayPetsByUsername($_SESSION['username']);
 }
 
 if(isset($_POST['uusername'],$_POST['upassword'])) 
@@ -117,13 +135,13 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 					    <label class="form-label">First Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ufirstname">
-						  <label for="firstNameEdit"><?php echo $user['first_name']; ?></label>
+						  <?php echo $userView->displayItem($_GET['login'],'first_name'); ?>
 						</div>	
 				    <div class="">
 				    <label class="form-label">Last Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ulastname" >
-						  <label for="lastNameEdit"><?php echo $user['last_name']; ?></label>		      		
+						  <?php echo $userView->displayItem($_GET['login'],'last_name'); ?>      		
 			    	</div>											    		      		
 			    	</div>			    				    				
 				</div>
@@ -133,7 +151,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
 						  <input type="email" class="form-control"  name="uemail">
-						  <label for="emailEdit"><?php echo $user['email']; ?></label>		      		
+						  <?php echo $userView->displayItem($_GET['login'],'email'); ?>         		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -142,7 +160,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">City</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"   name="ucity">
-						  <label for="cityEdit"><?php echo $user['city']; ?></label>		      		
+						  <?php echo $userView->displayItem($_GET['login'],'city'); ?>        		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -151,7 +169,8 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
 						  <input type="tel" class="form-control"  name="uphone">
-					  <label for="phoneEdit"><?php echo $user['phone_number']; ?></label>	 </div>     		
+					  	  <?php echo $userView->displayItem($_GET['login'],'phone_number'); ?>   	 
+						</div>     		
 			    	</div>				    				    				
 			  </div>
 			  <div class="row">
@@ -160,7 +179,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Username</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control" name="uusername">
-						  <label for="usernameEdit"><?php echo $user['username']; ?></label>		      		
+						  <?php echo $userView->displayItem($_GET['login'],'username'); ?>   	      		
 			    		</div>	
 			    	</div>			    				    				
 				</div>
@@ -168,7 +187,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Password</label>
 					    <div class="form-floating">
 						  <input type="password" class="form-control"  name="upassword">
-						  <label for="passwordEdit"></label>		      		
+						  <label></label>		      		
 			    		</div>		    									  				  	
 			  </div>
 				  <div class="row">
@@ -184,27 +203,9 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 	 <div class="row row-cols-3">   	
 		<?php 
 
-		if ($pets != null)
-		{
-		  foreach ($pets as $pet) 
-		  {
+		echo $userView->displayPets();
 
-		?>      	
-	    <div class="card col" style="width: 18rem;margin: 2%;">	
-		  <div class="card-body">	  	
-			  <div class="row" style="margin-bottom: 3%;">
-				<label  class="form-label card-text"><?php echo "Name: ".$pet['pet_name']; ?></label>
-				<label  class="form-label card-text"><?php echo "Type: ".$pet['pet_type']; ?></label>
-				<label  class="form-label card-text"><?php echo "Breed: ".$pet['breed']; ?></label>
-				<label  class="form-label card-text"><?php echo "Gender: ".$pet['gender']; ?></label>
-				<label  class="form-label card-text"><?php echo "Size: ".$pet['size']." cm"; ?></label>
-				<label  class="form-label card-text"><?php echo "Weight: ".$pet['weight']." kg"; ?></label>
-				<label  class="form-label card-text"><?php echo "Age: ".$pet['age'] ." years old"; ?></label>						
-			  </div>  	
-				<a class="btn btn-primary" href="edit_pet.php?petEdit=<?php echo $pet['pet_id']; ?>">Edit</a> 
-		  </div>    
-		</div>	
-	      <?php } } ?>	
+		?>	
 	  </div>    				
     </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
@@ -216,7 +217,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    	<label class="form-label">Current Username</label>
 						    <div class="form-floating">
 							  <input type="text" class="form-control" name="current_user">
-							  <label for="current_username"><?php echo $user['username']; ?></label>		      		
+							  <?php echo $userView->displayItem($_GET['login'],'username'); ?> 		      		
 				    		</div>
 			    		</div>	
 			    	</div>			  	

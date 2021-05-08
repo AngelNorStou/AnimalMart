@@ -68,31 +68,32 @@ session_start();
 <div style="background-color: lightblue;">
 	<table align="center">
 		<tr>
-			<td width="400" style="background-color: lightblue;">
+			<td align="center" width="600" style="background-color: lightblue; padding-left: 30px;">
 				<table align="center">
-					<th>PROMOTIONS</th>
+					<th style="font-size: 30px;color: darkblue;">TRAINING!</th>
 					<tr>
-						<td>lines 1</td>
+						<td style="font-size: 20px;color:red;font-weight: bold;"><br>Explore our new group training sessions offered!</td>
 					</tr>
 					<tr>
-						<td>
-							test 2
+						<td style="font-size: 20px;color: darkblue;font-weight: normal;">
+							<br>Sign up or Login now &amp;<br> Book your appointment!
 						</td>
 					</tr>
 				</table>
 			</td>
-			<td >
+			<td align="center" style="font-size: 30px;color:red;font-weight: normal;">
+				Take care of your pet's needs, all in one place.
 				<img width="750" height="400" src="./Images/pet_store1.jpg" alt="Animal">
 			</td>
-			<td  width="400" style="background-color: lightblue;">
-				<table align="center">
-					<th>PROMOTIONS</th>
+			<td  width="550" style="background-color: lightblue; padding-right: 5px;padding-left: 15px;">
+					<table align="center">
+					<th style="font-size: 30px;color: darkblue;">GROOMING!</th>
 					<tr>
-						<td>lines 1</td>
+						<td style="font-size: 20px;color:red;font-weight: bold;"><br> Explore all our grooming services for every pet!<td>
 					</tr>
 					<tr>
-						<td>
-							test 2
+						<td style="font-size: 20px;color: darkblue;font-weight: normal;">
+							<br>Sign up or Login now &amp;<br> Book your appointment!
 						</td>
 					</tr>
 				</table>
@@ -103,17 +104,17 @@ session_start();
 <div style="background-color: red;"  align="center">
 	<h4 style="background-color: darkblue; color: #fff;padding:10px;">Reviews from our customers!</h4>
 	<div class="card-group">
-		<p style="width: 200px;">
+		<p style="width: 150px;">
 	<div class="card mb-3">
 	  <div class="row g-0">
 	    <div class="col-md-4" >
-	      <img src="..." alt="...">
+	      <img src="./Images/dog.jpg" width="120" height="100" style="padding-top: 2px;" alt="...">
 	    </div>
 	    <div class="col-md-8">
 	      <div class="card-body">
-	        <h5 class="card-title">Customer 1</h5>
-	        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	        <p class="card-text"><small class="text-muted">Service: </small></p>
+	        <h5 class="card-title">Mary Owen</h5>
+	        <p class="card-text">Great local shop! The staff is always happy to help and are all knowledgable when it comes to pet care. My dog loves going to AnimalMart!</p>
+	        <p class="card-text"><small class="text-muted">Service: Grooming</small></p>
 	      </div>
 	    </div>
 	</div>
@@ -122,13 +123,13 @@ session_start();
 	<div class="card mb-3">
 	  <div class="row g-0">
 	    <div class="col-md-4">
-	      <img src="..." alt="...">
+	      <img src="./Images/bunny.jpg" width="120" height="100" style="padding-top: 2px;"  alt="...">
 	    </div>
 	    <div class="col-md-8">
 	      <div class="card-body">
-	        <h5 class="card-title">Customer 2</h5>
-	        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	        <p class="card-text"><small class="text-muted">Service: </small></p>
+	        <h5 class="card-title">Maxim Party</h5>
+	        <p class="card-text">Fantastic team, fantastic service. My bunny was dealing with a digestive issue and employee team gave me great advices. Purchase all your pets needs here!</p>
+	        <p class="card-text"><small class="text-muted">Service: Vet </small></p>
 	      </div>
 	    </div>
 	  </div>
@@ -137,18 +138,18 @@ session_start();
 	<div class="card mb-3">
 	  <div class="row g-0">
 	    <div class="col-md-4">
-	      <img src="..." alt="...">
+	      <img src="https://lh5.googleusercontent.com/p/AF1QipOSd-S225TZD4cM3CYqb4GC0k67udzJ_vBU5-RT=w100-h100-p-n-k-no" alt="...">
 	    </div>
 	    <div class="col-md-8">
 	      <div class="card-body">
-	        <h5 class="card-title">Customer 3</h5>
-	        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	        <p class="card-text"><small class="text-muted">Service: </small></p>
+	        <h5 class="card-title">Becca Maurice</h5>
+	        <p class="card-text">Banjo has been doing amazing! Banjo has quite a few health issues so I am always grateful for the advice they give me. Customer service is always top notch.</p>
+	        <p class="card-text"><small class="text-muted">Service: Vet</small></p>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-	<p style="width: 200px;">
+	<p style="width: 150px;"></p>
 </div>
 
 <footer align="center" style="background-color: lightblue;">

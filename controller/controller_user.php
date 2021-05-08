@@ -1,5 +1,6 @@
 <?php
 
+
 class ControllerUser
 {
 	public $userObj ;
@@ -25,16 +26,7 @@ class ControllerUser
 		    // Checks if user exists
 		    if ($UserExist)
 		    {
-		    	$isAdmin = $this->userObj->isAdmin($_POST['login_username']);
-
-		    	if ($isAdmin)
-		    	{
-		    		header("Location:admin_profile.php?login=".$_POST['login_username']);
-		    	}
-		    	else
-		    	{
-		    		header("Location:user_profile.php?login=".$_POST['login_username']);
-		    	}
+		    	$this->userObj->isAdmin($_POST['login_username']);
 
 		    	return "";
 		    }
@@ -42,9 +34,70 @@ class ControllerUser
 		    {
 		    	return "Not match found in our database. Please create an account." ;
 		    }
+
+
 		}
 	
     }
+
+    public function verify_update($post)
+    {
+    	// Checks if the data is empty.
+    	// The 'required' Attribute of the input fields
+    	// ensure that the user fills the textboxes.
+
+		if(isset($_POST['uusername'],$_POST['upassword'])) 
+		{
+			$isUser = $this->userObj->isUser($_POST['uusername'],$_POST['upassword']);
+
+			if ($isUser) // Matching password and username
+			{
+				$this->userObj->updateUser($_POST);
+
+		    	return "";				
+
+				
+			}
+			else
+			{
+				return "Please enter the correct username and password to confirm the changes." ;
+			}
+			
+			
+		}
+	 		
+	
+    }
+
+
+    public function verify_passwordChange($post)
+    {
+    	// Checks if the data is empty.
+    	// The 'required' Attribute of the input fields
+    	// ensure that the user fills the textboxes.
+
+		if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'] )) 
+		{
+			$isUser = $this->userObj->isUser($_POST['current_user'],$_POST['current_password']);
+
+			if ($isUser) // Matching password and username
+			{
+				$this->userObj->changePassword($_POST);
+
+				return "";
+			}
+			else
+			{
+				return "Please enter the correct current username and password to confirm the changes." ;
+			}			
+			
+			
+		} 		 		
+	
+    }    
+
+
+
 
 }
 

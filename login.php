@@ -2,9 +2,9 @@
 
 
 include './controller/controller_user.php';
-//include 'users.php';
+include './model/users.php';
 
-$controller_user = new ControllerUser();
+$controller_user = new ControllerUser(new Users());
 
 
 ?>

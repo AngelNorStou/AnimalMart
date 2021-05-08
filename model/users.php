@@ -39,7 +39,7 @@ class Users
         }       
     }
 
-    // Verifies if the email and password match in the system
+    // Verifies if the username, email and password match in the system
     public function login($postData)
     {
 
@@ -52,7 +52,6 @@ class Users
         $sql = $this->con->query($query);
         if($sql->num_rows > 0)
         {
-            //$this->isAdmin($user_name);
             return true;
         }
         else{
@@ -60,6 +59,26 @@ class Users
             return false;       
         } 
     }
+
+    // Verifies if the username and password match in the system
+    public function isUser($user,$pass)
+    {
+
+        $user_name = $this->con->real_escape_string($user); 
+        $password = $this->con->real_escape_string($pass); 
+
+        $query = "SELECT * FROM users WHERE password = '$password' AND username = '$user_name'";
+
+        $sql = $this->con->query($query);
+        if($sql->num_rows > 0)
+        {
+            return true;
+        }
+        else{
+
+            return false;       
+        } 
+    }   
 
     // Inserts a new user into the database.
     public function insertUser($postData,$fileData)
@@ -113,8 +132,6 @@ class Users
         if($sql == true)
         {
             $this->isAdmin($user_name);
-            //echo "Update Complete.". $username;
-            //header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Update failed, please try again!"."<br>";
@@ -139,7 +156,7 @@ class Users
         if($sql == true)
         {
 
-            echo "Password Changed!"."<br>";
+            $this->isAdmin($current_user);
         }
         else{
             echo "Update failed, please try again!"."<br>";
@@ -162,7 +179,6 @@ class Users
         if($sql == true)
         {
             $this->isAdmin($user_name);
-            //header("Location:user_profile.php?login=".$user_name);
         }
         else{
             echo "Update failed, please try again!"."<br>";
@@ -188,14 +204,14 @@ class Users
 
             if($data['isAdmin'] == 1)
             {
-                return true;
-                //header("Location:admin_profile.php?login=".$user);
+                //return true;
+                header("Location:admin_profile.php?login=".$user);
             }
             else{
 
-                return false;
+                //return false;
 
-                //header("Location:user_profile.php?login=".$user);
+                header("Location:user_profile.php?login=".$user);
             } 
         }       
     }  

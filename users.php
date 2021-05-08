@@ -45,17 +45,19 @@ class Users
 
         $user_name = $this->con->real_escape_string($_POST['login_username']); 
         $email = $this->con->real_escape_string($_POST['login_email']);
-        $password = $this->con->real_escape_string($_POST['login_password']);          
+        $password = $this->con->real_escape_string($_POST['login_password']); 
+
         $query = "SELECT * FROM users WHERE email = '$email' AND password = '$password' AND username = '$user_name'";
+
         $sql = $this->con->query($query);
         if($sql->num_rows > 0)
         {
-            $this->isAdmin($user_name);
-            //header("Location:user_profile.php?login=".$user_name);
+            //$this->isAdmin($user_name);
+            return true;
         }
         else{
-            echo "Not match found!"."<br>";
-            echo "Error: " . $sql . "<br>" . $this->con->error;           
+
+            return false;       
         } 
     }
 
@@ -77,6 +79,7 @@ class Users
  
         $query = " INSERT INTO users(first_name, last_name, username, email, password, city, phone_number,profile_picture) VALUES ('$firstname','$lastname', '$user_name', '$email', '$password', '$city', '$phone','$picture')";
         $sql = $this->con->query($query);
+
         if($sql == true)
         {
             header("Location:login.php");
@@ -169,7 +172,7 @@ class Users
 
     } 
 
-    private function isAdmin($user)
+    public function isAdmin($user)
     {
         $query = "SELECT `isAdmin` 
                     FROM `employees` 
@@ -185,11 +188,14 @@ class Users
 
             if($data['isAdmin'] == 1)
             {
-                header("Location:admin_profile.php?login=".$user);
+                return true;
+                //header("Location:admin_profile.php?login=".$user);
             }
             else{
 
-                header("Location:user_profile.php?login=".$user);
+                return false;
+
+                //header("Location:user_profile.php?login=".$user);
             } 
         }       
     }  

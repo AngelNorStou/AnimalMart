@@ -26,7 +26,10 @@ class ControllerUser
 		    // Checks if user exists
 		    if ($UserExist)
 		    {
-		    	$this->userObj->isAdmin($_POST['login_username']);
+
+		    	header("Location:user_profile.php?login=".$_POST['login_username']);
+		    	//$this->userObj->isAdmin($_POST['login_username']);
+
 
 		    	return "";
 		    }

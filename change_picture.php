@@ -1,15 +1,18 @@
 <?php
 
 
-include 'users.php';
+include './model/users.php';
 
 $userObj = new Users();
 $user = null;
-$user_name = null;
 
-if(isset($_GET['profile']) && !empty($_GET['profile']))
-{
-	$user_name = $_GET['profile'];
+session_start();
+
+if (!isset($_SESSION['username'])) // If it is empty
+{  
+
+	header("Location:login.php");
+
 }
 
 
@@ -60,7 +63,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: white;" href="user_profile.php" aria-current="page" tabindex="-1"><?php echo $user_name ?></a>
+	    <a class="nav-link active" style="color: white;" href="user_profile.php" aria-current="page" tabindex="-1"><?php echo $_SESSION['username'] ?></a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
@@ -78,7 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		  </div>
 		  <div class="row">
 	  		<button style="float: left;margin-top: 2%;margin-left: 1%;" name="selectImage"  value="selectImage" type="submit" class="btn btn-primary selectImage">Confirm Changes</button>			
-			<input type="hidden" class="form-control" value="<?php echo $user_name; ?>"  name="current_user">		  			
+			<input type="hidden" class="form-control" value="<?php echo $_SESSION['username']; ?>"  name="current_user">		  			
 		  </div>	    		
     	</form>
 	</div>		

@@ -6,6 +6,8 @@ include './model/users.php';
 
 $controller_user = new ControllerUser(new Users());
 
+$message = $controller_user->verify_login($_POST);
+
 
 ?>
  <!DOCTYPE html>
@@ -72,7 +74,7 @@ $controller_user = new ControllerUser(new Users());
 	  </div>
 	<div class="mb-3">	
 		<?php
-		 	echo $controller_user->verify_login($_POST);
+		 	echo $message;
 		?>
 	</div>  
 	  <br>

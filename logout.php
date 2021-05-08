@@ -1,6 +1,7 @@
 <?php
 Session_start();
-Session_destroy();
+unset($_SESSION['username']);
+unset($_SESSION['isAdmin']);
 header('Location: Home.php');
 
 ?>

@@ -1,13 +1,11 @@
 <?php
 
-include './model/users.php';
-
 
 class ViewPet
 {
 	public $petObj ;
 
-    public function __construct(Pets pet_obj)
+    public function __construct(Pets $pet_obj)
     {
     	//Set connection
         $this->petObj = $pet_obj;

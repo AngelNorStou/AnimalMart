@@ -26,16 +26,16 @@ $pets = null;
 $user_name = null;
 
 session_start();
-if (!isset($_SESSION['username'])) 
+if (!isset($_SESSION['username'])) // If it is empty
 {  
 
 	if(isset($_GET['login']) && !empty($_GET['login']))
 	{
 		$user_name = $_GET['login'];
-		$user = $userObj->displayRecordByUsername($_GET['login']);
-		$pets = $petObj->displayPetsByUsername($_GET['login']);
+		//$user = $userObj->displayRecordByUsername($_GET['login']);
+		//$pets = $petObj->displayPetsByUsername($_GET['login']);
 
-		$_SESSION['username'] = $user['username'];
+		$_SESSION['username'] = $_GET['login'];
 		$_SESSION['isAdmin'] = 0;
 
 	}
@@ -46,11 +46,10 @@ if (!isset($_SESSION['username']))
 }
 else
 {
-
-
-	//$user = $userObj->displayRecordByUsername($_SESSION['username']);
-	//$pets = $petObj->displayPetsByUsername($_SESSION['username']);
+	$user_name = $_SESSION['username'];
 }
+
+
 
 if(isset($_POST['uusername'],$_POST['upassword'])) 
 {
@@ -129,19 +128,19 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 			<form id="userProfile"  action="user_profile.php" method="POST" >
 				<div class="row">
 				    <div class="col-3">
-			      		<img src="<?php echo $user['profile_picture']; ?>" class="img-thumbnail" alt="No Picture Found.">
+			      		<?php echo $userView->displayPictureSource($user_name); ?>
 			    	</div>	
 				    <div class="col-sm">
 					    <label class="form-label">First Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ufirstname">
-						  <?php echo $userView->displayItem($_GET['login'],'first_name'); ?>
+						  <?php echo $userView->displayItem($user_name,'first_name'); ?>
 						</div>	
 				    <div class="">
 				    <label class="form-label">Last Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ulastname" >
-						  <?php echo $userView->displayItem($_GET['login'],'last_name'); ?>      		
+						  <?php echo $userView->displayItem($user_name,'last_name'); ?>      		
 			    	</div>											    		      		
 			    	</div>			    				    				
 				</div>
@@ -151,7 +150,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
 						  <input type="email" class="form-control"  name="uemail">
-						  <?php echo $userView->displayItem($_GET['login'],'email'); ?>         		
+						  <?php echo $userView->displayItem($user_name,'email'); ?>         		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -160,7 +159,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">City</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"   name="ucity">
-						  <?php echo $userView->displayItem($_GET['login'],'city'); ?>        		
+						  <?php echo $userView->displayItem($user_name,'city'); ?>        		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -169,7 +168,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
 						  <input type="tel" class="form-control"  name="uphone">
-					  	  <?php echo $userView->displayItem($_GET['login'],'phone_number'); ?>   	 
+					  	  <?php echo $userView->displayItem($user_name,'phone_number'); ?>   	 
 						</div>     		
 			    	</div>				    				    				
 			  </div>
@@ -179,7 +178,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    <label class="form-label">Username</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control" name="uusername">
-						  <?php echo $userView->displayItem($_GET['login'],'username'); ?>   	      		
+						  <?php echo $userView->displayItem($user_name,'username'); ?>   	      		
 			    		</div>	
 			    	</div>			    				    				
 				</div>
@@ -203,7 +202,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 	 <div class="row row-cols-3">   	
 		<?php 
 
-		echo $userView->displayPets();
+		echo $petView->displayPets($user_name);
 
 		?>	
 	  </div>    				
@@ -217,7 +216,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 				    	<label class="form-label">Current Username</label>
 						    <div class="form-floating">
 							  <input type="text" class="form-control" name="current_user">
-							  <?php echo $userView->displayItem($_GET['login'],'username'); ?> 		      		
+							  <?php echo $userView->displayItem($user_name,'username'); ?> 		      		
 				    		</div>
 			    		</div>	
 			    	</div>			  	

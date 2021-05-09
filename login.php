@@ -58,16 +58,16 @@ $message = $controller_user->verify_login($_POST);
 	<h5 class="text-center">Welcome Back!</h5>	
 	  <div class="mb-3">
 	    <label for="login_username" class="form-label">Username</label>
-	    <input type="text" class="form-control" name="login_username" required>
+	    <input type="text" class="form-control" name="login_username" required maxlength='32'>
 	  </div>		
 	  <div class="mb-3">
 	    <label for="login_email" class="form-label">Email address</label>
-	    <input type="email" class="form-control" name="login_email" required>
+	    <input type="email" class="form-control" name="login_email" required maxlength='128'>
 	    <div  class="form-text">We'll never share your email with anyone else.</div>
 	  </div>
 	  <div class="mb-3">
 	    <label for="login_password" class="form-label">Password</label>
-	    <input type="password" class="form-control" name="login_password" required>
+	    <input type="password" class="form-control" name="login_password" required maxlength='64'>
 	  </div>		
 	  <div class="d-grid gap-2">
 			<button value="login"  type="submit" class="btn btn-primary">Login</button>

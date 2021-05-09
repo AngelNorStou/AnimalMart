@@ -1,20 +1,13 @@
 <?php
 
-include 'users.php';
+include './controller/controller_user.php';
+include './model/users.php';
 
-$userObj = new Users();
+$controller_user = new ControllerUser(new Users());
 
-if($_SERVER['REQUEST_METHOD'] == 'POST' )
-{	
+$controller_user->verify_insert($_POST);
 
-	if (!($_FILES['profilepic']['size'] == 0 && $_FILES['profilepic']['error'] == 0))
-	{
-	    $target = $userObj->target_dir.$_FILES["profilepic"]["name"];
-	    move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target); 
-	}	
-		
-    $userObj->insertUser($_POST,$_FILES); 
-}
+
 
 
 ?>
@@ -67,38 +60,39 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' )
 	<div class="row">	
 	  <div class="mb-3 col">
 	    <label for="firstname" class="form-label">First Name</label>
-	    <input type="text" class="form-control" name="firstname" >
+	    <input type="text" class="form-control" name="firstname" maxlength='30'  required="">
 	  </div>
 	  <div class="mb-3 col">
 	    <label for="lastname" class="form-label">Last Name</label>
-	    <input type="text" class="form-control" name="lastname" >
+	    <input type="text" class="form-control" name="lastname" maxlength='100'  required="">
 	  </div>	  
 	</div>
 
 	  <div class="mb-3">
 	    <label for="username" class="form-label">Username</label>
-	    <input type="text" class="form-control" name="username" >
+	    <input type="text" class="form-control" name="username" maxlength='32'  required="">
+	    <div  class="form-text">Choose Wisely, it cannot be changed.</div>
 	  </div>	
 
 	  <div class="mb-3">
 	    <label for="email" class="form-label">Email address</label>
-	    <input type="email" class="form-control" name="email">
+	    <input type="email" class="form-control" name="email" maxlength='128'  required="">
 	    <div  class="form-text">We'll never share your email with anyone else.</div>
 	  </div>
 
 	  <div class="mb-3">
 	    <label for="password" class="form-label">Password</label>
-	    <input type="password" class="form-control" name="password">
+	    <input type="password" class="form-control" name="password" maxlength='64' required="">
 	  </div>
 
 	  <div class="mb-3">
 	    <label for="city" class="form-label">City</label>
-	    <input type="text" class="form-control" name="city">
+	    <input type="text" class="form-control" name="city" maxlength='85' required="">
 	  </div>
 
 	  <div class="mb-3">
 	    <label for="phone" class="form-label">Phone Number</label>
-	    <input type="tel" class="form-control" name="phone">
+	    <input type="tel" class="form-control" name="phone" maxlength='14'>
 	  </div>
 
 	  <div class="mb-3">

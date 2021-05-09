@@ -43,6 +43,28 @@ class ControllerUser
 	
     }
 
+    public function verify_insert($post)
+    {
+    	// Checks if the data is empty.
+    	// The 'required' Attribute of the input fields
+    	// ensure that the user fills the textboxes.
+
+		if($_SERVER['REQUEST_METHOD'] == 'POST' )
+		{	
+
+			if (!($_FILES['profilepic']['size'] == 0 && $_FILES['profilepic']['error'] == 0))
+			{
+			    $target = $this->userObj->target_dir.$_FILES["profilepic"]["name"];
+			    move_uploaded_file($_FILES["profilepic"]["tmp_name"], $target); 
+			}	
+				
+		    $this->userObj->insertUser($_POST,$_FILES); 
+		}
+	
+    }
+
+
+
     public function verify_update($post)
     {
     	// Checks if the data is empty.

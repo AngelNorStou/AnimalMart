@@ -1,28 +1,4 @@
-<?php 
-include 'model_services.php';
-session_start();
-$serviceObj = new Service();
-
-if(isset($_GET['service'])) 
- {
-	$service = $serviceObj->displayServiceById($_GET['service']);
-}
-
-if (isset($_POST['editService'], $_POST['service_id'], $_POST['name'], $_POST['price'])) {
-	$edit_service = $serviceObj->editService($_POST);
-	if($edit_service == 1){
-		header("Location: services.php");
-	}
-}
-
-if (isset($_POST['deleteService'])) {
-	$service = $serviceObj->deleteService($_POST['service_id']);
-	if($service == 1){
-		header("Location: services.php");
-	}
-}
-
-?>
+<?php include './controller/controller_services.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>

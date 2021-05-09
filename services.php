@@ -1,9 +1,4 @@
-<?php
-include 'model_services.php';
-$serviceObj = new Service();
-$services = $serviceObj->displayService();
-session_start();
-?>
+<?php include './controller/controller_services.php'; ?>
 <!DOCTYPE HTML>
 <html>
 <head>

@@ -1,17 +1,4 @@
-<?php
-include 'model_services.php';
-session_start();
-$serviceObj = new Service();
-$services = $serviceObj->getServiceType();
-
-	if(isset($_POST['addService'],$_POST['service_type']))
-	{
-	    $val = $serviceObj->addService($_POST);
-	    if($val == 1){
-	    	header("Location: services.php");
-	    }
-	}
-?>
+<?php include './controller/controller_services.php'; ?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,7 +55,7 @@ $services = $serviceObj->getServiceType();
 				  	 <label class="form-label">Service Type</label>
 				    <select name="service_type" id="inputState" class="form-select" required>
 				      <option value="choose" selected>Choose...</option>
-				      <?php foreach($services as $service){ ?>
+				      <?php foreach($type as $service){ ?>
 				      <option name="<?php echo $service['service_type']; ?>"><?php echo $service['service_type']; ?></option>
 				      <?php }?>
 				    </select>

@@ -1,7 +1,7 @@
 <?php
 include 'model_services.php';
-include 'pets.php';
-include 'users.php';
+include './model/pets.php';
+include './model/users.php';
 include './controller/controller_appointments.php';
 
 $petObj = new Pets();
@@ -96,25 +96,25 @@ else{
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First Name" value="<?php echo $user['first_name'] ?>" aria-label="First name">
+				    <input type="text" class="form-control" placeholder="First Name" value="<?php echo $user['first_name'] ?>" aria-label="First name" required>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name"  value="<?php echo $user['last_name'] ?>"  aria-label="Last name">
+				    <input type="text" class="form-control" placeholder="Last name"  value="<?php echo $user['last_name'] ?>"  aria-label="Last name" required>
 				  </div>
 				</div>
 				<br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
-						 <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca">    			    				    				
+						 <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca" required>    			    				    				
 				</div>
 			  </div>
 			  <br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
-						  <input type="tel" class="form-control" id="phoneEdit"  value="<?php echo $user['phone_number'] ?>"  placeholder="999-999-9999">
+						  <input type="tel" class="form-control" id="phoneEdit"  value="<?php echo $user['phone_number'] ?>"  placeholder="999-999-9999" required>
 							      						    				
 				</div>
 			  </div>
@@ -122,7 +122,7 @@ else{
 			 <div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">Pet</label>
-				    <select name="pet_id" id="inputState" class="form-select" required="required">
+				    <select name="pet_id" id="inputState" class="form-select" required>
 				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($pets as $pet){ ?>
 				      <option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
@@ -131,7 +131,7 @@ else{
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Service</label>
-				   <select name="service_id" id="inputState" class="form-select" required="required">
+				   <select name="service_id" id="inputState" class="form-select" required>
 				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($services as $service){ ?>
 				      <option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
@@ -141,7 +141,7 @@ else{
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control" value="appointment_date" id="appointment_date" name="appointment_date" placeholder="">	      		
+					<input type="datetime-local" class="form-control" value="appointment_date" id="appointment_date" name="appointment_date" placeholder="" required>	      		
 			    				    				    				
 				</div>
 			  </div>

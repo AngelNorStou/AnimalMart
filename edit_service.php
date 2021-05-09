@@ -77,25 +77,25 @@ if (isset($_POST['deleteService'])) {
 				<div class="row g-3">
 				<div class="col">
 				    <label class="form-label">Service Name</label>
-				    	<input type="text" class="form-control" id="name" name="name" value="<?php echo $service['service_name']; ?>" placeholder="service name">	    				    				
+				    	<input type="text" class="form-control" id="name" name="name" value="<?php echo $service['service_name']; ?>" placeholder="service name" required>	    				    				
 				</div>
 			  </div>
 			  <br>
 			  <div class="row">
 				<div class="col-sm">
 				    <label class="form-label">Service Description</label>
-				    	<textarea type="textare	a" class="form-control" id="desc" name="desc"  placeholder="description of the service offered (optional)"><?php echo $service['service_description']; ?></textarea> 	    				    			
+				    	<textarea type="textarea" class="form-control" id="desc" name="desc"  placeholder="description of the service offered (optional)"><?php echo $service['service_description']; ?></textarea> 	    				    			
 				</div>
 			  </div>
 			  <br>
 			  <div class="row">
 				<div class="col">
 					<label class="form-label">Length</label>
-					  <input type="text" class="form-control" id="length" name="length" value="<?php echo $service['service_length']; ?>" placeholder="">  				    				
+					  <input type="number" class="form-control" id="length" name="length" value="<?php echo $service['service_length']; ?>" placeholder="" required>  				    				
 				</div>
 				 <div class="col">
 				    <label class="form-label">Price</label>
-					 <input type="text" class="form-control" id="price" name="price" value="<?php echo $service['service_price']; ?>" placeholder="">	    				    				
+					 <input type="number" step="any" class="form-control" id="price" name="price" value="<?php echo $service['service_price']; ?>" placeholder="" required>	    				    				
 				</div>
 			  </div>
 			  <br>

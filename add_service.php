@@ -66,7 +66,7 @@ $services = $serviceObj->getServiceType();
 				<div class="row g-3">
 				   <div class="col">
 				  	 <label class="form-label">Service Type</label>
-				    <select name="service_type" id="inputState" class="form-select" required="required">
+				    <select name="service_type" id="inputState" class="form-select" required>
 				      <option value="choose" selected>Choose...</option>
 				      <?php foreach($services as $service){ ?>
 				      <option name="<?php echo $service['service_type']; ?>"><?php echo $service['service_type']; ?></option>
@@ -75,7 +75,7 @@ $services = $serviceObj->getServiceType();
 				  </div>
 				<div class="col">
 				    <label class="form-label">Service Name</label>
-				    	<input type="text" class="form-control" id="name" name="name" placeholder="">	    				    				
+				    	<input type="text" class="form-control" id="name" name="name" placeholder="" required>	    				    				
 				</div>
 			  </div>
 			  <br>
@@ -89,11 +89,11 @@ $services = $serviceObj->getServiceType();
 			  <div class="row">
 				<div class="col">
 					<label class="form-label">Length</label>
-					  <input type="text" class="form-control" id="length" name="length" placeholder="">  				    				
+					  <input type="number" class="form-control" id="length" name="length" placeholder="">  				    				
 				</div>
 				 <div class="col">
 				    <label class="form-label">Price</label>
-					 <input type="text" class="form-control" id="price" name="price" placeholder="">	    				    				
+					 <input type="number" step="any" class="form-control" id="price" name="price" placeholder="" required>	    				    				
 				</div>
 			  </div>
 			  <br>

@@ -63,12 +63,14 @@ $file_type = $controller_user->verify_pictureChange($_FILES, $_SESSION['username
 			<?php 
 			if ($_SESSION['isAdmin'] == 1)
 			{
-				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"admin_profile.php?login=<?php echo $_SESSION['username']?>\" aria-current=\"page\" tabindex=\"-1\"><?php echo $_SESSION['username']?>";	
+				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"admin_profile.php?login=". $_SESSION['username']." \" aria-current=\"page\" tabindex=\"-1\" >".
+						$_SESSION['username']. "</a> ";	
 			}
 
 			else
 			{
-				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"user_profile.php?login=<?php echo $_SESSION['username']?>\" aria-current=\"page\" tabindex=\"-1\"><?php echo $_SESSION['username']?>";				
+				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"user_profile.php?login=". $_SESSION['username']." \" aria-current=\"page\" tabindex=\"-1\" >". 
+					  $_SESSION['username']. "</a>";				
 			}
 
 		?>	

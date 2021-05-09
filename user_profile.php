@@ -43,8 +43,8 @@ if (!isset($_SESSION['username'])) // If it is empty
 $updateError = $controller_user->verify_update($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
 
-
-$appointments = $app->getAppointmentsByUsername($_SESSION['username']);
+$app = new ControllerAppointment();
+$appointments = $app->getAppointments();
 
 ?>
 

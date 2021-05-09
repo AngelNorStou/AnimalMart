@@ -227,7 +227,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 			echo $deleteError;
 		?>		
     <div class="tab-pane fade" id="employeesEdit" role="tabpanel" aria-labelledby="employeesEditTab">
- 	<a style="float: right;" class="btn btn-primary" href="add_emp.php?user=<?php echo $user_name;?>">Add an Employee Here!</a>   	
+ 	<a style="float: right;" class="btn btn-primary" href="add_emp.php?user=<?php echo $_SESSION['username'];?>">Add an Employee Here!</a>   	
 	  <table class="table table-hover">
 	    <thead>
 	      <tr>

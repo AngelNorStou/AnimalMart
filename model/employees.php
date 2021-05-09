@@ -65,10 +65,8 @@ class Employees
       
     }    
 
-    public function insertEmp($postData, $admin)
+    public function insertEmp($postData, $admin,$user_id)
     {
-
-        $user_id = $this->getUserId($_POST['emp_username']);
 
         $start_date = $_POST['emp_date']; 
 
@@ -124,14 +122,19 @@ class Employees
 
         $sql = $this->con->query($query);
 
-        if($sql->num_rows > 0)
+        if($sql->num_rows > 0) // if it exist
         {
             $data = $sql->fetch_assoc(); 
 
             echo $data['user_id'];
 
             return $data['user_id'];
-        }           
+        } 
+        else{
+
+            return null;
+
+        }          
 
     }
 

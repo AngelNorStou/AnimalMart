@@ -26,12 +26,23 @@ class ControllerEmployee
 
     }
 
-    public function verify_addEmp($post, $user)
+    public function verify_addEmp($post, $admin)
     {
   
         if($_SERVER['REQUEST_METHOD'] == 'POST') 
         {
-            $empObj->insertEmp($_POST, $user);
+            $UserExists = $this->empObj->getUserId($_POST['emp_username']);
+
+            if ($UserExists != null)
+            {
+                $this->empObj->insertEmp($_POST, $admin,$UserExists);
+                return "";
+            }
+            else
+            {
+                return "Select an existing user.";
+            }
+            
         }
 
 

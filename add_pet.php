@@ -3,7 +3,7 @@
 include './controller/controller_pet.php';
 include './model/pets.php';
 
-$controller_pet = new ControllerPet(new Pets);
+$controller_pet = new ControllerPet(new Pets());
 
 session_start();
 

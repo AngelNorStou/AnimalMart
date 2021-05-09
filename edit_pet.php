@@ -1,26 +1,29 @@
 <?php
 
-include 'pets.php';
+include './controller/controller_pet.php';
+include './model/pets.php';
+include './view/view_pet.php';
 
 $petObj = new Pets();
-$pet = null;
+$controller_pet = new ControllerPet($petObj);
+$petView = new ViewPet($petObj);
 $id = null;
 
-if(isset($_GET['petEdit']) && !empty($_GET['petEdit'])) {
-
-$id = $_GET['petEdit'];
-$pet = $petObj->displayPetById($id);
+session_start();
 
 
+if( isset($_GET['petEdit']) or isset($_SESSION['username']) ) 
+{
+	$id = $_GET['petEdit'];
+	
 } 
+else
+{
+	header("Location:login.php");
+}
 
-  if(isset($_POST['edit_pet_name'],   $_POST['edit_pet_type'], $_POST['edit_pet_breed'],
-		   $_POST['edit_pet_gender'], $_POST['edit_pet_size'], $_POST['edit_pet_weight'],
-		   $_POST['edit_pet_age'], $_POST['edit_pet_id'])) 
-  {
 
-    $petObj->updatePet($_POST);
-  }
+$editError = $controller_pet->verify_editPet($_POST);
 
 
 
@@ -41,67 +44,84 @@ $pet = $petObj->displayPetById($id);
 	<title>View Account</title>	
 </head>
 <body>
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
+	  <li class="nav-item">
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
+	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+	  <li class="nav-item" >
+	    <a class="nav-link active" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" aria-current="page" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	  </li>
+	  <li class="nav-item">
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
+	  </li>
+	
+        </ul>
+    </div>
+</nav>
 <div class="container">
-	<ul class="nav justify-content-center">
-	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
-	  </li>
-	</ul>	
-</div>
-<div class="container">
-	<form action="edit_pet.php" method="POST">
+	<form action="edit_pet.php?petEdit=<?php echo $id; ?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">Pet Name</label>
-			<input type="text" class="form-control" value="<?php echo $pet['pet_name']; ?>"  name="edit_pet_name"  required="">	
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'pet_name'); ?>"  
+			name="edit_pet_name"  required="" maxlength='30'>	
 		</div>
 	    <div class="row">
 	    	<label class="form-label">Pet Type</label>
-			<input type="text" class="form-control" value="<?php echo $pet['pet_type']; ?>" name="edit_pet_type" required="">
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'pet_type'); ?>" 
+			name="edit_pet_type" required="" maxlength='30'>
 		</div>			    				    				
 	  <div class="row">
 		    <label class="form-label">Breed</label>
-			<input type="text" class="form-control" value="<?php echo $pet['breed']; ?>" name="edit_pet_breed" required="">	    				
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'breed'); ?>" 
+			name="edit_pet_breed" required="" maxlength='64'>	    				
 		</div>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
 			<select class="form-select" name="edit_pet_gender" aria-label="edit_pet_gender">
 			<?php 
-				if ($pet['gender'] == 'M')
-				{
-					echo "<option selected value=\"M\">Male</option>";
-					echo "<option value=\"F\">Female</option>";
-				}
-				else
-				{
-					echo "<option value=\"M\">Male</option>";
-					echo "<option selected value=\"F\">Female</option>"	;				
-				}
+ 				echo $petView->displayGender($id); 
 			?>			  			  
 			</select>     	
 	    </div>				    				    				
 	  <div class="row">
 		    <label class="form-label">Size (cm)</label>
-			<input type="text" class="form-control" value="<?php echo $pet['size']; ?>" name="edit_pet_size" required="">      					    				    		
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'size'); ?>" 
+			name="edit_pet_size" required="">      					    				    		
 		</div>
 	  <div class="row">
 		    <label class="form-label">Weight (kg)</label>
-			<input type="text" class="form-control" value="<?php echo $pet['weight']; ?>"  name="edit_pet_weight" required="">				    				  		
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'weight'); ?>"  
+			name="edit_pet_weight" required="">				    				  		
 	  </div>
 	  <div class="row">
 		    <label class="form-label">Age</label>
-			<input type="text" class="form-control" value="<?php echo $pet['age']; ?>"  name="edit_pet_age"  required="">	      						    				
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'age'); ?>"  
+			name="edit_pet_age"  required="">	      						    				
 		</div>	  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>
+  		<?php echo $editError ?>
   		<input type="hidden" class="form-control" value="<?php echo $id; ?>"  name="edit_pet_id">						  	
 	  </div>			  		  		  		  		  	
 	</form>

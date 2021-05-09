@@ -47,6 +47,34 @@ class ViewPet
 		return $html;
     }
 
+    public function displayItem($id,$item)
+    {
+        $pet = $this->petObj->displayPetById($id);
+
+        return $pet[$item];
+
+    }
+
+    public function displayGender($id)
+    {
+        $pet = $this->petObj->displayPetById($id);
+
+        if ($pet['gender'] == 'M')
+        {
+            $html = "<option selected value=\"M\">Male</option>".
+                    "<option value=\"F\">Female</option>";
+        }
+        else
+        {
+            $html = "<option value=\"M\">Male</option>".
+                    "<option selected value=\"F\">Female</option>" ;               
+        }
+
+        return $html;
+
+    }
+
+
 
 
 

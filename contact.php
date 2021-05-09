@@ -75,11 +75,11 @@ session_start();
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First name" name="firstname" aria-label="First name">
+				    <input type="text" class="form-control" placeholder="First name" name="firstname" aria-label="First name" required>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name" name="lastname" aria-label="Last name">
+				    <input type="text" class="form-control" placeholder="Last name" name="lastname" aria-label="Last name" required>
 				  </div>
 				</div>
 				<br>
@@ -87,7 +87,7 @@ session_start();
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control" id="email" name="email" placeholder="example@web.ca">
+						  <input type="email" class="form-control" id="email" name="email" placeholder="example@web.ca" required>
 						  <label for="email">example@web.ca</label>		      		
 			    	</div>				    				    				
 				</div>
@@ -97,7 +97,7 @@ session_start();
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
-						  <input type="tel" class="form-control" id="phone" name="phone" placeholder="999-999-9999">
+						  <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="phone" name="phone" placeholder="999-999-9999" required>
 						  <label for="phone">999-999-9999</label>		      		
 			    	</div>				    				    				
 				</div>
@@ -106,7 +106,7 @@ session_start();
 			   <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Message</label>
-					<textarea type="text" class="form-control" id="message" name="message" placeholder="Your Message"></textarea>	    				    				
+					<textarea type="text" class="form-control" id="message" name="message" placeholder="Your Message" required></textarea>	    				    				
 				</div>
 			  </div>
 			  <br>

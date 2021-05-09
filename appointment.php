@@ -9,7 +9,6 @@ $usersObj = new Users();
 $serviceObj = new ControllerService();
 $services = $serviceObj->displayAllServices();
 $app = new ControllerAppointment();
-$appointments = $app->getAppointments();
 
 
 if (!isset($_SESSION['username'])) {  

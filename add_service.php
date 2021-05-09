@@ -1,4 +1,8 @@
-<?php include './controller/controller_services.php'; ?>
+<?php include './controller/controller_services.php'; 
+$serviceObj = new ControllerService(); 
+$type = $serviceObj->serviceType(); 
+$add = $serviceObj->addService($_POST); 
+?>
 <!DOCTYPE html>
 <html>
 <head>

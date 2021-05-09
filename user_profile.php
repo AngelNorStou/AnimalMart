@@ -23,7 +23,6 @@ $petView = new ViewPet($petObj);
 $serviceObj = new Service();
 
 
-
 if (!isset($_SESSION['username'])) // If it is empty
 {  
 
@@ -43,8 +42,6 @@ if (!isset($_SESSION['username'])) // If it is empty
 
 $updateError = $controller_user->verify_update($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
-
-
 
 
 $appointments = $app->getAppointmentsByUsername($_SESSION['username']);

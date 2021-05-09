@@ -1,4 +1,9 @@
-<?php include './controller/controller_services.php'; ?>
+<?php include './controller/controller_services.php';  
+$serviceObj = new ControllerService(); 
+$service = $serviceObj->getServiceId(); 
+$update = $serviceObj->editService($_POST);
+$delete = $serviceObj->deleteService($_POST);
+ ?>
 <!DOCTYPE html>
 <html>
 <head>

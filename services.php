@@ -1,4 +1,9 @@
-<?php include './controller/controller_services.php'; ?>
+<?php include './controller/controller_services.php'; 
+
+$serviceObj = new ControllerService(); 
+
+?>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -95,7 +100,7 @@
 		
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
-
+		$services = $serviceObj->displayAllServices();
 		if ($services != null)
 		{
 		  foreach ($services as $service) 
@@ -162,7 +167,6 @@
 	   	<?php } } } ?>
 		</tr>
 	</table>
-
 </div>
 
 	<div class="tab-pane fade fade" id="training" role="tabpanel" aria-labelledby="training-tab">

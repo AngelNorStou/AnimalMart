@@ -37,6 +37,30 @@ class Service{
         }
     }
 
+    public function getNumOfServices($type){
+        $query = "SELECT COUNT(*) FROM services WHERE service_type = '$type'";
+        $result = $this->con->query($query);
+      if($result->num_rows > 0){
+            $data = $result->fetch_assoc();           
+            return $data;
+        }  
+    }
+
+    public function getServices($min, $max){
+
+    //retrieve the selected results from database   
+    $query = "SELECT * FROM services WHERE service_type = 'grooming' LIMIT " . $min . ',' . $max;  
+     if($result->num_rows > 0)
+        {
+            $data = array();
+            while($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }  
+    }
+
     public function getServiceType(){
         $query = "SELECT DISTINCT service_type FROM services";
         $result = $this->con->query($query);

@@ -111,7 +111,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
 		<div class="container">	
 			<h3 align="center" style="color: darkblue;">Update your account information!</h3>
-			<form id="userProfile"  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST" >
+			<form id="userProfile"  action="admin_profile.php?login=<?php echo $_SESSION['username']?>" method="POST" >
 				<div class="row">
 				    <div class="col-3">
 						<?php echo $userView->displayPictureSource($_SESSION['username']); ?>
@@ -119,13 +119,13 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="col-sm">
 					    <label class="form-label">First Name</label>
 					    <div class="form-floating">
-						  <input type="text" class="form-control"  name="ufirstname">
+						  <input type="text" class="form-control"  name="ufirstname" maxlength='30'>
 						 <?php echo $userView->displayItem($_SESSION['username'],'first_name'); ?>
 						</div>	
 				    <div class="">
 				    <label class="form-label">Last Name</label>
 					    <div class="form-floating">
-						  <input type="text" class="form-control"  name="ulastname" >
+						  <input type="text" class="form-control" maxlength='100'  name="ulastname" required>
 						  <?php echo $userView->displayItem($_SESSION['username'],'last_name'); ?>		      		
 			    	</div>											    		      		
 			    	</div>			    				    				
@@ -135,7 +135,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control"  name="uemail">
+						  <input type="email" class="form-control" maxlength='128' name="uemail" required>
 						  <?php echo $userView->displayItem($_SESSION['username'],'email'); ?> 	      		
 			    	</div>				    				    				
 				</div>
@@ -144,7 +144,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="col-sm">
 				    <label class="form-label">City</label>
 					    <div class="form-floating">
-						  <input type="text" class="form-control"   name="ucity">
+						  <input type="text" class="form-control"  maxlength='85' name="ucity" required>
 						  <?php echo $userView->displayItem($_SESSION['username'],'city'); ?>	      		
 			    	</div>				    				    				
 				</div>
@@ -153,7 +153,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 			  	<div class="col-sm">
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
-						  <input type="tel" class="form-control"  name="uphone">
+						  <input type="tel" class="form-control"  name="uphone" maxlength='14'>
 					  <?php echo $userView->displayItem($_SESSION['username'],'phone_number'); ?>
 					  	 </div>     		
 			    	</div>				    				    				
@@ -163,7 +163,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="col-sm">
 				    <label class="form-label">Username</label>
 					    <div class="form-floating">
-						  <input type="text" class="form-control" name="uusername">
+						  <input type="text" class="form-control" name="uusername" maxlength='32'required>
 						  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?>	      		
 			    		</div>	
 			    	</div>			    				    				
@@ -171,7 +171,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				<div class="col-sm">
 				    <label class="form-label">Password</label>
 					    <div class="form-floating">
-						  <input type="password" class="form-control"  name="upassword">
+						  <input type="password" class="form-control"  name="upassword" required maxlength='64'>
 						  <label ></label>		      		
 			    		</div>		    									  				  	
 			  </div>
@@ -186,14 +186,14 @@ $deleteError = $controller_emp->verify_delete($_GET);
 		</div>
     </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
-		 <form id="changePass"  action="admin_profile.php" method="POST">
+		 <form id="changePass"  action="admin_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">
 		 	  <div class="row">
 			  	<label class="form-label">Enter your current password and username to add a new password.</label>
 				    <div class="row">
 				    	<div class="col-sm">
 				    	<label class="form-label">Current Username</label>
 						    <div class="form-floating">
-							  <input type="text" class="form-control" name="current_user">
+							  <input type="text" class="form-control" name="current_user" maxlength='32'>
 							  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?>	      		
 				    		</div>
 			    		</div>	
@@ -201,7 +201,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="row">
 					    <label class="form-label">Current Password</label>
 						    <div class="form-floating">
-							  <input type="password" class="form-control"  name="current_password">
+							  <input type="password" class="form-control"  name="current_password" maxlength='64'>
 							  <label for="current_password"></label>		      		
 				    		</div>		      		
 			    	</div>
@@ -209,7 +209,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
 				    <div class="row">
 					    <label class="form-label">New Password</label>
 						    <div class="form-floating">
-							  <input type="password" class="form-control"  name="new_password">
+							  <input type="password" class="form-control"  name="new_password" maxlength='64'>
 							  <label for="new_password"></label>		      		
 				    		</div>		      		
 			    		</div>
@@ -240,26 +240,8 @@ $deleteError = $controller_emp->verify_delete($_GET);
 	    <tbody>
 	        <?php 
 
-				$employees = $empObj->displayEmployees();	
-
-			  	foreach ($employees as $emp) 
-			  	{
+				echo $empView->getAllEmp($_SESSION['username']);	
 	        ?>
-	        <tr>
-	          <td><?php echo $emp['first_name'] ?></td>
-	          <td><?php echo $emp['last_name'] ?></td>
-	          <td><?php echo $emp['start_date'] ?></td>          
-	          <td><?php echo $emp['end_date'] ?></td>
-	          <td>
-	            <a href="edit_emp.php?editId=<?php echo $emp['username'] ?>">Edit?</a>
-	            </a>
-            <a href="admin_profile.php?login=<?php echo $user_name ?>&deleteId=<?php echo $emp['username'] ?>" 
-            	style="color:red" onclick="confirm('Are you sure want to remove this employee ?')">
-              DELETE
-            </a>	            
-	          </td>
-	        </tr>
-	      <?php } ?>
 	    </tbody>
 	  </table>  				    				    				
 	</div>

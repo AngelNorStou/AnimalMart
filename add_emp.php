@@ -1,8 +1,12 @@
 <?php
 
-include 'employees.php';
+include './model/employees.php';
+include './controller/controller_emp.php';
+
+session_start();
 
 $empObj = new Employees();
+$controller_emp = new ControllerEmployee($empObj);
 $user = null;
 
 if(isset($_GET['user']) && !empty($_GET['user'])) {
@@ -12,13 +16,7 @@ $user = $_GET['user'];
 
 } 
 
-
-if($_SERVER['REQUEST_METHOD'] == 'POST') 
-{
-	//echo $_POST['emp_username']. $_POST['emp_date']. $_POST['adminOption'];
-
-	$empObj->insertEmp($_POST, $user);
-}
+$addError = $controller_emp->verify_addEmp($_GET, $user);
 
 
 
@@ -39,38 +37,51 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 	<title>Add Pet</title>	
 </head>
 <body>
-<div class="container">
-	<ul class="nav justify-content-center">
+	<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
+	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+	  <li class="nav-item" >
+	    <a class="nav-link active" style="color: white;" href="admin_profile.php?login=<?php echo $_SESSION['username']; ?>" aria-current="page" tabindex="-1"><?php echo  $_SESSION['username']; ?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
-	</ul>	
-</div>
+	
+        </ul>
+    </div>
+</nav>
 <div class="container">
 	<div class="row">
 		Add a new Employee
 	</div>	
-	<form action="add_emp.php" method="POST">
+	<form action="add_emp.php?user=<?php echo $user;?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">UserName</label>
-			<input type="text" class="form-control" name="emp_username"  required="">
+			<input type="text" class="form-control" name="emp_username"  maxlength='32' required="">
 			<div  class="form-text">Make sure that the user has created an account.</div>		
 		</div>
 	    <div class="row">
 	    	<label class="form-label">Start Date</label>
-			<input class="form-control" name="emp_date" type="date">
+			<input class="form-control" name="emp_date" type="date" required="">
 		</div>			    				    				
 	  <div class="row">
-			<fieldset class="form-group">
+			<fieldset class="form-group" required="">
 			    <legend>Give them Admin powers?</legend>
 			    <div class="form-check">
 			      <label class="form-check-label">
@@ -88,6 +99,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 		</div> 	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="addEmp" type="submit" class="btn btn-primary">Confirm Changes</button> 
+  		<?php echo $addError ?>
   	</div>			  		  		  		  		  	
 	</form>
 	</div>		

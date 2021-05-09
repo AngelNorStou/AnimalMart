@@ -36,7 +36,7 @@ if (!isset($_SESSION['username'])) // If it is empty
 	{
 
 		$_SESSION['username'] = $_GET['login'];
-		$_SESSION['isAdmin'] = 0;
+		$_SESSION['isAdmin'] = 1;
 
 	}
 	else

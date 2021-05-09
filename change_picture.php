@@ -3,6 +3,8 @@
 include './controller/controller_user.php';
 include './model/users.php';
 
+Session_start();
+
 $controller_user = new ControllerUser(new Users());
 
 
@@ -58,7 +60,18 @@ $file_type = $controller_user->verify_pictureChange($_FILES, $_SESSION['username
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username'] ?>" aria-current="page" tabindex="-1"><?php echo $_SESSION['username'] ?></a>
+			<?php 
+			if ($_SESSION['isAdmin'] == 1)
+			{
+				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"admin_profile.php?login=<?php echo $_SESSION['username']?>\" aria-current=\"page\" tabindex=\"-1\"><?php echo $_SESSION['username']?>";	
+			}
+
+			else
+			{
+				echo "<a class=\"nav-link active\" style=\"color: white;\" href=\"user_profile.php?login=<?php echo $_SESSION['username']?>\" aria-current=\"page\" tabindex=\"-1\"><?php echo $_SESSION['username']?>";				
+			}
+
+		?>	
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>

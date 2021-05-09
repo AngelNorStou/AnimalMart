@@ -2,7 +2,7 @@
 
 include 'employees.php';
 
-include 'model_services.php';
+include './model/model_services.php';
 
 include './controller/controller_user.php';
 include './model/users.php';
@@ -17,8 +17,6 @@ $empObj = new Employees();
 $user = null;
 $user_name = null;
 
-
-session_start();
 if (!isset($_SESSION['username'])) {  
 
 	if(isset($_GET['login']) && !empty($_GET['login']))

@@ -1,5 +1,5 @@
 <?php
-include 'model_services.php';
+include './model/model_services.php';
 
 include './controller/controller_user.php';
 include './model/users.php';
@@ -23,7 +23,6 @@ $petView = new ViewPet($petObj);
 $serviceObj = new Service();
 
 
-session_start();
 
 if (!isset($_SESSION['username'])) // If it is empty
 {  

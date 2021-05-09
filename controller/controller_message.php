@@ -1,6 +1,10 @@
 <?php
 
 include './model/messages.php';
+if(session_id() == ''){
+    //session has not started
+    session_start();
+}
 
 date_default_timezone_set("America/New_York"); // sets timezone for timestamp
 

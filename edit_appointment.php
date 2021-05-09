@@ -1,37 +1,21 @@
 <?php
-include 'model_services.php';
-include 'pets.php';
-include 'users.php';
+
+include './model/pets.php';
+include './model/users.php';
 include './controller/controller_appointments.php';
+include './controller/controller_services.php';
 
 $petObj = new Pets();
 $usersObj = new Users();
-$serviceObj = new Service();
-
-session_start();
 
 if (!isset($_SESSION['username'])) {  
 	header("Location: login.php");
 }
 else{
 	//TO BE CHANGED USING CALL METHOD
-	$services = $serviceObj->displayService();
 	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
 	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
-
-if(isset($_GET['appt_id'])) 
- {
-	$appointment = $app->getAppointmentsById($_GET['appt_id']);
-}
-
-if(isset($_POST['editAppointment'])){
-	$appointment = $app->updateAppointment($_POST);
-	if($appointment == 1){
-		header("Location: user_profile.php");
-	}
-}
-
 
 ?>
 <!DOCTYPE html>

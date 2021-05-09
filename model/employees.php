@@ -141,14 +141,15 @@ class Employees
 
     public function deleteEmp($user_name)
     {
-        $id = $this->getUserId($user_name);
-        $query = "DELETE FROM employees WHERE user_id = '$id'";
+        $query = "DELETE FROM employees WHERE user_id IN 
+                                                      (SELECT user_id FROM users WHERE username = '$user_name')";
+
         $sql = $this->con->query($query);
         if($sql==true){
-            echo "Record deleted sucessfully";
+            return "Record deleted sucessfully";
         }
         else{
-            echo "Not possible to delete, please try again!";
+            return "Not possible to delete, please try again!";
         }
     }   
 

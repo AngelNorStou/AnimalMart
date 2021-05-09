@@ -16,10 +16,11 @@ class ControllerEmployee
     public function verify_delete($get)
     {
 
-	  if(isset($_GET['deleteId']) ) 
+	  if(isset($_GET['deleteUser']) ) 
 	  {
-	      $this->empObj->deleteEmp($_GET['deleteId']);
-	      return "Employee successfully removed.";
+	       
+          return $this->empObj->deleteEmp($_GET['deleteUser']);
+	      
 	  }	
 
 	  return "";

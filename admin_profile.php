@@ -28,7 +28,6 @@ $serviceObj = new Service();
 
 
 
-
 if (!isset($_SESSION['username'])) // If it is empty
 {  
 
@@ -45,11 +44,15 @@ if (!isset($_SESSION['username'])) // If it is empty
 	}
 }
 
+
+$deleteError = $controller_emp->verify_delete($_GET);
+
+
 $updateError = $controller_user->verify_update($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
 
 
-$deleteError = $controller_emp->verify_delete($_GET);
+
 
 
 ?>

@@ -69,7 +69,7 @@ class ViewEmp
              		"<td>".
             		 "<a href=\"edit_emp.php?editUser=".$emp['username'] ."\">Edit?</a>".
 
-            		"<a href=\"admin_profile.php?login=".$admin."&deleteId=". $emp['username'] ."\" style=\"color:red;margin-left:2%;\" onclick=\"confirm('Are you sure want to remove this employee ?')\">DELETE</a>".
+            		"<a href=\"admin_profile.php?login=".$admin."&deleteUser=". $emp['username'] ."\" style=\"color:red;margin-left:2%;\" onclick=\"confirm('Are you sure want to remove this employee ?')\">DELETE</a>".
 
             		"</td>".
 

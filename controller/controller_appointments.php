@@ -27,7 +27,7 @@ class ControllerAppointment{
     	 // Insert Record in appointments table
 		if(isset($_POST['submit']))
 		{
-		    $val = $app->createAppointment($_POST);
+		    $val =  $this->appointmnetObj->createAppointment($_POST);
 		    if($val == 1){
 		    	header("location: ./user_profile.php");
 		    }

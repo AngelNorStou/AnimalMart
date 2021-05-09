@@ -20,6 +20,7 @@ else{
 	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
 
+$add = $app->insert();
 
 
 ?>

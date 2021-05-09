@@ -44,7 +44,7 @@ $updateError = $controller_user->verify_update($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
 
 $app = new ControllerAppointment();
-$appointments = $app->getAppointments();
+$appointments = $app->getAppointments($_SESSION['username']);
 
 ?>
 

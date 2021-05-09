@@ -7,6 +7,10 @@ class ControllerUser
 
     public function __construct(Users $user_obj)
     {
+    	if(session_id() == ''){
+		    //session has not started
+		    session_start();
+		}
     	//Set connection
 
     	$this->userObj = $user_obj;

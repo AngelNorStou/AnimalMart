@@ -1,22 +1,23 @@
 <?php
 
-include 'pets.php';
+include './controller/controller_pet.php';
+include './model/pets.php';
 
-$petObj = new Pets();
-$user = null;
+$controller_pet = new ControllerPet(new Pets);
 
-if(isset($_GET['user']) && !empty($_GET['user'])) {
-
-$user = $_GET['user'];
+session_start();
 
 
-} 
+if (!isset($_SESSION['username']) || (!isset($_GET['user']) && empty($_GET['user'])) ) // If it is empty
+{  
 
-  if($_SERVER['REQUEST_METHOD'] == 'POST') 
-  {
+	header("Location:login.php");
+	
+}
 
-    $petObj->insertPet($_POST);
-  }
+
+$addError = $controller_pet->verify_addPet($_POST);
+
 
 
 
@@ -37,42 +38,55 @@ $user = $_GET['user'];
 	<title>Add Pet</title>	
 </head>
 <body>
-<div class="container">
-	<ul class="nav justify-content-center">
+<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="nav">
 	  <li class="nav-item">
-	    <a class="nav-link active" aria-current="page" href="#">Active</a>
+	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" href="#">Link</a>
+	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
+	  </li>
+	</ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ms-auto">
+	  <li class="nav-item" >
+	    <a class="nav-link active" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" aria-current="page" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
 	  </li>
-	</ul>	
-</div>
+	
+        </ul>
+    </div>
+</nav>
 <div class="container">
 	<div class="row">
-		Add your pet !
+		<h3>Add your pet !</h3>
 	</div>	
-	<form action="add_pet.php" method="POST">
+	<form action="add_pet.php?user=<?php echo $_SESSION['username']; ?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">Pet Name</label>
-			<input type="text" class="form-control" name="pet_name"  required="">	
+			<input type="text" class="form-control" name="pet_name" maxlength='30'  required="">	
 		</div>
 	    <div class="row">
 	    	<label class="form-label">Pet Type</label>
-			<input type="text" class="form-control"  name="type" required="">
+			<input type="text" class="form-control"  name="type" maxlength='30' required="">
 		</div>			    				    				
 	  <div class="row">
 		    <label class="form-label">Breed</label>
-			<input type="text" class="form-control"  name="breed" required="">	    				
+			<input type="text" class="form-control"  name="breed" maxlength='64' required="">	    				
 		</div>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
-			<select class="form-select" name="gender" aria-label="gender">
+			<select class="form-select" name="gender" aria-label="gender" required="">
 				<option selected value="M">Male</option>				
 				<option value="F">Female</option>			  			  
 			</select>     	
@@ -91,7 +105,8 @@ $user = $_GET['user'];
 		</div>	  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="add" type="submit" class="btn btn-primary">Confirm Changes</button>
-  		<input type="hidden" class="form-control" value="<?php echo $user; ?>"  name="user">	 
+  		<?php echo $addError ?>
+  		<input type="hidden" class="form-control" value="<?php echo $_SESSION['username']; ?>"  name="user">	 
   	</div>			  		  		  		  		  	
 	</form>
 	</div>		

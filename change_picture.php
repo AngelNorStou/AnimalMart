@@ -6,8 +6,6 @@ include './model/users.php';
 $controller_user = new ControllerUser(new Users());
 
 
-session_start();
-
 if (!isset($_SESSION['username'])) // If it is empty
 {  
 

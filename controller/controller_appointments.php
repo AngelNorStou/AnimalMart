@@ -1,7 +1,7 @@
 <?php
 
 include './model/model_appointment.php';
-
+date_default_timezone_set("America/New_York");
 
 class ControllerAppointment{
 
@@ -18,8 +18,8 @@ class ControllerAppointment{
         $this->appointmnetObj = new Appointment();
     }
 
-    public function getAppointments($username){
-    	$app = $this->appointmnetObj->getAppointmentsByUsername($username);
+    public function getAppointments(){
+    	$app = $this->appointmnetObj->getAppointmentsByUsername($_SESSION['username']);
     	return $app;
     }
 
@@ -35,38 +35,22 @@ class ControllerAppointment{
     }
 
     public function getAppById(){
-	    	if(isset($_GET['appt_id'])) 
-			 {
-				$appointment = $this->appointmnetObj->getAppointmentsById($_GET['appt_id']);
-				return $appointment;
-			}
-		
+    	if(isset($_GET['appt_id'])) 
+		 {
+			$appointment = $app->getAppointmentsById($_GET['appt_id']);
+		}
+
     }
 
-    public function editAppointment($post){
-    	if($_SERVER['REQUEST_METHOD'] == 'POST') 
-		  {
+    public function editAppointment(){
     	// edit appointment
 		if(isset($_POST['editAppointment'])){
-			$appointment = $this->appointmnetObj->updateAppointment($_POST);
+			$appointment = $app->updateAppointment($_POST);
 			if($appointment == 1){
 				header("Location: user_profile.php");
 			}
 		}
-    	}
-	}
-
-	public function delete($id){
-		if($_SERVER['REQUEST_METHOD'] == 'GET') 
-		  {
-	    	if (isset($_GET['appt_id'])) {
-				$service = $this->appointmnetObj->deleteAppointment($id);
-				if($service == 1){
-					header("Location: user_profile.php");
-				}
-			}
-		}
-	}
+    }
 
 }
 

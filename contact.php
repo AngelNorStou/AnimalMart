@@ -1,7 +1,5 @@
 <?php
 include './controller/controller_message.php';
-$messageObj = new ControllerMessage();
-$add = $messageObj->insert($_POST); 
 ?>
 <!DOCTYPE HTML>
 <html>

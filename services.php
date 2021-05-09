@@ -77,6 +77,14 @@ $serviceObj = new ControllerService();
 			Add a Service
 		</button></a>
 	<?php }?>
+	<div style="float: right;">
+		<div class="input-group input-group-sm mb-3">
+	<input type="text" name="searchInput" class="form-control">
+	<button type="button"  onclick="location.href = 'appointment.php?search='" class="btn btn-outline-danger btn-sm" >
+
+			Search
+		</button></div>
+	</div>
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>

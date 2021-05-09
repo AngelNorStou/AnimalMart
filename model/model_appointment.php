@@ -97,13 +97,5 @@ class Appointment {
             return 0;   
         }
     }
-
-    public function searchPastAppointments($id){
-
-    }
-
-    public function searchUpcomingAppointments($id){
-
-    }
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 
 include './model/model_appointment.php';
+date_default_timezone_set("America/New_York");
 
 if(session_id() == ''){
     //session has not started

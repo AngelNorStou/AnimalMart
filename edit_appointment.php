@@ -143,8 +143,7 @@ else{
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control" name="appointment_date" value="<?php echo $appointment['appointment_datetime']; ?>" id="appointment_date" placeholder="">	      		
-			    				    				    				
+					<input type="datetime-local" class="form-control"  name="appointment_date" value="<?php  echo date("Y-m-d\TH:i:s",strtotime($appointment['appointment_datetime'])); ?>" id="appointment_date">	
 				</div>
 			  </div>
 			</div>

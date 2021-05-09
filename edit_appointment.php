@@ -7,6 +7,7 @@ include './controller/controller_services.php';
 
 $petObj = new Pets();
 $usersObj = new Users();
+$serviceObj = new ControllerService(); 
 
 if (!isset($_SESSION['username'])) {  
 	header("Location: login.php");
@@ -16,6 +17,12 @@ else{
 	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
 	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
 }
+
+$services = $serviceObj->displayAllServices(); 
+$app = new ControllerAppointment();
+$appointment = $app->getAppById();
+$edit = $app->editAppointment($_POST);
+
 
 ?>
 <!DOCTYPE html>
@@ -143,7 +150,7 @@ else{
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control"  name="appointment_date" min="<?php  echo date("Y-m-d\TH:i"); ?>" value="<?php  echo date("Y-m-d\TH:i",strtotime($appointment['appointment_datetime'])); ?>" id="appointment_date">	
+					<input type="datetime-local" class="form-control"  name="appointment_date" min="<?php date_default_timezone_set("America/New_York");  echo date("Y-m-d\TH:i"); ?>" value="<?php  echo date("Y-m-d\TH:i",strtotime($appointment['appointment_datetime'])); ?>" id="appointment_date">	
 				</div>
 			  </div>
 			</div>

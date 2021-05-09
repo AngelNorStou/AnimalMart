@@ -218,7 +218,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 		 </form>   				    				    				
 		</div>
     <div class="tab-pane fade" id="employeesEdit" role="tabpanel" aria-labelledby="employeesEditTab">
- 	<a class="btn btn-primary" href="add_emp.php?user=<?php echo $user_name;?>">Add an Employee Here!</a>   	
+ 	<a style="float: right;" class="btn btn-primary" href="add_emp.php?user=<?php echo $user_name;?>">Add an Employee Here!</a>   	
 	  <table class="table table-hover">
 	    <thead>
 	      <tr>

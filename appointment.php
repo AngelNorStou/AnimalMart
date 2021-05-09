@@ -137,7 +137,7 @@ else{
 			 <div class="col">
 				    <div class="col-sm">
 				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control" value="appointment_date" id="appointment_date" name="appointment_date" placeholder="" required>	      		
+					<input type="datetime-local" class="form-control" value="<?php  echo date("Y-m-d\TH:i"); ?>" min="<?php  echo date("Y-m-d\TH:i"); ?>" id="appointment_date" name="appointment_date" required>	      		
 			    				    				    				
 				</div>
 			  </div>

@@ -2,7 +2,7 @@
 
 
 
-// Create the class Customers
+// Create the class Employees
 class Employees
 {
     private $servername = "localhost";

@@ -1,31 +1,40 @@
 <?php
 
-include 'employees.php';
-
 include './model/model_services.php';
 
 include './controller/controller_user.php';
 include './model/users.php';
 include './view/view_user.php';
-include './controller/controller_message.php';
+
+
+include './view/view_emp.php';
+include './model/employees.php';
+include './controller/controller_emp.php';
 
 
 // MVC in OOP for Users
 $userObj = new Users();
 $controller_user = new ControllerUser($userObj);
-$empObj = new Employees();
-$user = null;
-$user_name = null;
+$userView = new ViewUser($userObj);
 
-if (!isset($_SESSION['username'])) {  
+// MVC in OOP for Employees
+$empObj = new Employees();
+$empView = new ViewEmp($empObj);
+$controller_emp = new ControllerEmployee($empObj);
+
+$serviceObj = new Service();
+
+
+
+
+if (!isset($_SESSION['username'])) // If it is empty
+{  
 
 	if(isset($_GET['login']) && !empty($_GET['login']))
 	{
-		$user_name = $_GET['login'];
-		$user = $userObj->displayRecordByUsername($_GET['login']);
 
-		$_SESSION['username'] = $user['username'];
-		$_SESSION['isAdmin'] = 1;
+		$_SESSION['username'] = $_GET['login'];
+		$_SESSION['isAdmin'] = 0;
 
 	}
 	else
@@ -33,27 +42,12 @@ if (!isset($_SESSION['username'])) {
 		header("Location:login.php");
 	}
 }
-else{
-	$user = $userObj->displayRecordByUsername($_SESSION['username']);
-}
 
-if(isset($_POST['uusername'],$_POST['upassword'])) 
-{
-	$userObj->updateUser($_POST);
-	
-} 
+$updateError = $controller_user->verify_update($_POST);
+$passwordError = $controller_user->verify_passwordChange($_POST);
 
 
-if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'] )) 
-{
-	$userObj->changePassword($_POST);
-	
-} 
-
-  if(isset($_GET['deleteId']) ) 
-  {
-      $empObj->deleteEmp($_GET['deleteId']);
-  }
+$deleteError = $controller_emp->verify_delete($_GET);
 
 
 ?>
@@ -115,22 +109,22 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
 		<div class="container">	
 			<h3 align="center" style="color: darkblue;">Update your account information!</h3>
-			<form id="userProfile"  action="admin_profile.php" method="POST" >
+			<form id="userProfile"  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST" >
 				<div class="row">
 				    <div class="col-3">
-			      		<img src="<?php echo $user['profile_picture']; ?>" class="img-thumbnail" alt="No Picture Found.">
+						<?php echo $userView->displayPictureSource($_SESSION['username']); ?>
 			    	</div>	
 				    <div class="col-sm">
 					    <label class="form-label">First Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ufirstname">
-						  <label for="firstNameEdit"><?php echo $user['first_name']; ?></label>
+						 <?php echo $userView->displayItem($_SESSION['username'],'first_name'); ?>
 						</div>	
 				    <div class="">
 				    <label class="form-label">Last Name</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"  name="ulastname" >
-						  <label for="lastNameEdit"><?php echo $user['last_name']; ?></label>		      		
+						  <?php echo $userView->displayItem($_SESSION['username'],'last_name'); ?>		      		
 			    	</div>											    		      		
 			    	</div>			    				    				
 				</div>
@@ -140,7 +134,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
 						  <input type="email" class="form-control"  name="uemail">
-						  <label for="emailEdit"><?php echo $user['email']; ?></label>		      		
+						  <?php echo $userView->displayItem($_SESSION['username'],'email'); ?> 	      		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -149,7 +143,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    <label class="form-label">City</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control"   name="ucity">
-						  <label for="cityEdit"><?php echo $user['city']; ?></label>		      		
+						  <?php echo $userView->displayItem($_SESSION['username'],'city'); ?>	      		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -158,7 +152,8 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
 						  <input type="tel" class="form-control"  name="uphone">
-					  <label for="phoneEdit"><?php echo $user['phone_number']; ?></label>	 </div>     		
+					  <?php echo $userView->displayItem($_SESSION['username'],'phone_number'); ?>
+					  	 </div>     		
 			    	</div>				    				    				
 			  </div>
 			  <div class="row">
@@ -167,7 +162,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    <label class="form-label">Username</label>
 					    <div class="form-floating">
 						  <input type="text" class="form-control" name="uusername">
-						  <label for="usernameEdit"><?php echo $user['username']; ?></label>		      		
+						  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?>	      		
 			    		</div>	
 			    	</div>			    				    				
 				</div>
@@ -175,11 +170,15 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    <label class="form-label">Password</label>
 					    <div class="form-floating">
 						  <input type="password" class="form-control"  name="upassword">
-						  <label for="passwordEdit"></label>		      		
+						  <label ></label>		      		
 			    		</div>		    									  				  	
 			  </div>
 				  <div class="row">
-			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>					  	
+			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>	
+					<?php
+					 								
+						echo $updateError;
+					?>				  						  	
 				  </div>			  		  		  		  		  	
 			</form>
 		</div>
@@ -193,7 +192,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    	<label class="form-label">Current Username</label>
 						    <div class="form-floating">
 							  <input type="text" class="form-control" name="current_user">
-							  <label for="current_username"><?php echo $user['username']; ?></label>		      		
+							  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?>	      		
 				    		</div>
 			    		</div>	
 			    	</div>			  	
@@ -213,11 +212,18 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				    		</div>		      		
 			    		</div>
 				    <div class="row">
-			      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>		
+			      		<button style="float: left;margin-top: 2%;" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>
+					<?php
+					 	echo $passwordError;
+					?>				      				
 			    	</div>	 	    			    			
 			    </div>	
 		 </form>   				    				    				
 		</div>
+		<?php
+		 								
+			echo $deleteError;
+		?>		
     <div class="tab-pane fade" id="employeesEdit" role="tabpanel" aria-labelledby="employeesEditTab">
  	<a style="float: right;" class="btn btn-primary" href="add_emp.php?user=<?php echo $user_name;?>">Add an Employee Here!</a>   	
 	  <table class="table table-hover">

@@ -46,7 +46,19 @@ class ControllerEmployee
         }
 
 
-    }        
+    } 
+
+    public function verify_editEmp($post,$admin)
+    {
+  
+            if($_SERVER['REQUEST_METHOD'] == 'POST') 
+            {
+
+                $this->empObj->updateEmp($_POST,$admin);
+            }
+
+
+    }            
 
 
 

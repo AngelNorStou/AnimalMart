@@ -50,15 +50,14 @@ class Employees
     // Display Employees
     public function selectEmployee($user_name)
     {     
-        $user_id = $this->getUserId($user_name);
         $query = "SELECT start_date, end_date, isAdmin 
-                    FROM employees WHERE user_id = '$user_id'";
+                    FROM employees WHERE user_id IN 
+                                                (SELECT user_id FROM users WHERE username = '$user_name')";
 
         $result = $this->con->query($query);
         if($result->num_rows > 0)
         {
-            $data = $result->fetch_assoc();  
-            echo   $data['start_date'];       
+            $data = $result->fetch_assoc();      
             return $data;
         }
 
@@ -86,10 +85,10 @@ class Employees
         }
     } 
 
-   public function updateEmp($postData)
+   public function updateEmp($postData, $admin)
     {
 
-        $user_id = $this->getUserId($_POST['emp_editusername']);
+        $user_name = $_POST['emp_editusername'];
 
         $start_date = $_POST['emp_date_start'];         
 
@@ -101,7 +100,8 @@ class Employees
         $query = " UPDATE employees SET start_date = '$start_date', 
                                         end_date = '$end_date', 
                                         isAdmin =  '$isAdmin'
-                                        WHERE user_id = '$user_id'";
+                                        WHERE user_id IN 
+                                                      (SELECT user_id FROM users WHERE username = '$user_name')";
 
         $sql = $this->con->query($query);
         if($sql == true)

@@ -7,16 +7,15 @@ session_start();
 
 $empObj = new Employees();
 $controller_emp = new ControllerEmployee($empObj);
-$user = null;
 
-if(isset($_GET['user']) && !empty($_GET['user'])) {
+if(!isset($_GET['user']) or !isset($_SESSION['username'] )) 
+{
 
-$user = $_GET['user'];
-
+	header("Location:login.php");
 
 } 
 
-$addError = $controller_emp->verify_addEmp($_GET, $user);
+$addError = $controller_emp->verify_addEmp($_POST, $_SESSION['username']);
 
 
 
@@ -70,7 +69,7 @@ $addError = $controller_emp->verify_addEmp($_GET, $user);
 	<div class="row">
 		Add a new Employee
 	</div>	
-	<form action="add_emp.php?user=<?php echo $user;?>" method="POST">
+	<form action="add_emp.php?user=<?php echo $_SESSION['username'];?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">UserName</label>
 			<input type="text" class="form-control" name="emp_username"  maxlength='32' required="">

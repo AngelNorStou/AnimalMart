@@ -11,6 +11,8 @@ include './model/pets.php';
 
 include './controller/controller_appointments.php';
 
+session_start();
+
 // MVC in OOP for Users
 $userObj = new Users();
 $controller_user = new ControllerUser($userObj);

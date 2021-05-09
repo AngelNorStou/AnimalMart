@@ -11,6 +11,8 @@ include './view/view_emp.php';
 include './model/employees.php';
 include './controller/controller_emp.php';
 
+session_start();
+
 
 // MVC in OOP for Users
 $userObj = new Users();
@@ -87,7 +89,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: white;" href="admin_profile.php" aria-current="page" tabindex="-1"><?php echo  $_SESSION['username']; ?></a>
+	    <a class="nav-link active" style="color: white;" href="admin_profile.php?login=<?php echo $_SESSION['username']; ?>" aria-current="page" tabindex="-1"><?php echo  $_SESSION['username']; ?></a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
@@ -103,7 +105,7 @@ $deleteError = $controller_emp->verify_delete($_GET);
      <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button> 
       <button class="nav-link" id="messagesTab" data-bs-toggle="pill" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>   
        <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
-  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a>  
+  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $_SESSION['username']; ?>" >Change Profile Picture</a>  
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">

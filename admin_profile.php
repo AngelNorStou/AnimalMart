@@ -10,6 +10,7 @@ include './view/view_user.php';
 include './view/view_emp.php';
 include './model/employees.php';
 include './controller/controller_emp.php';
+include './controller/controller_message.php';
 
 session_start();
 
@@ -51,9 +52,9 @@ $deleteError = $controller_emp->verify_delete($_GET);
 $updateError = $controller_user->verify_update($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
 
-
-
-
+$messageObj = new ControllerMessage();
+$messages = $messageObj->display();
+$deleteMessage = $messageObj->delete($_GET);
 
 ?>
 
@@ -276,7 +277,7 @@ $passwordError = $controller_user->verify_passwordChange($_POST);
 	          <td>
 	            <a href="mailto:<?php echo $message['email'] ?>">Reply</a>
 	            </a>
-            <a href="admin_profile.php?login=<?php echo $user_name ?>&deleteId=<?php echo $message['message_id'] ?>" 
+            <a href="admin_profile.php?&deleteMessage=<?php echo $message['message_id'] ?>" 
             	style="color:red" onclick="confirm('Are you sure want to delete this message ?')">
               Delete
             </a>	            

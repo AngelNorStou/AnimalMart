@@ -38,17 +38,15 @@ class ControllerMessage{
     }
 
     public function delete($post){
-    	if($_SERVER['REQUEST_METHOD'] == 'POST') 
-		  {
-		  	// if the message is deleted, delete from db
+    // if the message is deleted, delete from db
 			if (isset($_GET['deleteMessage'])) {
 			$message = $this->messageObj->deleteMessage($_GET['deleteMessage']);
 				if($message == 1){ // if deletion was successful
 					header("Location: admin_profile.php");
 				}
-			}
-		  }
+			
     }
+}
 
 }
 

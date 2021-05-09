@@ -27,8 +27,8 @@ class ControllerUser
 		    if ($UserExist)
 		    {
 
-		    	header("Location:user_profile.php?login=".$_POST['login_username']);
-		    	//$this->userObj->isAdmin($_POST['login_username']);
+		    	//header("Location:user_profile.php?login=".$_POST['login_username']);
+		    	$this->userObj->isAdmin($_POST['login_username']);
 
 
 		    	return "";
@@ -97,7 +97,39 @@ class ControllerUser
 			
 		} 		 		
 	
-    }    
+    } 
+
+    public function verify_pictureChange($files, $user)
+    {
+		if($_SERVER['REQUEST_METHOD'] == 'POST') 
+		{
+	    	$target = $this->userObj->target_dir.$_FILES["upicture"]["name"];
+
+	    	$target_file = $target . basename($_FILES["upicture"]["name"]);
+
+			$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+			if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+			&& $imageFileType != "gif" ) 
+			{
+			  return "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+
+			} 
+
+
+			move_uploaded_file($_FILES["upicture"]["tmp_name"], $target); 
+
+			$this->userObj->updatePicture($_FILES["upicture"]["name"],$user);
+
+
+		}
+
+		return "";
+
+	
+    } 
+
+
 
 
 

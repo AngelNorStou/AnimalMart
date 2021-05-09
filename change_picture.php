@@ -1,10 +1,10 @@
 <?php
 
-
+include './controller/controller_user.php';
 include './model/users.php';
 
-$userObj = new Users();
-$user = null;
+$controller_user = new ControllerUser(new Users());
+
 
 session_start();
 
@@ -16,12 +16,9 @@ if (!isset($_SESSION['username'])) // If it is empty
 }
 
 
-if($_SERVER['REQUEST_METHOD'] == 'POST') 
-{
-	$target = $userObj->target_dir.$_FILES["upicture"]["name"];
-	move_uploaded_file($_FILES["upicture"]["tmp_name"], $target); 
-	$userObj->updatePicture($_FILES["upicture"]["name"],$_POST['current_user']);
-}
+
+$file_type = $controller_user->verify_pictureChange($_FILES, $_SESSION['username']);
+
 
 
 
@@ -63,7 +60,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
 	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: white;" href="user_profile.php" aria-current="page" tabindex="-1"><?php echo $_SESSION['username'] ?></a>
+	    <a class="nav-link active" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username'] ?>" aria-current="page" tabindex="-1"><?php echo $_SESSION['username'] ?></a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
@@ -73,15 +70,17 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     </div>
 </nav>
 <div class="container">
-    	<form id="userPicture"  style="margin-top: 2%;" action="change_picture.php" method="POST" enctype="multipart/form-data">
+    	<form id="userPicture"  style="margin-top: 2%;" action="change_picture.php?profile=<?php echo $_SESSION['username'] ?>" method="POST" enctype="multipart/form-data">
 			  <div class="row">
 			  	<h3 style="margin-bottom: 1%;">Select a new image file for your profile picture.</h3>
 			  	<div class="row">
 				<input style="margin-left: 1%;" class="form-control form-control-lg" name="upicture" id="upicture" type="file" /></div>
 		  </div>
 		  <div class="row">
-	  		<button style="float: left;margin-top: 2%;margin-left: 1%;" name="selectImage"  value="selectImage" type="submit" class="btn btn-primary selectImage">Confirm Changes</button>			
-			<input type="hidden" class="form-control" value="<?php echo $_SESSION['username']; ?>"  name="current_user">		  			
+	  		<button style="float: left;margin-top: 2%;margin-left: 1%;" name="selectImage"  value="selectImage" type="submit" class="btn btn-primary selectImage">Confirm Changes</button>
+	  		<?php 
+	  			echo $file_type;
+	  		?>		  			
 		  </div>	    		
     	</form>
 	</div>		

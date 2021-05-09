@@ -190,12 +190,12 @@ class Users
 
     public function isAdmin($user)
     {
-        $query = "SELECT `isAdmin` 
-                    FROM `employees` 
-                   WHERE `user_id` IN 
-                                    (SELECT `user_id` 
-                                       FROM `users` 
-                                      WHERE `username` = '$user') ";
+        $query = "SELECT isAdmin 
+                    FROM employees 
+                   WHERE user_id IN 
+                                    (SELECT user_id 
+                                       FROM users 
+                                      WHERE username = '$user') ";
 
         $result = $this->con->query($query);
         if($result->num_rows > 0)
@@ -204,16 +204,16 @@ class Users
 
             if($data['isAdmin'] == 1)
             {
-                //return true;
                 header("Location:admin_profile.php?login=".$user);
+                return;
             }
-            else{
 
-                //return false;
+        } 
 
-                header("Location:user_profile.php?login=".$user);
-            } 
-        }       
+         header("Location:user_profile.php?login=".$user);
+
+
+
     }  
 
 

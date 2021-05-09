@@ -24,7 +24,7 @@ class ViewPet
 
         foreach ($pets as $pet) 
         {
-            $html = "<div class=\"card col\" style=\"width: 18rem;margin: 2%;\">    " .
+            $html .= "<div class=\"card col\" style=\"width: 17rem;margin: 2%;\">    " .
                     "<div class=\"card-body\">".
                     "<div class=\"row\" style=\"margin-bottom: 3%;\">".
 

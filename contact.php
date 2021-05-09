@@ -1,4 +1,5 @@
 <?php
+include './controller/controller_message.php';
 session_start();
 ?>
 <!DOCTYPE HTML>
@@ -68,17 +69,17 @@ session_start();
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms" style="background-color: lightblue; border-color: lightblue;" >
+			<form class="userForms" action="contact.php" method="POST" style="background-color: lightblue; border-color: lightblue;" >
 				<h3 align="center">Contact Us</h3>
 				<p align="center" style="line-height: 0px;padding-bottom: 10px;">__________________________</p>
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First name" aria-label="First name">
+				    <input type="text" class="form-control" placeholder="First name" name="firstname" aria-label="First name">
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name" aria-label="Last name">
+				    <input type="text" class="form-control" placeholder="Last name" name="lastname" aria-label="Last name">
 				  </div>
 				</div>
 				<br>
@@ -86,8 +87,8 @@ session_start();
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
 					    <div class="form-floating">
-						  <input type="email" class="form-control" id="emailEdit" placeholder="example@web.ca">
-						  <label for="emailEdit">example@web.ca</label>		      		
+						  <input type="email" class="form-control" id="email" name="email" placeholder="example@web.ca">
+						  <label for="email">example@web.ca</label>		      		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -96,8 +97,8 @@ session_start();
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
 					    <div class="form-floating">
-						  <input type="tel" class="form-control" id="phoneEdit" placeholder="999-999-9999">
-						  <label for="phoneEdit">999-999-9999</label>		      		
+						  <input type="tel" class="form-control" id="phone" name="phone" placeholder="999-999-9999">
+						  <label for="phone">999-999-9999</label>		      		
 			    	</div>				    				    				
 				</div>
 			  </div>
@@ -105,11 +106,12 @@ session_start();
 			   <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Message</label>
-					<textarea type="text" class="form-control" id="phoneEdit" placeholder="Your Message"></textarea>	    				    				
+					<textarea type="text" class="form-control" id="message" name="message" placeholder="Your Message"></textarea>	    				    				
 				</div>
 			  </div>
 			  <br>
-			  	<button id="sendMessagebtn" value="submit" type="submit" href="" class="btn btn-danger">Send Message</button>
+			  	<button id="submit" name="submit" value="submit" type="submit" class="btn btn-danger">Send Message</button>
+			  	<input type="hidden" class="form-control" value="<?php echo date("Y-m-d H:i"); ?>"  name="timestamp">
 			</form>	
 		</div>
     </div>

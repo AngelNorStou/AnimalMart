@@ -251,7 +251,7 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 		      <td><?php $pet = $petObj->displayPetById($appt['pet_id']); echo $pet['pet_name']; ?></td>
 		      <td><?php $service = $serviceObj->displayServiceById($appt['service_id']); echo $service['service_name']; ?></td>
 		      <td><a href="edit_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:green">Edit</a></td>
-		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:red">Cancel</a></td>
+		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" onclick="confirm('Are you sure want to cancel this appointment ?')" style="color:red">Cancel</a></td>
 		    </tr>
 		<?php } ?>
 		  </tbody>

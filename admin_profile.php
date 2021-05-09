@@ -1,12 +1,22 @@
 <?php
 
- include 'users.php';
- include 'employees.php';
+include 'employees.php';
 
+include 'model_services.php';
+
+include './controller/controller_user.php';
+include './model/users.php';
+include './view/view_user.php';
+include './controller/controller_message.php';
+
+
+// MVC in OOP for Users
 $userObj = new Users();
+$controller_user = new ControllerUser($userObj);
 $empObj = new Employees();
 $user = null;
 $user_name = null;
+
 
 session_start();
 if (!isset($_SESSION['username'])) {  
@@ -99,7 +109,8 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
-     <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button>   
+     <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button> 
+      <button class="nav-link" id="messagesTab" data-bs-toggle="pill" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>   
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a>  
   </div>
   <div class="tab-content" id="v-pills-tabContent">
@@ -238,6 +249,44 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
             <a href="admin_profile.php?login=<?php echo $user_name ?>&deleteId=<?php echo $emp['username'] ?>" 
             	style="color:red" onclick="confirm('Are you sure want to remove this employee ?')">
               DELETE
+            </a>	            
+	          </td>
+	        </tr>
+	      <?php } ?>
+	    </tbody>
+	  </table>  				    				    				
+	</div>
+	<div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messagesTab">
+	  <table class="table table-hover">
+	    <thead>
+	      <tr>
+	        <th>First Name</th>
+	        <th>Last Name</th>        
+	        <th>Email</th>
+	        <th>Phone Number</th>
+	        <th>Message</th>
+	        <th>Date</th>
+	        <th>Actions</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	        <?php 
+			  	foreach ((array)$messages as $message) 
+			  	{
+	        ?>
+	        <tr>
+	          <td><?php echo $message['first_name'] ?></td>
+	          <td><?php echo $message['last_name'] ?></td>
+	          <td><?php echo $message['email'] ?></td>          
+	          <td><?php echo $message['phone_number'] ?></td>
+	          <td><?php echo $message['message_body'] ?></td>
+	           <td><?php echo $message['message_timestamp'] ?></td>
+	          <td>
+	            <a href="mailto:<?php echo $message['email'] ?>">Reply</a>
+	            </a>
+            <a href="admin_profile.php?login=<?php echo $user_name ?>&deleteId=<?php echo $message['message_id'] ?>" 
+            	style="color:red" onclick="confirm('Are you sure want to delete this message ?')">
+              Delete
             </a>	            
 	          </td>
 	        </tr>

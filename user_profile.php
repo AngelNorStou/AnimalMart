@@ -100,13 +100,33 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
     <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
+    <button class="nav-link" id="viewAppointmentsTab" data-bs-toggle="pill" data-bs-target="#viewAppointments" type="button" role="tab" aria-controls="viewAppointments" aria-selected="false">View Appointments</button> 
     <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $_SESSION['username']; ?>" >Change Profile Picture</a> 
-  <button class="nav-link" id="viewAppointmentsTab" data-bs-toggle="pill" data-bs-target="#viewAppointments" type="button" role="tab" aria-controls="viewAppointments" aria-selected="false">View Appointments</button> 
+  
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
-		<div class="container">			
+		<div class="container">		
+		<h3 align="center" style="color: darkblue;">Actions</h3>
+			<table align="center">
+				<tbody>
+					<tr>
+						<td>
+							<button class="btn btn-outline-info" onclick="window.location.href='services.php'" >View Services</button>		
+						</td>
+						<td>
+							<button class="btn btn-outline-danger" onclick="window.location.href='appointment.php'" >Book appointment</button>		
+						</td>
+						<td>
+							<button class="btn btn-outline-info" onclick="window.location.href='contact.php'">Contact Us</button>		
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<div>
+				<br><br>
+			</div>	
 			<form id="userProfile"  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST" >
 				<div class="row">
 				    <div class="col-3">
@@ -243,14 +263,19 @@ $appointments = $app->getAppointmentsByUsername($_SESSION['username']);
 		  </thead>
 		  <tbody>
 		  	<?php foreach((array)$appointments as $appt) {
-		  	
+		  		
 		  	 ?> 
-		    <tr>
+		    <tr style="<?php if(date("Y-m-d H:i") >= $appt['appointment_datetime']){?>color: red;<?php }?>" >
 		      <td scope="row"><?php echo $appt['appointment_datetime']; ?></td>
 		      <td><?php $pet = $petObj->displayPetById($appt['pet_id']); echo $pet['pet_name']; ?></td>
 		      <td><?php $service = $serviceObj->displayServiceById($appt['service_id']); echo $service['service_name']; ?></td>
+		      <?php if(date("Y-m-d H:i") < $appt['appointment_datetime']){?>
 		      <td><a href="edit_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:green">Edit</a></td>
-		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" onclick="confirm('Are you sure want to cancel this appointment ?')" style="color:red">Cancel</a></td>
+		       <?php }?>
+		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" onclick="confirm('Are you sure want to cancel this appointment ?')" style="color:red">
+		      		 <?php if(date("Y-m-d H:i") < $appt['appointment_datetime']){?> Cancel <?php } else { ?> Delete <?php } ?>
+		      	</a>
+		      </td>
 		    </tr>
 		<?php } ?>
 		  </tbody>

@@ -76,7 +76,7 @@
 			  </div>
 			  <br>
 			  	<button id="editService" value="" name="editService" value="submit" type="submit" class="btn btn-primary">Save Changes</button>
-			  	<button id="deleteService" value="deleteService" name="deleteService" value="submit" type="submit" class="btn btn-danger">Delete</button>
+			  	<button id="deleteService" value="deleteService" name="deleteService" value="submit" type="submit"  onclick="confirm('Are you sure want to delete this service ?')" class="btn btn-danger">Delete</button>
 			  	<input type="hidden" class="form-control" value="<?php echo $service['service_id']; ?>"  name="service_id">	
 			</form>	
 		</div>

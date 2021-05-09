@@ -106,14 +106,15 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 <div class="d-flex align-items-start">
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
-    <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
      <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button> 
       <button class="nav-link" id="messagesTab" data-bs-toggle="pill" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>   
+       <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $user['username']; ?>" >Change Profile Picture</a>  
   </div>
   <div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
-		<div class="container">			
+		<div class="container">	
+			<h3 align="center" style="color: darkblue;">Update your account information!</h3>
 			<form id="userProfile"  action="admin_profile.php" method="POST" >
 				<div class="row">
 				    <div class="col-3">
@@ -180,7 +181,7 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
 				  <div class="row">
 			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>					  	
 				  </div>			  		  		  		  		  	
-			</form>	
+			</form>
 		</div>
     </div>
     <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
@@ -297,4 +298,8 @@ if(isset($_POST['new_password'],$_POST['current_password'],$_POST['current_user'
   </div>
 </div>
 </body>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </html> 

@@ -72,6 +72,14 @@ class ControllerService{
     	return $type;
     }
 
+    public function search(){
+    	if(isset($_GET['search'])) 
+		 {
+			$searchServices = $this->serviceObj->displayServiceById($_GET['search']);
+			return $searchServices;
+		}
+    }
+
 }
 
 ?>

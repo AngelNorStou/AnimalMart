@@ -55,9 +55,8 @@ class Appointment {
         $dateexpiry = $this->con->real_escape_string($_POST['appointment_date']);
         $pet = $this->con->real_escape_string($_POST['pet_id']);
         $service = $this->con->real_escape_string($_POST['service_id']);
-      //  $employee = $this->con->real_escape_string($_POST['employee']);
 
-        $query = "INSERT INTO appointments (appointment_datetime, appointment_expiry, pet_id, service_id, employee_id) VALUES ('$date', '$dateexpiry', '$pet', '$service', '1');";
+        $query = "INSERT INTO appointments (appointment_datetime, appointment_expiry, pet_id, service_id) VALUES ('$date', '$dateexpiry', '$pet', '$service');";
         $sql = $this->con->query($query);
         if($sql == true)
 	    {

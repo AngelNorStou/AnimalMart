@@ -426,9 +426,9 @@ $page_first_result = ($page-1) * $results_per_page;
 	 </div>
 	</div>
 </div>
+</body>
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.
 </footer>
-</body>
 </html>

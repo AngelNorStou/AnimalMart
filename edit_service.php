@@ -39,10 +39,10 @@ $delete = $serviceObj->deleteService($_POST);
     <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ms-auto">
 		 <li class="nav-item" >
-	 	<a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	 	<a class="nav-link" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="logout.php"  tabindex="-1">Logout</a>
+	    <a class="nav-link" style="color: red;" href="logout.php?login=<?php echo $_SESSION['username']?>"  tabindex="-1">Logout</a>
 	  </li>
 	
         </ul>

@@ -15,7 +15,7 @@ class ControllerService{
     	//Set connection
         $this->serviceObj = new Service();
     }
-    
+
    // New functions below...
 
     // View
@@ -45,7 +45,7 @@ class ControllerService{
 
     	if (($highest % $results_per_page) != 0)
     	{
-    		$count = floor($highest / $results_per_page);	
+    		$count = floor($highest / $results_per_page) + 1;	
     	}
     	else
     	{

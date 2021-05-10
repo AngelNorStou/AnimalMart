@@ -16,6 +16,11 @@ class ViewPet
     {
         $pets = $this->petObj->displayPetsByUsername($owner);
 
+        if ($pets == null)
+        {
+            return "";
+        }
+
         $label_start_tag = "<label  class=\"form-label card-text\">" ;
 
         $label_end_tag = "</label>";

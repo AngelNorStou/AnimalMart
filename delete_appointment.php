@@ -6,7 +6,7 @@ $appointments = new ControllerAppointment();
 
 $delete = $appointments->delete($_GET['appt_id']);
 if($delete == 1){
-   	header("location: ./user_profile.php");
+   	header("location: ./user_profile.php?login=".$_SESSION['username']);
 }
 
 ?>

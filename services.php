@@ -65,9 +65,9 @@ $page_first_result = ($page-1) * $results_per_page;
 		if ($_SESSION['isAdmin'] == 1) {  
 			
 		?>
-	    <a class="nav-link" style="color: white;" href="admin_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    <a class="nav-link" style="color: white;" href="admin_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	    <?php } else{?>
-	    	 <a class="nav-link" style="color: white;" href="user_profile.php" tabindex="-1"><?php echo $_SESSION['username']?></a>
+	    	 <a class="nav-link" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
 	    <?php } ?>
 	  </li>
 	  <li class="nav-item">

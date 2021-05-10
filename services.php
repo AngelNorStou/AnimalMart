@@ -1,6 +1,7 @@
 <?php include './controller/controller_services.php'; 
 
 $serviceObj = new ControllerService(); 
+$searchStr = $serviceObj->search();
 
 ?>
 
@@ -73,18 +74,90 @@ $serviceObj = new ControllerService();
 	<?php
 	if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
 		?>
-		<a href="add_service.php" ><button type="button" style="float: right;" class="btn btn-outline-danger" >
+		<a href="add_service.php" ><button type="button" style="float: right;" class="btn btn-outline-danger btn-sm" >
 			Add a Service
 		</button></a>
 	<?php }?>
 	<div style="float: right;">
-		<div class="input-group input-group-sm mb-3">
-	<input type="text" name="searchInput" class="form-control">
-	<button type="button"  onclick="location.href = 'appointment.php?search='" class="btn btn-outline-danger btn-sm" >
-
-			Search
-		</button></div>
+		<form action="services.php" method="GET" >
+		<div class="input-group input-group-sm mb-3" >
+				<input type="text" name="searchInput" name="searchInput" id="searchInput" class="form-control">
+			
+			<button type="submit" value="search" class="btn btn-outline-danger" > Search </button>
+			<button type="button" onclick="window.location.href = 'services.php?page=1'" value="search" class="btn btn-outline-danger" > Clear </button>
+		</div>
+		</form>
 	</div>
+		
+	<table width="420" style="margin-right:30%;float:top;">
+		<?php 
+
+		if ($searchStr != null)
+		{
+		  foreach ($searchStr as $service) 
+		  {
+		  	
+		?>      	
+	   <tr style="border-width: 1px;" >
+	   	<td align="center" width="250" class="form-label card-text">
+	   		<?php 
+	   			if($service['service_length'] != '')
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   			else
+	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
+	   		?>
+	   		<br>
+	   		</td>
+	   	<td>
+	   		
+	   		 <?php
+	   		 	if($service['service_description'] != ''){
+			  ?>
+			<!-- Button trigger modal -->
+			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
+			  More info
+			</button>
+
+			<!-- Modal -->
+			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="exampleModalLabel"><?php echo $service['service_name'] ?></h5>
+			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			      </div>
+			      <div class="modal-body">
+			        <?php  
+			        	echo $service['service_description'];
+			       	?>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			<br>
+			<?php } else{ ?>
+				<button type="button" class="btn btn-outline-danger btn-sm" type="submit" onclick="location.href = 'appointment.php'" >
+			  Book Appointment
+			</button>
+
+			<?php } 
+				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
+					?>
+					<div style="padding-top: 5px;">
+						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
+							Edit Service
+						</button></a>
+					</div>
+				<?php }?>
+	   	</td>
+	   	<tr><td><br></td></tr>
+	   	<?php } }  ?>
+	</table>
+
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>

@@ -134,8 +134,8 @@ class Service{
         }
     }
 
-    public function searchAppointment($string){
-         $query = "SELECT * FROM services WHERE service_name LIKE %{$string}%'";
+    public function searchServices($string){
+        $query = "SELECT * FROM services WHERE service_name LIKE '%$string%'";
         $result = $this->con->query($query);
         if($result->num_rows > 0)
         {

@@ -98,5 +98,10 @@ $file_type = $controller_user->verify_pictureChange($_FILES, $_SESSION['username
     	</form>
 	</div>		
 </div>
+<div><p><br><br></p></div>
 </body>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </html> 

@@ -1,5 +1,7 @@
 <?php include './controller/controller_services.php'; 
 
+
+$serviceModel = new Service();
 $serviceObj = new ControllerService(); 
 $searchStr = $serviceObj->search();
 
@@ -196,6 +198,7 @@ $page_first_result = ($page-1) * $results_per_page;
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 		$services = $serviceObj->getServices('grooming',$results_per_page,$page_first_result);
+
 
 		if ($services != null)
 		{

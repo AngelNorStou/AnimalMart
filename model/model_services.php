@@ -37,19 +37,21 @@ class Service{
         }
     }
 
-    public function getNumOfServices($type){
-        $query = "SELECT COUNT(*) FROM services WHERE service_type = '$type'";
+   public function getNumOfServices($type){
+        $query = "SELECT COUNT(*) AS total FROM services WHERE service_type = '$type'";
         $result = $this->con->query($query);
       if($result->num_rows > 0){
             $data = $result->fetch_assoc();           
-            return $data;
+            return $data['total'];
         }  
     }
 
-    public function getServices($min, $max){
+    public function getServices($service_type,$min, $max)
+    {
 
     //retrieve the selected results from database   
-    $query = "SELECT * FROM services WHERE service_type = 'grooming' LIMIT " . $min . ',' . $max;  
+    $query = "SELECT * FROM services WHERE service_type = '$service_type' LIMIT " . $min . ' OFFSET ' . $max; 
+    $result = $this->con->query($query); 
      if($result->num_rows > 0)
         {
             $data = array();
@@ -58,7 +60,10 @@ class Service{
                 $data[] = $row;
             }
             return $data;
-        }  
+        } 
+        else{
+            return null;
+        } 
     }
 
     public function getServiceType(){

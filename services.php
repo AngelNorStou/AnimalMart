@@ -3,6 +3,17 @@
 $serviceObj = new ControllerService(); 
 $searchStr = $serviceObj->search();
 
+if (!isset ($_GET['page']) ) 
+{  
+    $page = 1;  
+} else 
+{  
+    $page = $_GET['page'];  
+} 
+
+$results_per_page = 5;  
+$page_first_result = ($page-1) * $results_per_page;  
+
 ?>
 
 <!DOCTYPE HTML>
@@ -67,6 +78,9 @@ $searchStr = $serviceObj->search();
         </ul>
     </div>
 </nav>
+	<?php 
+		echo $serviceObj->displayPagination($results_per_page);
+	?>
 
 <div align="left" style="font-family: 'Verdana'; padding-left: 100px;padding-right: 100px;">
 
@@ -181,12 +195,13 @@ $searchStr = $serviceObj->search();
 		
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
-		$services = $serviceObj->displayAllServices();
+		$services = $serviceObj->getServices('grooming',$results_per_page,$page_first_result);
+
 		if ($services != null)
 		{
 		  foreach ($services as $service) 
 		  {
-		  	if($service['service_type'] == 'grooming'){
+		  	
 
 		?>      	
 	  <tr style="border-width: 1px;" >
@@ -245,7 +260,7 @@ $searchStr = $serviceObj->search();
 
 	   	</td>
 	   	<tr><td><br></td></tr>
-	   	<?php } } } ?>
+	   	<?php  } } ?>
 		</tr>
 	</table>
 </div>
@@ -260,11 +275,14 @@ $searchStr = $serviceObj->search();
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 
+		$services = $serviceObj->getServices('training',$results_per_page,$page_first_result);
+
+
 		if ($services != null)
 		{
 		  foreach ($services as $service) 
 		  {
-		  	if($service['service_type'] == 'training'){
+		  	
 		?>      	
 	   <tr style="border-width: 1px;" >
 	   	<td align="center" width="250" class="form-label card-text">
@@ -323,7 +341,7 @@ $searchStr = $serviceObj->search();
 				<?php }?>
 	   	</td>
 	   	<tr><td><br></td></tr>
-	   	<?php } } } ?>
+	   	<?php  } } ?>
 	</table>
 </div>
 <div  class="tab-pane fade" id="vet" role="tabpanel" aria-labelledby="vet-tab">
@@ -337,11 +355,14 @@ $searchStr = $serviceObj->search();
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
 
+		$services = $serviceObj->getServices('vet',$results_per_page,$page_first_result);
+
+
 		if ($services != null)
 		{
 		  foreach ($services as $service) 
 		  {
-		  	if($service['service_type'] == 'vet'){
+		  	
 		?>      	
 	   <tr style="border-width: 1px;">
 	   	<td align="center"  width="250" class="form-label card-text">
@@ -399,7 +420,7 @@ $searchStr = $serviceObj->search();
 			<?php }?>
 	   	</td>
 	   	<tr><td><br></td></tr>
-	   	<?php } } } ?>
+	   	<?php  } } ?>
 	   </tr>
 	</table>
 	 </div>

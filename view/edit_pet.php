@@ -39,7 +39,8 @@ $editError = $controller_pet->verify_editPet($_POST);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="../CSS/account.css" rel="stylesheet" >	
+	<link href="../CSS/account.css" rel="stylesheet" >
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
 
 	<title>View Account</title>	
 </head>
@@ -74,25 +75,28 @@ $editError = $controller_pet->verify_editPet($_POST);
     </div>
 </nav>
 <div class="container">
-	<form action="edit_pet.php?petEdit=<?php echo $id; ?>" method="POST">
+	<form class="userForms" action="edit_pet.php?petEdit=<?php echo $id; ?>" method="POST" style="background-color: lightblue; border-color: lightblue;">
+		<div class="row">
+		<h3 align="center">Edit your pet !</h3>
+	</div>	
 	    <div class="row">
 		    <label class="form-label">Pet Name</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'pet_name'); ?>"  
 			name="edit_pet_name"  required="" maxlength='30'>	
-		</div>
+		</div><br>
 	    <div class="row">
 	    	<label class="form-label">Pet Type</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'pet_type'); ?>" 
 			name="edit_pet_type" required="" maxlength='30'>
-		</div>			    				    				
+		</div>	<br>		    				    				
 	  <div class="row">
 		    <label class="form-label">Breed</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'breed'); ?>" 
 			name="edit_pet_breed" required="" maxlength='64'>	    				
-		</div>
+		</div><br>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
 			<select class="form-select" name="edit_pet_gender" aria-label="edit_pet_gender">
@@ -100,25 +104,25 @@ $editError = $controller_pet->verify_editPet($_POST);
  				echo $petView->displayGender($id); 
 			?>			  			  
 			</select>     	
-	    </div>				    				    				
+	    </div>	<br>			    				    				
 	  <div class="row">
 		    <label class="form-label">Size (cm)</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'size'); ?>" 
 			name="edit_pet_size" required="">      					    				    		
-		</div>
+		</div><br>
 	  <div class="row">
 		    <label class="form-label">Weight (kg)</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'weight'); ?>"  
 			name="edit_pet_weight" required="">				    				  		
-	  </div>
+	  </div><br>
 	  <div class="row">
 		    <label class="form-label">Age</label>
 			<input type="text" class="form-control" 
 			value="<?php echo $petView->displayItem($id,'age'); ?>"  
 			name="edit_pet_age"  required="">	      						    				
-		</div>	  	  
+		</div>	<br>  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>
   		<?php echo $editError ?>

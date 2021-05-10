@@ -90,7 +90,7 @@ $add = $app->insert();
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms" action="appointment.php" method="POST">
+			<form class="userForms" action="appointment.php" method="POST" style="background-color: lightblue; border-color: lightblue;">
 				<h3 align="center">Book an appointment</h3>
 				<p align="center" style="line-height: 0px;padding-bottom: 10px;">_________________________________________</p>
 				<div class="row g-3">
@@ -154,9 +154,9 @@ $add = $app->insert();
 </div>
 </div>
 <div><p><br></p></div>
+</body>
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.
 </footer>
-</body>
 </html>

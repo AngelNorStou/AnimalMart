@@ -33,7 +33,8 @@ $addError = $controller_pet->verify_addPet($_POST);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="../CSS/account.css" rel="stylesheet" >	
+	<link href="../CSS/account.css" rel="stylesheet" >
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
 
 	<title>Add Pet</title>	
 </head>
@@ -68,41 +69,41 @@ $addError = $controller_pet->verify_addPet($_POST);
     </div>
 </nav>
 <div class="container">
-	<div class="row">
-		<h3>Add your pet !</h3>
+	<form class="userForms" action="add_pet.php?user=<?php echo $_SESSION['username']; ?>" method="POST" style="background-color: lightblue; border-color: lightblue;">
+		<div class="row">
+		<h3 align="center">Add your pet !</h3>
 	</div>	
-	<form action="add_pet.php?user=<?php echo $_SESSION['username']; ?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">Pet Name</label>
 			<input type="text" class="form-control" name="pet_name" maxlength='30'  required="">	
-		</div>
+		</div><br>
 	    <div class="row">
 	    	<label class="form-label">Pet Type</label>
 			<input type="text" class="form-control"  name="type" maxlength='30' required="">
-		</div>			    				    				
+		</div><br>		    				    				
 	  <div class="row">
 		    <label class="form-label">Breed</label>
 			<input type="text" class="form-control"  name="breed" maxlength='64' required="">	    				
-		</div>
+		</div><br>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
 			<select class="form-select" name="gender" aria-label="gender" required="">
 				<option selected value="M">Male</option>				
 				<option value="F">Female</option>			  			  
 			</select>     	
-	    </div>				    				    				
+	    </div>	<br>			    				    				
 	  <div class="row">
 		    <label class="form-label">Size (cm)</label>
 			<input type="text" class="form-control" v name="size" required="">      					    				    		
-		</div>
+		</div><br>
 	  <div class="row">
 		    <label class="form-label">Weight (kg)</label>
 			<input type="text" class="form-control" name="weight" required="">				    				  		
-	  </div>
+	  </div><br>
 	  <div class="row">
 		    <label class="form-label">Age</label>
 			<input type="text" class="form-control"  name="age"  required="">	    		
-		</div>	  	  
+		</div>	<br>  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="add" type="submit" class="btn btn-primary">Confirm Changes</button>
   		<?php echo $addError ?>
@@ -111,5 +112,10 @@ $addError = $controller_pet->verify_addPet($_POST);
 	</form>
 	</div>		
 </div>
+<div><p><br><br></p></div>
 </body>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </html> 

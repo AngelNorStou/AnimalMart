@@ -112,7 +112,7 @@ $appointments = $app->getAppointments($_SESSION['username']);
 				<tbody>
 					<tr>
 						<td>
-							<button class="btn btn-outline-info" onclick="window.location.href='services.php'" >View Services</button>		
+							<button class="btn btn-outline-info" onclick="window.location.href='services.php?page=1'" >View Services</button>		
 						</td>
 						<td>
 							<button class="btn btn-outline-danger" onclick="window.location.href='appointment.php'" >Book appointment</button>		

@@ -1,15 +1,15 @@
 <?php
-include './model/model_services.php';
+include '../model/model_services.php';
 
-include './controller/controller_user.php';
-include './model/users.php';
-include './view/view_user.php';
+include '../controller/controller_user.php';
+include '../model/users.php';
+include '../view/view_user.php';
 
 
-include './view/view_pet.php';
-include './model/pets.php';
+include '../view/view_pet.php';
+include '../model/pets.php';
 
-include './controller/controller_appointments.php';
+include '../controller/controller_appointments.php';
 
 session_start();
 
@@ -60,7 +60,7 @@ $appointments = $app->getAppointments($_SESSION['username']);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="CSS/account.css" rel="stylesheet" >		
+	<link href="../CSS/account.css" rel="stylesheet" >		
 
 	<title>View Account</title>	
 </head>

@@ -27,7 +27,7 @@ class ViewUser
     	
     	$user =  $this->userObj->displayRecordByUsername($user_name);
 
-    	$picture = "<img src=\"" . $user['profile_picture'] . "\" class=\"img-thumbnail\" alt=\"No Picture Found.\">";
+    	$picture = "<img src=\"../" . $user['profile_picture'] . "\" class=\"img-thumbnail\" alt=\"No Picture Found.\">";
 
 
 		return $picture;

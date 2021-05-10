@@ -1,4 +1,4 @@
-<?php include './controller/controller_services.php'; 
+<?php include '../controller/controller_services.php'; 
 
 
 $serviceModel = new Service();
@@ -191,7 +191,7 @@ $page_first_result = ($page-1) * $results_per_page;
 		<br>
 		<div id="header" style="width:100%;">
     		<div style='float:right'>
-        		<img src="./Images/grooming.jpg" style="padding-top: 16px; margin-right:25%;margin-top:5%"/>
+        		<img src="../Images/grooming.jpg" style="padding-top: 16px; margin-right:25%;margin-top:5%"/>
     		</div>
 		</div>
 		
@@ -272,7 +272,7 @@ $page_first_result = ($page-1) * $results_per_page;
 		<br>
 			<div id="header" style="width:100%;">
     		<div style='float:right'>
-        		<img src="./Images/training.jpg" width="600" height="350"  alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
+        		<img src="../Images/training.jpg" width="600" height="350"  alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
     		</div>
 		</div>
 	<table width="420" style="margin-right:30%;float:top;">
@@ -351,7 +351,7 @@ $page_first_result = ($page-1) * $results_per_page;
 	<br>
 	<div id="header" style="width:100%;">
     		<div style='float:right'>
-        		<img src="./Images/vet.jpg" width="500" height="350" alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
+        		<img src="../Images/vet.jpg" width="500" height="350" alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
     		</div>
 		</div>
 		

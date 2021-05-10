@@ -1,8 +1,8 @@
 <?php
 
-include './view/view_emp.php';
-include './model/employees.php';
-include './controller/controller_emp.php';
+include '../view/view_emp.php';
+include '../model/employees.php';
+include '../controller/controller_emp.php';
 
 session_start();
 
@@ -36,7 +36,7 @@ $controller_emp->verify_editEmp($_POST,$_SESSION['username']);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="CSS/account.css" rel="stylesheet" >	
+	<link href="../CSS/account.css" rel="stylesheet" >	
 
 	<title>Edit Employee</title>	
 </head>

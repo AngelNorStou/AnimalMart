@@ -1,6 +1,6 @@
 <?php
 
-include './model/model_appointment.php';
+include '../model/model_appointment.php';
 
 
 class ControllerAppointment{

@@ -1,6 +1,6 @@
 <?php
 
-include './model/messages.php';
+include '../model/messages.php';
 date_default_timezone_set("America/New_York");  // sets timezone for timestamp
 
 class ControllerMessage{

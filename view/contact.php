@@ -1,28 +1,7 @@
 <?php
-include './controller/controller_services.php';
-include './model/pets.php';
-include './model/users.php';
-include './controller/controller_appointments.php';
-
-$petObj = new Pets();
-$usersObj = new Users();
-$serviceObj = new ControllerService();
-$services = $serviceObj->displayAllServices();
-$app = new ControllerAppointment();
-
-
-if (!isset($_SESSION['username'])) {  
-	header("Location: login.php");
-}
-else{
-	//TO BE CHANGED USING CALL METHOD
-	$pets = $petObj->displayPetsByUsername($_SESSION['username']);
-	$user = $usersObj->displayRecordByUsername($_SESSION['username']);
-}
-
-$add = $app->insert();
-
-
+include '../controller/controller_message.php';
+$messageObj = new ControllerMessage();
+$add = $messageObj->insert($_POST); 
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -34,8 +13,9 @@ $add = $app->insert();
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-		<link href="CSS/sign_in_out.css" rel="stylesheet">	
-	<title>Make an Appointment</title>
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
+
+	<title>Contact Us</title>
 </head>
 <body>
 <nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
@@ -48,7 +28,7 @@ $add = $app->insert();
 	    <a class="nav-link" style="color: lightblue;" href="services.php?page=1">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
+	    <a class="nav-link active" style="color: white;" aria-current="page" href="">Contact</a>
 	  </li>
 	</ul>
     </div>
@@ -68,7 +48,7 @@ $add = $app->insert();
 		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
 		  </li>
 		<?php } else{?>
-	<li class="nav-item" >
+	 <li class="nav-item" >
 	  	 <?php
 		if ($_SESSION['isAdmin'] == 1) {  
 			
@@ -90,70 +70,57 @@ $add = $app->insert();
 	<div class="tab-content" id="v-pills-tabContent">
     <div  class="tab-pane fade show active" role="tabpanel">
 		<div class="container">		
-			<form class="userForms" action="appointment.php" method="POST">
-				<h3 align="center">Book an appointment</h3>
-				<p align="center" style="line-height: 0px;padding-bottom: 10px;">_________________________________________</p>
+			<form class="userForms" action="contact.php" method="POST" style="background-color: lightblue; border-color: lightblue;" >
+				<h3 align="center">Contact Us</h3>
+				<p align="center" style="line-height: 0px;padding-bottom: 10px;">__________________________</p>
 				<div class="row g-3">
 				  <div class="col">
 				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First Name" value="<?php echo $user['first_name'] ?>" aria-label="First name" required>
+				    <input type="text" class="form-control" placeholder="First name" name="firstname" aria-label="First name" required>
 				  </div>
 				  <div class="col">
 				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name"  value="<?php echo $user['last_name'] ?>"  aria-label="Last name" required>
+				    <input type="text" class="form-control" placeholder="Last name" name="lastname" aria-label="Last name" required>
 				  </div>
 				</div>
 				<br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Email</label>
-						 <input type="email" class="form-control" id="emailEdit"  value="<?php echo $user['email'] ?>"  placeholder="example@web.ca" required>    			    				    				
+					    <div class="form-floating">
+						  <input type="email" class="form-control" id="email" name="email" placeholder="example@web.ca" required>
+						  <label for="email">example@web.ca</label>		      		
+			    	</div>				    				    				
 				</div>
 			  </div>
 			  <br>
 			  <div class="row">
 				    <div class="col-sm">
 				    <label class="form-label">Phone Number</label>
-						  <input type="tel" class="form-control" id="phoneEdit"  value="<?php echo $user['phone_number'] ?>"  placeholder="999-999-9999" required>
-							      						    				
+					    <div class="form-floating">
+						  <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="phone" name="phone" placeholder="999-999-9999" required>
+						  <label for="phone">999-999-9999</label>		      		
+			    	</div>				    				    				
 				</div>
 			  </div>
 			  <br>
-			 <div class="row g-3">
-				  <div class="col">
-				  	 <label class="form-label">Pet</label>
-				    <select name="pet_id" id="inputState" class="form-select" required>
-				      <option value="choose" selected>Choose...</option>
-				      <?php foreach($pets as $pet){ ?>
-				      <option value="<?php echo $pet['pet_id']; ?>"><?php echo $pet['pet_name']; ?></option>
-				      <?php }?>
-				    </select>
-				  </div>
-				  <div class="col">
-				  	 <label class="form-label">Service</label>
-				   <select name="service_id" id="inputState" class="form-select" required>
-				      <option value="choose" selected>Choose...</option>
-				      <?php foreach($services as $service){ ?>
-				      <option value="<?php echo $service['service_id']; ?>"><?php echo $service['service_name']; ?></option>
-				      <?php }?>
-				    </select>
-				  </div>
-			 <div class="col">
+			   <div class="row">
 				    <div class="col-sm">
-				    <label class="form-label">Date</label>
-					<input type="datetime-local" class="form-control" value="<?php  echo date("Y-m-d\TH:i"); ?>" min="<?php  echo date("Y-m-d\TH:i"); ?>" id="appointment_date" name="appointment_date" required>	      		
-			    				    				    				
+				    <label class="form-label">Message</label>
+					<textarea type="text" class="form-control" id="message" name="message" placeholder="Your Message" required></textarea>	    				    				
 				</div>
 			  </div>
-			</div>
 			  <br>
-			  	<button value="submit" name="submit" id="appointmentBtn" type="submit" class="btn btn-danger">Confirm Appointment</button>
+			  	<button id="submit" name="submit" value="submit" type="submit" class="btn btn-danger">Send Message</button>
+			  	<input type="hidden" class="form-control" value="<?php echo date("Y-m-d H:i"); ?>"  name="timestamp">
 			</form>	
 		</div>
     </div>
 </div>
 </div>
-<div><p><br></p></div>
+<div>
+	<br><br>
+</div>
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
 	©2021 AnimalMart, Inc. All rights reserved.

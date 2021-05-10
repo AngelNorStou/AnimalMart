@@ -1,5 +1,5 @@
 <?php
-include './controller/controller_appointments.php';
+include '../controller/controller_appointments.php';
 session_start();
 
 $appointments = new ControllerAppointment();

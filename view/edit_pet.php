@@ -1,23 +1,29 @@
 <?php
 
-include './controller/controller_pet.php';
-include './model/pets.php';
+include '../controller/controller_pet.php';
+include '../model/pets.php';
+include '../view/view_pet.php';
 
-$controller_pet = new ControllerPet(new Pets());
+$petObj = new Pets();
+$controller_pet = new ControllerPet($petObj);
+$petView = new ViewPet($petObj);
+$id = null;
 
 session_start();
 
 
-if (!isset($_SESSION['username']) || (!isset($_GET['user']) && empty($_GET['user'])) ) // If it is empty
-{  
-
-	header("Location:login.php");
+if( isset($_GET['petEdit']) or isset($_SESSION['username']) ) 
+{
+	$id = $_GET['petEdit'];
 	
+} 
+else
+{
+	header("Location:login.php");
 }
 
 
-$addError = $controller_pet->verify_addPet($_POST);
-
+$editError = $controller_pet->verify_editPet($_POST);
 
 
 
@@ -33,9 +39,9 @@ $addError = $controller_pet->verify_addPet($_POST);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="CSS/account.css" rel="stylesheet" >	
+	<link href="../CSS/account.css" rel="stylesheet" >	
 
-	<title>Add Pet</title>	
+	<title>View Account</title>	
 </head>
 <body>
 <nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
@@ -68,46 +74,56 @@ $addError = $controller_pet->verify_addPet($_POST);
     </div>
 </nav>
 <div class="container">
-	<div class="row">
-		<h3>Add your pet !</h3>
-	</div>	
-	<form action="add_pet.php?user=<?php echo $_SESSION['username']; ?>" method="POST">
+	<form action="edit_pet.php?petEdit=<?php echo $id; ?>" method="POST">
 	    <div class="row">
 		    <label class="form-label">Pet Name</label>
-			<input type="text" class="form-control" name="pet_name" maxlength='30'  required="">	
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'pet_name'); ?>"  
+			name="edit_pet_name"  required="" maxlength='30'>	
 		</div>
 	    <div class="row">
 	    	<label class="form-label">Pet Type</label>
-			<input type="text" class="form-control"  name="type" maxlength='30' required="">
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'pet_type'); ?>" 
+			name="edit_pet_type" required="" maxlength='30'>
 		</div>			    				    				
 	  <div class="row">
 		    <label class="form-label">Breed</label>
-			<input type="text" class="form-control"  name="breed" maxlength='64' required="">	    				
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'breed'); ?>" 
+			name="edit_pet_breed" required="" maxlength='64'>	    				
 		</div>
 	  <div class="row">
 	  		<label class="form-label">Gender</label>	  	
-			<select class="form-select" name="gender" aria-label="gender" required="">
-				<option selected value="M">Male</option>				
-				<option value="F">Female</option>			  			  
+			<select class="form-select" name="edit_pet_gender" aria-label="edit_pet_gender">
+			<?php 
+ 				echo $petView->displayGender($id); 
+			?>			  			  
 			</select>     	
 	    </div>				    				    				
 	  <div class="row">
 		    <label class="form-label">Size (cm)</label>
-			<input type="text" class="form-control" v name="size" required="">      					    				    		
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'size'); ?>" 
+			name="edit_pet_size" required="">      					    				    		
 		</div>
 	  <div class="row">
 		    <label class="form-label">Weight (kg)</label>
-			<input type="text" class="form-control" name="weight" required="">				    				  		
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'weight'); ?>"  
+			name="edit_pet_weight" required="">				    				  		
 	  </div>
 	  <div class="row">
 		    <label class="form-label">Age</label>
-			<input type="text" class="form-control"  name="age"  required="">	    		
+			<input type="text" class="form-control" 
+			value="<?php echo $petView->displayItem($id,'age'); ?>"  
+			name="edit_pet_age"  required="">	      						    				
 		</div>	  	  
 	  <div class="row">	 	    	   	
-  		<button style="float: left;margin-top: 2%;" value="add" type="submit" class="btn btn-primary">Confirm Changes</button>
-  		<?php echo $addError ?>
-  		<input type="hidden" class="form-control" value="<?php echo $_SESSION['username']; ?>"  name="user">	 
-  	</div>			  		  		  		  		  	
+  		<button style="float: left;margin-top: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>
+  		<?php echo $editError ?>
+  		<input type="hidden" class="form-control" value="<?php echo $id; ?>"  name="edit_pet_id">						  	
+	  </div>			  		  		  		  		  	
 	</form>
 	</div>		
 </div>

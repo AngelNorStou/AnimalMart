@@ -1,7 +1,7 @@
 <?php
 
-include './controller/controller_user.php';
-include './model/users.php';
+include '../controller/controller_user.php';
+include '../model/users.php';
 
 $controller_user = new ControllerUser(new Users());
 
@@ -21,7 +21,7 @@ $controller_user->verify_insert($_POST);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="CSS/sign_in_out.css" rel="stylesheet">	
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
 
 	<title>Join AnimalMart!</title>	
 </head>

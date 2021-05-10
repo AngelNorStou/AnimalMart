@@ -82,7 +82,7 @@ Session_start();
 			</td>
 			<td align="center" style="font-size: 30px;color:red;font-weight: normal;">
 				Take care of your pet's needs, all in one place.
-				<img width="750" height="400" src="./Images/pet_store1.jpg" alt="Animal">
+				<img width="750" height="400" src="../Images/pet_store1.jpg" alt="Animal">
 			</td>
 			<td  width="550" style="background-color: lightblue; padding-right: 5px;padding-left: 15px;">
 					<table align="center">
@@ -107,7 +107,7 @@ Session_start();
 	<div class="card mb-3">
 	  <div class="row g-0">
 	    <div class="col-md-4" >
-	      <img src="./Images/dog.jpg" width="120" height="100" style="padding-top: 2px;" alt="...">
+	      <img src="../Images/dog.jpg" width="120" height="100" style="padding-top: 2px;" alt="...">
 	    </div>
 	    <div class="col-md-8">
 	      <div class="card-body">
@@ -122,7 +122,7 @@ Session_start();
 	<div class="card mb-3">
 	  <div class="row g-0">
 	    <div class="col-md-4">
-	      <img src="./Images/bunny.jpg" width="120" height="100" style="padding-top: 2px;"  alt="...">
+	      <img src="../Images/bunny.jpg" width="120" height="100" style="padding-top: 2px;"  alt="...">
 	    </div>
 	    <div class="col-md-8">
 	      <div class="card-body">

@@ -116,9 +116,9 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	<td align="center" width="250" class="form-label card-text">
 	   		<?php 
 	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
+	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
 	   		<br>
 	   		</td>
@@ -212,7 +212,7 @@ $page_first_result = ($page-1) * $results_per_page;
 	   			if($service['service_length'] != '')
 	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
+	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
 	   		<br>
 	   	</td>

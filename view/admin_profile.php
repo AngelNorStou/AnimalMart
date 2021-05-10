@@ -239,6 +239,7 @@ $deleteMessage = $messageObj->delete($_GET);
 	        <th>Last Name</th>        
 	        <th>Start Date</th>
 	        <th>End Date</th>
+	        <th>Actions</th>
 	      </tr>
 	    </thead>
 	    <tbody>

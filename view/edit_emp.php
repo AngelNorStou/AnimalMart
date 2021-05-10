@@ -36,7 +36,9 @@ $controller_emp->verify_editEmp($_POST,$_SESSION['username']);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="../CSS/account.css" rel="stylesheet" >	
+	
+	<link href="../CSS/account.css" rel="stylesheet" >
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">
 
 	<title>Edit Employee</title>	
 </head>
@@ -71,22 +73,22 @@ $controller_emp->verify_editEmp($_POST,$_SESSION['username']);
     </div>
 </nav>
 <div class="container">
-	<div class="row">
-		Change an employee's information.
+	<form class="userForms" action="edit_emp.php?editUser=$_GET['editUser']" method="POST"  style="background-color: lightblue; border-color: lightblue;">
+		<div align="center" class="row">
+		<h3>Change an employee's information.</h3>
 	</div>	
-	<form action="edit_emp.php?editUser=$_GET['editUser']" method="POST">
 	    <div class="row">
 		    <label class="form-label">UserName</label>
 			<input type="text" class="form-control" name="emp_editusername" value="<?php echo $_GET['editUser']; ?>" readonly>	
-		</div>
+		</div><br>
 	    <div class="row">
 	    	<label class="form-label">Start Date</label>
 			<input class="form-control" value= "<?php echo $empView->displayItem($_GET['editUser'],'start_date'); ?>" name="emp_date_start" type="date" required="">
-		</div>
+		</div><br>
 	    <div class="row">
 	    	<label class="form-label">End Date</label>
 			<input class="form-control" value= "<?php echo $empView->displayItem($_GET['editUser'],'end_date'); ?>" name="emp_date_end" type="date">
-		</div>					    				    				
+		</div><br>	    				    				
 	  <div class="row">
 			<fieldset class="form-group" required="">
 			    <legend>Give them Admin powers?</legend>
@@ -103,5 +105,10 @@ $controller_emp->verify_editEmp($_POST,$_SESSION['username']);
 	</form>
 	</div>		
 </div>
+<div><p><br></p></div>
 </body>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </html> 

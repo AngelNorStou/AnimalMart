@@ -141,7 +141,7 @@ class Service{
     }
 
     public function searchServices($string){
-        $query = "SELECT * FROM services WHERE service_name LIKE '%$string%'";
+        $query = "SELECT * FROM services WHERE service_name LIKE '%$string%' OR service_type LIKE '%$string%'";
         $result = $this->con->query($query);
         if($result->num_rows > 0)
         {

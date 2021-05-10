@@ -31,7 +31,10 @@ $addError = $controller_emp->verify_addEmp($_POST, $_SESSION['username']);
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
 
-	<link href="../CSS/account.css" rel="stylesheet" >	
+	
+	<link href="../CSS/account.css" rel="stylesheet" >
+	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
+	
 
 	<title>Add Pet</title>	
 </head>
@@ -66,19 +69,20 @@ $addError = $controller_emp->verify_addEmp($_POST, $_SESSION['username']);
     </div>
 </nav>
 <div class="container">
-	<div class="row">
-		Add a new Employee
-	</div>	
-	<form action="add_emp.php?user=<?php echo $_SESSION['username'];?>" method="POST">
+	
+	<form class="userForms" action="add_emp.php?user=<?php echo $_SESSION['username'];?>" method="POST" style="background-color: lightblue; border-color: lightblue;">
+			<div align="center" class="row">
+		<h3>Add a new Employee</h3>
+	</div>
 	    <div class="row">
 		    <label class="form-label">UserName</label>
 			<input type="text" class="form-control" name="emp_username"  maxlength='32' required="">
 			<div  class="form-text">Make sure that the user has created an account.</div>		
-		</div>
+		</div><br>
 	    <div class="row">
 	    	<label class="form-label">Start Date</label>
 			<input class="form-control" name="emp_date" type="date" required="">
-		</div>			    				    				
+		</div>	<br>		    				    				
 	  <div class="row">
 			<fieldset class="form-group" required="">
 			    <legend>Give them Admin powers?</legend>
@@ -91,17 +95,22 @@ $addError = $controller_emp->verify_addEmp($_POST, $_SESSION['username']);
 			    <div class="form-check">
 			    <label class="form-check-label">
 			        <input type="radio" class="form-check-input" name="adminOption"  value="1">
-			        YES
+			        Yes
 			      </label>
 			    </div>
 			  </fieldset>				
 		</div> 	  
 	  <div class="row">	 	    	   	
-  		<button style="float: left;margin-top: 2%;" value="addEmp" type="submit" class="btn btn-primary">Confirm Changes</button> 
+  		<button style="float: left;margin-top: 2%;" value="addEmp" type="submit" class="btn btn-danger">Confirm Changes</button> 
   		<?php echo $addError ?>
   	</div>			  		  		  		  		  	
 	</form>
 	</div>		
 </div>
+<div><p><br></p></div>
 </body>
+<footer align="center" style="background-color: lightblue;">
+	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+	©2021 AnimalMart, Inc. All rights reserved.
+</footer>
 </html> 

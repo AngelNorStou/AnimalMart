@@ -55,7 +55,7 @@ $controller_user->verify_insert($_POST);
     </div>
 </nav>
 <div class="container">		
-	<form class="userForms" action="signup.php" method="POST" enctype="multipart/form-data">
+	<form class="userForms" action="signup.php" method="POST" enctype="multipart/form-data" style="background-color: lightblue; border-color: lightblue;">
 	<h5 class="text-center">Create an Account</h5>	
 	<div class="row">	
 	  <div class="mb-3 col">

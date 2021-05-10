@@ -64,11 +64,18 @@ class ControllerService{
     	$number_of_page = $this->getNumberOfPages($results_per_page);
 
     	$html = "<nav> <ul  class=\"pagination\">";
-
+        
 	     for($page = 1; $page<= $number_of_page; $page++) 
 	     {  
-	     	$html .= "<li class=\"page-item\"><a class=\"page-link\" href=\"services.php?&page=". $page
-	     			 . "\">".$page."</a></li>" ;
+            if($page == $_GET['page']){
+                $html .= "<li class=\"page-item active\"><a class=\"page-link\" href=\"services.php?page=". $page
+                     . "\">".$page."</a></li>" ;
+            }
+            else{
+                $html .= "<li class=\"page-item \"><a class=\"page-link\" href=\"services.php?page=". $page
+                    . "\">".$page."</a></li>" ;
+            }
+	    
 	     }
 
 	     $html .= "</ul></nav>";

@@ -14,7 +14,7 @@ if (!isset ($_GET['page']) )
 
 } 
 
-$results_per_page = 5;  
+$results_per_page = 4;  
 $page_first_result = ($page-1) * $results_per_page;  
 
 ?>
@@ -189,8 +189,8 @@ $page_first_result = ($page-1) * $results_per_page;
 
 		<br>
 		<div id="header" style="width:100%;">
-    		<div style='float:left;padding-right: 20px;'>
-        		<img src="../Images/grooming.jpg" style="padding-top: 16px; margin-right:25%;margin-top:5%"/>
+    		<div style='float:left;padding-right:20px;'>
+        		<img src="../Images/grooming.jpg"/>
     		</div>
 		</div>
 

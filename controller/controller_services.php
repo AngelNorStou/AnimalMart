@@ -19,9 +19,9 @@ class ControllerService{
    // New functions below...
 
     // View
-    public function getServices($service_type,$min, $max)
+    public function getServices($min, $max)
     {
-     	$services = $this->serviceObj->getServices($service_type,$min, $max);
+     	$services = $this->serviceObj->getServices($min, $max);
     	return $services;   	
     }
 
@@ -32,7 +32,7 @@ class ControllerService{
      	$training = $this->serviceObj->getNumOfServices("training");
      	$vet = $this->serviceObj->getNumOfServices("vet");
 
-     	return max($grooming,$training,$vet);
+     	return $grooming + $training + $vet;
     }
 
 
@@ -63,11 +63,11 @@ class ControllerService{
 
     	$number_of_page = $this->getNumberOfPages($results_per_page);
 
-    	$html = "<nav> <ul class=\"pagination\">";
+    	$html = "<nav> <ul  class=\"pagination\">";
 
 	     for($page = 1; $page<= $number_of_page; $page++) 
 	     {  
-	     	$html .= "<li class=\"page-item\"><a class=\"page-link\" href=\"services.php?page=". $page
+	     	$html .= "<li class=\"page-item\"><a class=\"page-link\" href=\"services.php?&page=". $page
 	     			 . "\">".$page."</a></li>" ;
 	     }
 
@@ -76,6 +76,7 @@ class ControllerService{
 	     return $html;
   	
     }
+   
    
 
     // From orginal sources.

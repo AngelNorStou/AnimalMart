@@ -6,11 +6,12 @@ $serviceObj = new ControllerService();
 $searchStr = $serviceObj->search();
 
 if (!isset ($_GET['page']) ) 
-{  
+{ 
     $page = 1;  
 } else 
 {  
     $page = $_GET['page'];  
+
 } 
 
 $results_per_page = 5;  
@@ -55,7 +56,7 @@ $page_first_result = ($page-1) * $results_per_page;
 		if (!isset($_SESSION['username'])) {  
 			
 		?>
-		  <li class="nav-item" >
+		  <li class="nav-item">
 		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
 		  </li>
 		  <li class="nav-item">
@@ -80,10 +81,7 @@ $page_first_result = ($page-1) * $results_per_page;
         </ul>
     </div>
 </nav>
-	<?php 
-		echo $serviceObj->displayPagination($results_per_page);
-	?>
-
+	
 <div align="left" style="font-family: 'Verdana'; padding-left: 100px;padding-right: 100px;">
 
 	<h3 align="center" style="color: red;padding-top: 30px;line-height: 16px;">Our Services</h3>
@@ -105,7 +103,7 @@ $page_first_result = ($page-1) * $results_per_page;
 		</form>
 	</div>
 		
-	<table width="420" style="margin-right:30%;float:top;">
+	<table width="420" style="float:top;">
 		<?php 
 
 		if ($searchStr != null)
@@ -173,10 +171,10 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	<tr><td><br></td></tr>
 	   	<?php } }  ?>
 	</table>
-
+<!-- <! -- 
 	<ul class="nav nav-tabs">
 	  <li class="nav-item">
-	    <a style="color: blue;" class="nav-link active" id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
+	    <a style="color: blue;" class="nav-link active"  id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
 	  </li>
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link" id="training-tab" data-bs-toggle="tab" data-bs-target="#training" type="button" role="tab" aria-controls="training" aria-selected="false">Training</a>
@@ -184,20 +182,21 @@ $page_first_result = ($page-1) * $results_per_page;
 	  <li class="nav-item">
 	    <a style="color: blue;" class="nav-link" id="vet-tab" data-bs-toggle="tab" data-bs-target="#vet" type="button" role="tab" aria-controls="vet" aria-selected="false">Vet</a>
 	  </li>
-	</ul>
-	<div class="tab-content" id="v-pills-tabContent">
-	
+	</ul>  -->
+<div class="tab-content" id="v-pills-tabContent">
+
 	<div class="tab-pane fade show active" id="grooming" role="tabpanel" aria-labelledby="grooming-tab">
+
 		<br>
 		<div id="header" style="width:100%;">
-    		<div style='float:right'>
+    		<div style='float:left;padding-right: 20px;'>
         		<img src="../Images/grooming.jpg" style="padding-top: 16px; margin-right:25%;margin-top:5%"/>
     		</div>
 		</div>
-		
+
 	<table width="420" style="margin-right:30%;float:top;">
 		<?php 
-		$services = $serviceObj->getServices('grooming',$results_per_page,$page_first_result);
+		$services =$serviceObj->getServices($results_per_page,$page_first_result);
 
 
 		if ($services != null)
@@ -211,7 +210,7 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	<td align="center" width="250" class="form-label card-text">
 	   		<?php 
 	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
+	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
 	   			else
 	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
 	   		?>
@@ -264,11 +263,20 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	</td>
 	   	<tr><td><br></td></tr>
 	   	<?php  } } ?>
+	   	<td>	
+	   		<div align="right">
+			<?php 
+				echo $serviceObj->displayPagination($results_per_page);
+			?>
+			</div>
+	   	</td>
 		</tr>
 	</table>
-</div>
+	
 
-	<div class="tab-pane fade fade" id="training" role="tabpanel" aria-labelledby="training-tab">
+</div>
+		<div class="tab-pane fade fade" id="training" role="tabpanel" aria-labelledby="training-tab">
+	
 		<br>
 			<div id="header" style="width:100%;">
     		<div style='float:right'>
@@ -346,6 +354,10 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	<tr><td><br></td></tr>
 	   	<?php  } } ?>
 	</table>
+	<?php 
+		echo $serviceObj->displayPagination($results_per_page);
+	?>
+
 </div>
 <div  class="tab-pane fade" id="vet" role="tabpanel" aria-labelledby="vet-tab">
 	<br>
@@ -426,6 +438,9 @@ $page_first_result = ($page-1) * $results_per_page;
 	   	<?php  } } ?>
 	   </tr>
 	</table>
+	<?php 
+		echo $serviceObj->displayPagination($results_per_page);
+	?>
 	 </div>
 	</div>
 </div>

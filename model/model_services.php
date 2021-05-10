@@ -46,11 +46,12 @@ class Service{
         }  
     }
 
-    public function getServices($service_type,$min, $max)
+    public function getServices($min, $max)
     {
 
     //retrieve the selected results from database   
-    $query = "SELECT * FROM services WHERE service_type = '$service_type' LIMIT " . $min . ' OFFSET ' . $max; 
+    //$query = "SELECT * FROM services WHERE service_type = '$service_type' LIMIT " . $min . ' OFFSET ' . $max; 
+        $query = "SELECT * FROM services LIMIT " . $min . ' OFFSET ' . $max;
     $result = $this->con->query($query); 
      if($result->num_rows > 0)
         {

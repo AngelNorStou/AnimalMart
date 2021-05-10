@@ -43,7 +43,7 @@ $addError = $controller_emp->verify_addEmp($_POST, $_SESSION['username']);
 	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
 	  </li>
 	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;"  href="services.php">Services Offered</a>
+	    <a class="nav-link" style="color: lightblue;"  href="services.php?page=1">Services Offered</a>
 	  </li>
 	  <li class="nav-item">
 	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>

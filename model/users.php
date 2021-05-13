@@ -25,6 +25,20 @@ class Users
         }
     }
 
+    public function getAllUsers(){
+         $query = "SELECT * FROM users";
+        $result = $this->con->query($query);
+        if($result->num_rows > 0)
+        {
+            $data = array();
+            while($row = $result->fetch_assoc())
+            {
+                $data[] = $row;
+            }
+            return $data;
+        }
+    }
+
     // Get data account by username.
     public function displayRecordByUsername($user_name)
     {     

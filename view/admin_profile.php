@@ -55,6 +55,7 @@ $passwordError = $controller_user->verify_passwordChange($_POST);
 $messageObj = new ControllerMessage();
 $messages = $messageObj->display();
 $deleteMessage = $messageObj->delete($_GET);
+$deleteUser = $controller_user->verify_delete($_GET);
 
 ?>
 
@@ -107,7 +108,8 @@ $deleteMessage = $messageObj->delete($_GET);
   <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
     <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
      <button class="nav-link" id="employeesEditTab" data-bs-toggle="pill" data-bs-target="#employeesEdit" type="button" role="tab" aria-controls="employeesEdit" aria-selected="false">Employees</button> 
-      <button class="nav-link" id="messagesTab" data-bs-toggle="pill" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>   
+      <button class="nav-link" id="messagesTab" data-bs-toggle="pill" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">Messages</button>  
+       <button class="nav-link" id="usersTab" data-bs-toggle="pill" data-bs-target="#users" type="button" role="tab" aria-controls="users" aria-selected="false">User Accounts</button> 
        <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
   <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $_SESSION['username']; ?>" >Change Profile Picture</a>  
   </div>
@@ -280,6 +282,42 @@ $deleteMessage = $messageObj->delete($_GET);
 	            </a>
             <a href="admin_profile.php?&deleteMessage=<?php echo $message['message_id'] ?>" 
             	style="color:red" onclick="confirm('Are you sure want to delete this message ?')">
+              Delete
+            </a>	            
+	          </td>
+	        </tr>
+	      <?php } ?>
+	    </tbody>
+	  </table>  				    				    				
+	</div>	
+	<div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users">
+	  <table class="table table-hover">
+	    <thead>
+	      <tr>
+	        <th>First Name</th>
+	        <th>Last Name</th>      
+	        <th>Username</th>  
+	        <th>Email</th>
+	        <th>Phone Number</th>
+	        <th>Actions</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	        <?php 
+	        	$users = $userObj->getAllUsers();
+			  	foreach ((array)$users as $user) 
+			  	{
+	        ?>
+	        <tr>
+	          <td><?php echo $user['first_name'] ?></td>
+	          <td><?php echo $user['last_name'] ?></td>
+	          <td><?php echo $user['username'] ?></td>
+	          <td><?php echo $user['email'] ?></td>          
+	          <td><?php echo $user['phone_number'] ?></td>
+	          
+	          <td>
+            <a href="admin_profile.php?&deleteUser=<?php echo $user['user_id'] ?>" 
+            	style="color:red" onclick="confirm('Are you sure want to delete this user ?')">
               Delete
             </a>	            
 	          </td>

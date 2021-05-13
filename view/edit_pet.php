@@ -22,10 +22,7 @@ else
 	header("Location:login.php");
 }
 
-
 $editError = $controller_pet->verify_editPet($_POST);
-
-
 
 ?>
 
@@ -125,9 +122,9 @@ $editError = $controller_pet->verify_editPet($_POST);
 		</div>	<br>  	  
 	  <div class="row">	 	    	   	
   		<button style="float: left;margin-top: 2%;" value="update_pet" type="submit" class="btn btn-primary">Confirm Changes</button>
-  		<?php echo $editError ?>
-  		<input type="hidden" class="form-control" value="<?php echo $id; ?>"  name="edit_pet_id">						  	
-	  </div>			  		  		  		  		  	
+  		<p><?php echo $editError ?></p><br>
+  		<input type="hidden" value="<?php echo $id; ?>"  name="edit_pet_id">						  	
+		</div>			
 	</form>
 	</div>		
 </div>

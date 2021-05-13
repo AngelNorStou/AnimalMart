@@ -44,6 +44,7 @@ class ViewPet
                     "</div> ".
 
                     "<a class=\"btn btn-primary\" href=\"edit_pet.php?petEdit=". $pet['pet_id'] ." \">Edit</a> ".
+                      "<a class=\"btn btn-primary\" href=\"delete_pet.php?petDelete=". $pet['pet_id'] ." \">Delete</a> ".
 
                     "</div></div> " ;
         }       

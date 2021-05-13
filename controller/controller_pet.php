@@ -36,30 +36,23 @@ class ControllerPet
     {
 		  if($_SERVER['REQUEST_METHOD'] == 'POST') 
 		  {
+			  	if ( ( is_numeric($_POST['edit_pet_size']) !== true) or 
+			  		 ( is_numeric($_POST['edit_pet_weight']) !== true) or
+			  		 ( is_numeric($_POST['edit_pet_age']) !== true) ) 
+				{
 
-		  	if ( ( is_numeric($_POST['edit_pet_size']) !== true) or 
-		  		 ( is_numeric($_POST['edit_pet_weight']) !== true) or
-		  		 ( is_numeric($_POST['edit_pet_age']) !== true) ) 
-			{
+					return "The pet's size, weight or age must be a number.";
+				}
 
-				return "The pet's size, weight or age must be a number.";
-			}
-
-		    $this->petObj->updatePet($_POST);
+			    $this->petObj->updatePet($_POST);
+			
 		  }
 
 		  return "";
 
 
     }   
-
-
-
-
-
 }
-
-
 
 
 ?>

@@ -199,9 +199,9 @@ $appointments = $app->getAppointments($_SESSION['username']);
 					?>			  						  	
 				  </div>			  		  		  		  		  	
 			</form>
-			<form  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">	
+			<form action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">	
 				<input type="hidden" name="user_id" value="<?php echo $userView->getId($_SESSION['username'],'user_id'); ?>   ">
-				<button style="float: left;margin: 2%;" name="deleteUser" value="deleteUser" type="submit" onclick="confirm('Confirmation to delete your account?');" class="btn btn-danger">Delete Account</button>
+				<button style="float: left;margin: 2%;width: 100%;" name="deleteUser" value="deleteUser" type="submit" onclick="confirm('Confirmation to delete your account?');" class="btn btn-danger">Delete Account</button>
 			</form>
 		</div>
     </div>

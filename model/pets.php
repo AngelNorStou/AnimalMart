@@ -141,13 +141,17 @@ class Pets
  
     }     
 
-
-
-
-
+    public function deletePet($id){
+        $query = "DELETE FROM pets WHERE pet_id = '$id'";
+        $sql = $this->con->query($query);
+        if ($sql == true){
+           return 1;
+        }
+        else{
+             return 0;
+        }
+    }
 }
-
-
 
 
 ?>

@@ -3,7 +3,6 @@
 
 $serviceModel = new Service();
 $serviceObj = new ControllerService(); 
-$searchStr = $serviceObj->search();
 
 if (!isset ($_GET['page']) ) 
 { 
@@ -13,6 +12,8 @@ if (!isset ($_GET['page']) )
     $page = $_GET['page'];  
 
 } 
+
+$searchStr = $serviceObj->search();
 
 $results_per_page = 4;  
 $page_first_result = ($page-1) * $results_per_page;  
@@ -100,6 +101,7 @@ $page_first_result = ($page-1) * $results_per_page;
 			<button type="submit" value="search" class="btn btn-outline-danger" > Search </button>
 			<button type="button" onclick="window.location.href = 'services.php?page=1'" value="search" class="btn btn-outline-danger" > Clear </button>
 		</div>
+		<input type="hidden" class="form-control" value="<?php echo $_GET['page']; ?>"  name="page">	
 		</form>
 	</div>
 		

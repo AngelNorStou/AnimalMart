@@ -292,6 +292,7 @@ $deleteMessage = $messageObj->delete($_GET);
     </div>
   </div>
 </div>
+<div><p><br></p></div>
 </body>
 <footer align="center" style="background-color: lightblue;">
 	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>

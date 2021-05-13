@@ -98,6 +98,19 @@ class ControllerUser
 	
     }
 
+    public function verify_delete($post)
+    {
+		if($_SERVER['REQUEST_METHOD'] == 'POST') 
+		{
+			if(isset($_POST['deleteUser'])){
+				$this->userObj->deleteUser($_POST['user_id']);
+				return;
+			}
+		}
+	 		
+	
+    }
+
 
     public function verify_passwordChange($post)
     {

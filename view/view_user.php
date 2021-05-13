@@ -12,6 +12,14 @@ class ViewUser
         
     }
 
+    public function getId($user_name,$item)
+    {
+        
+        $user =  $this->userObj->displayRecordByUsername($user_name);
+
+        return $user[$item];
+    }
+
     public function displayItem($user_name,$item)
     {
     	

@@ -188,6 +188,15 @@ class Users
 
     } 
 
+    public function deleteUser($id){
+        $query = "DELETE FROM users WHERE user_id = '$id'";
+        $sql = $this->con->query($query);
+        if ($sql == true){
+            header("Location: logout.php");
+        }
+    }
+
+
     public function isAdmin($user)
     {
         $query = "SELECT isAdmin 

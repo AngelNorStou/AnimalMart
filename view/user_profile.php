@@ -43,6 +43,7 @@ if (!isset($_SESSION['username'])) // If it is empty
 
 
 $updateError = $controller_user->verify_update($_POST);
+$controller_user->verify_delete($_POST);
 $passwordError = $controller_user->verify_passwordChange($_POST);
 
 $app = new ControllerAppointment();
@@ -191,13 +192,17 @@ $appointments = $app->getAppointments($_SESSION['username']);
 			    		</div>		    									  				  	
 			  </div>
 				  <div class="row">
-			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>	
+			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>		
 					<?php
 					 								
 						echo $updateError;
 					?>			  						  	
 				  </div>			  		  		  		  		  	
-			</form>	
+			</form>
+			<form  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">	
+				<input type="hidden" name="user_id" value="<?php echo $userView->getId($_SESSION['username'],'user_id'); ?>   ">
+				<button style="float: left;margin: 2%;" name="deleteUser" value="deleteUser" type="submit" onclick="confirm('Confirmation to delete your account?');" class="btn btn-danger">Delete Account</button>
+			</form>
 		</div>
     </div>
     <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">

@@ -22,4 +22,4 @@ A full-stack web application built with PHP and MySQL that allows users to book 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/pet-appointment-system.git
+   git clone https://github.com/AngelNorStou/AnimalMart.git

@@ -1,129 +1,141 @@
 <?php
-include '../controller/controller_message.php';
-$messageObj = new ControllerMessage();
-$add = $messageObj->insert($_POST); 
+require_once '../config/database.php';
+require_once '../controller/MessageController.php';
+require_once '../model/MessageModel.php';
+
+require_once '../config/session_check.php';
+
+try {
+    $pdo = Database::getConnection();
+} catch (Exception $e) {
+    error_log($e->getMessage());
+    die("Database unavailable");
+}
+$message = new MessageModel($pdo);
+$messageObj = new MessageController($message,$pdo);
+$response = [];
+
+// Handle form submission
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $postData = [
+    'name'    => trim(($_POST['firstname'] ?? '') . ' ' . ($_POST['lastname'] ?? '')),
+    'email'   => trim($_POST['email'] ?? ''),
+    'phone'   => trim($_POST['phone'] ?? ''),
+    'subject' => trim($_POST['subject'] ?? 'Message from contact form'),
+    'message' => trim($_POST['message'] ?? '')
+];
+
+    $userId = $_SESSION['user_id'] ?? null;
+    $response = $messageObj->insertMessage($postData, $userId);
+}
 ?>
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-	<link href="../CSS/sign_in_out.css" rel="stylesheet">	
-
-	<title>Contact Us</title>
+    <meta charset="UTF-8">
+    <title>Contact Us | AnimalMart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="nav">
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="services.php?page=1">Services Offered</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link active" style="color: white;" aria-current="page" href="">Contact</a>
-	  </li>
-	</ul>
+<body class="bg-blue-50 min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<nav class="bg-blue-900 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center md:items-center space-y-2 md:space-y-0">
+    <div class="flex space-x-4">
+        <a href="Home.php" class="underline">Home</a>
+        <a href="services.php?page=1" class="hover:text-blue-300">Services</a>
+        <a href="contact.php" class="hover:text-blue-300">Contact</a>
     </div>
-    <div class="mx-auto order-0">
-        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ms-auto">
-             <?php
-		if (!isset($_SESSION['username'])) {  
-			
-		?>
-		  <li class="nav-item" >
-		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
-		  </li>
-		<?php } else{?>
-	 <li class="nav-item" >
-	  	 <?php
-		if ($_SESSION['isAdmin'] == 1) {  
-			
-		?>
-	    <a class="nav-link" style="color: white;" href="admin_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
-	    <?php } else{?>
-	    	 <a class="nav-link" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
-	    <?php } ?>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
-	  </li>
-	<?php }?>
-	
-        </ul>
+
+    <div class="text-xl font-bold">Welcome To AnimalMart!</div>
+
+    <div class="flex space-x-4">
+        <?php if (!isLoggedIn()): ?>
+            <a href="login.php" class="text-red-400">Login</a>
+            <a href="signup.php" class="text-red-400">Sign Up</a>
+        <?php else: ?>
+                <a href="user_profile.php" class="text-white">
+                    <?= htmlspecialchars(getCurrentUsername()) ?>
+                </a>
+            <a href="logout.php" class="text-red-400">Logout</a>
+        <?php endif; ?>
     </div>
 </nav>
-<div class="header">
-	<div class="tab-content" id="v-pills-tabContent">
-    <div  class="tab-pane fade show active" role="tabpanel">
-		<div class="container">		
-			<form class="userForms" action="contact.php" method="POST" style="background-color: lightblue; border-color: lightblue;" >
-				<h3 align="center">Contact Us</h3>
-				<p align="center" style="line-height: 0px;padding-bottom: 10px;">__________________________</p>
-				<div class="row g-3">
-				  <div class="col">
-				  	 <label class="form-label">First Name</label>
-				    <input type="text" class="form-control" placeholder="First name" name="firstname" aria-label="First name" required>
-				  </div>
-				  <div class="col">
-				  	 <label class="form-label">Last Name</label>
-				    <input type="text" class="form-control" placeholder="Last name" name="lastname" aria-label="Last name" required>
-				  </div>
-				</div>
-				<br>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Email</label>
-					    <div class="form-floating">
-						  <input type="email" class="form-control" id="email" name="email" placeholder="example@web.ca" required>
-						  <label for="email">example@web.ca</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <br>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Phone Number</label>
-					    <div class="form-floating">
-						  <input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" class="form-control" id="phone" name="phone" placeholder="999-999-9999" required>
-						  <label for="phone">999-999-9999</label>		      		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <br>
-			   <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Message</label>
-					<textarea type="text" class="form-control" id="message" name="message" placeholder="Your Message" required></textarea>	    				    				
-				</div>
-			  </div>
-			  <br>
-			  	<button id="submit" name="submit" value="submit" type="submit" class="btn btn-danger">Send Message</button>
-			  	<input type="hidden" class="form-control" value="<?php echo date("Y-m-d H:i"); ?>"  name="timestamp">
-			</form>	
-		</div>
+
+<!-- MAIN -->
+<main class="flex-grow container mx-auto px-6 py-10">
+    <div class="max-w-2xl mx-auto text-center">
+        <h1 class="text-3xl font-bold text-blue-900 mb-6">Contact Us</h1>
+
+        <?php if (!empty($response)): ?>
+            <div class="mb-6 p-4 rounded <?= $response['success'] ? 'bg-green-200 text-green-900' : 'bg-red-200 text-red-900' ?>">
+                <?= htmlspecialchars($response['message']) ?>
+            </div>
+        <?php endif; ?>
+
+        <form method="POST" class="bg-white p-8 rounded-lg shadow-lg space-y-4">
+
+            <div class="grid md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block font-medium text-blue-900">First Name</label>
+                    <input type="text" name="firstname" required
+                           value="<?= htmlspecialchars($_POST['firstname'] ?? '') ?>"
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div>
+                    <label class="block font-medium text-blue-900">Last Name</label>
+                    <input type="text" name="lastname" required
+                           value="<?= htmlspecialchars($_POST['lastname'] ?? '') ?>"
+                           class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+            </div>
+
+            <div>
+                <label class="block font-medium text-blue-900">Email</label>
+                <input type="email" name="email" required
+                       value="<?= htmlspecialchars($_POST['email'] ?? '') ?>"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="example@web.ca">
+            </div>
+
+            <div>
+                <label class="block font-medium text-blue-900">Phone Number</label>
+                <input type="tel" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                       value="<?= htmlspecialchars($_POST['phone'] ?? '') ?>"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                       placeholder="999-999-9999">
+            </div>
+
+            <div>
+                <label class="block font-medium text-blue-900">Subject</label>
+                <input type="text" name="subject"
+                       value="<?= htmlspecialchars($_POST['subject'] ?? 'Message from contact form') ?>"
+                       class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+
+            <div>
+                <label class="block font-medium text-blue-900">Message</label>
+                <textarea name="message" rows="5" required
+                          class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          placeholder="Your message..."><?= htmlspecialchars($_POST['message'] ?? '') ?></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit"
+                        class="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition">
+                    Send Message
+                </button>
+            </div>
+
+        </form>
     </div>
-</div>
-</div>
-<div>
-	<br><br>
-</div>
-<footer align="center" style="background-color: lightblue;">
-	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
-	©2021 AnimalMart, Inc. All rights reserved.
+</main>
+
+<!-- FOOTER -->
+<footer class="bg-blue-100 text-center p-4">
+    123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+    ©2026 AnimalMart, Inc. All rights reserved.
 </footer>
+
 </body>
 </html>

@@ -1,0 +1,25 @@
+{
+    "name": "angelnorst/animalmart",
+    "description": "Pet Services Appointment Booking System",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "AngelNorStou",
+            "email": "AngelicaNgSt@hotmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "nunomaduro/termwind": "^2.3"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "AnimalMart\\Controllers\\": "src/Controllers/",
+            "AnimalMart\\Models\\": "src/Models/"
+        }
+    }
+}

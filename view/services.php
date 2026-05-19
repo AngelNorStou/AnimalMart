@@ -1,454 +1,160 @@
-<?php include '../controller/controller_services.php'; 
+<?php
+require_once '../config/database.php';
+require_once '../model/ServiceModel.php';
+require_once '../controller/ServiceController.php';
+
+require_once '../config/session_check.php';
 
 
-$serviceModel = new Service();
-$serviceObj = new ControllerService(); 
+try {
+    $pdo = Database::getConnection();
+} catch (Exception $e) {
+    error_log($e->getMessage());
+    die("Database unavailable");
+}
 
-if (!isset ($_GET['page']) ) 
-{ 
-    $page = 1;  
-} else 
-{  
-    $page = $_GET['page'];  
+$service = new ServiceModel($pdo);
 
-} 
+$controllerService = new ServiceController($service ,$pdo);
 
-$searchStr = $serviceObj->search();
 
-$results_per_page = 4;  
-$page_first_result = ($page-1) * $results_per_page;  
+$page = isset($_GET['page']) && is_numeric($_GET['page']) && $_GET['page'] > 0
+    ? (int) $_GET['page']
+    : 1;
+
+$resultsPerPage = 4;
+$offset = ($page - 1) * $resultsPerPage;
+
+
+$isSearching = isset($_GET['searchInput']) && trim($_GET['searchInput']) !== '';
+$services    = $isSearching
+    ? $controllerService->search()
+    : $controllerService->getServices($resultsPerPage, $offset);
 
 ?>
 
-<!DOCTYPE HTML>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-	<meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-	<title>Our Services</title>
-
+    <meta charset="UTF-8">
+    <title>Our Services | AnimalMart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="nav">
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link active" style="color: white;" aria-current="page"  href="">Services Offered</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
-	  </li>
-	</ul>
+
+<body class="bg-blue-50 min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<nav class="bg-blue-900 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center md:items-center space-y-2 md:space-y-0">
+    <div class="flex space-x-4">
+        <a href="Home.php" class="underline">Home</a>
+        <a href="services.php?page=1" class="hover:text-blue-300">Services</a>
+        <a href="contact.php" class="hover:text-blue-300">Contact</a>
     </div>
-    <div class="mx-auto order-0">
-        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ms-auto">
-             <?php
-		if (!isset($_SESSION['username'])) {  
-			
-		?>
-		  <li class="nav-item">
-		    <a class="nav-link" style="color: red;" href="login.php" tabindex="-1">Login</a>
-		  </li>
-		  <li class="nav-item">
-		    <a class="nav-link" style="color: red;" href="signup.php" tabindex="-1">Sign Up</a>
-		  </li>
-		<?php } else{?>
-	 <li class="nav-item" >
-	  	 <?php
-		if ($_SESSION['isAdmin'] == 1) {  
-			
-		?>
-	    <a class="nav-link" style="color: white;" href="admin_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
-	    <?php } else{?>
-	    	 <a class="nav-link" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" tabindex="-1"><?php echo $_SESSION['username']?></a>
-	    <?php } ?>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="logout.php"  tabindex="-1">Logout</a>
-	  </li>
-	<?php }?>
-	
-        </ul>
+
+    <div class="text-xl font-bold">Welcome To AnimalMart!</div>
+
+    <div class="flex space-x-4">
+        <?php if (!isLoggedIn()): ?>
+            <a href="login.php" class="text-red-400">Login</a>
+            <a href="signup.php" class="text-red-400">Sign Up</a>
+        <?php else: ?>
+                <a href="user_profile.php" class="text-white">
+                    <?= htmlspecialchars(getCurrentUsername()) ?>
+                </a>
+            <a href="logout.php" class="text-red-400">Logout</a>
+        <?php endif; ?>
     </div>
 </nav>
-	
-<div align="left" style="font-family: 'Verdana'; padding-left: 100px;padding-right: 100px;">
 
-	<h3 align="center" style="color: red;padding-top: 30px;line-height: 16px;">Our Services</h3>
-	<?php
-	if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
-		?>
-		<a href="add_service.php" ><button type="button" style="float: right;" class="btn btn-outline-danger btn-sm" >
-			Add a Service
-		</button></a>
-	<?php }?>
-	<div style="float: right;">
-		<form action="services.php" method="GET" >
-		<div class="input-group input-group-sm mb-3" >
-				<input type="text" name="searchInput" name="searchInput" id="searchInput" class="form-control">
-			
-			<button type="submit" value="search" class="btn btn-outline-danger" > Search </button>
-			<button type="button" onclick="window.location.href = 'services.php?page=1'" value="search" class="btn btn-outline-danger" > Clear </button>
-		</div>
-		<input type="hidden" class="form-control" value="<?php echo $_GET['page']; ?>"  name="page">	
-		</form>
-	</div>
-		
-	<table width="420" style="float:top;">
-		<?php 
+<!-- MAIN -->
+<main class="flex-grow container mx-auto px-6 py-10">
 
-		if ($searchStr != null)
-		{
-		  foreach ($searchStr as $service) 
-		  {
-		  	
-		?>      	
-	   <tr style="border-width: 1px;" >
-	   	<td align="center" width="250" class="form-label card-text">
-	   		<?php 
-	   			if($service['service_length'] != '')
-	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
-	   			else
-	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'];
-	   		?>
-	   		<br>
-	   		</td>
-	   	<td>
-	   		
-	   		 <?php
-	   		 	if($service['service_description'] != ''){
-			  ?>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
-			  More info
-			</button>
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-bold text-blue-900">Our Services</h1>
 
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel"><?php echo $service['service_name'] ?></h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <?php  
-			        	echo $service['service_description'];
-			       	?>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<br>
-			<?php } else{ ?>
-				<button type="button" class="btn btn-outline-danger btn-sm" type="submit" onclick="location.href = 'appointment.php'" >
-			  Book Appointment
-			</button>
+        <?php if (!empty($_SESSION['user']['isAdmin'])): ?>
+            <a href="add_service.php"
+               class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                Add Service
+            </a>
+        <?php endif; ?>
+    </div>
 
-			<?php } 
-				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
-					?>
-					<div style="padding-top: 5px;">
-						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
-							Edit Service
-						</button></a>
-					</div>
-				<?php }?>
-	   	</td>
-	   	<tr><td><br></td></tr>
-	   	<?php } }  ?>
-	</table>
-<!-- <! -- 
-	<ul class="nav nav-tabs">
-	  <li class="nav-item">
-	    <a style="color: blue;" class="nav-link active"  id="grooming-tab" data-bs-toggle="tab" data-bs-target="#grooming" type="button" role="tab" aria-controls="grooming" aria-selected="true">Grooming</a>
-	  </li>
-	  <li class="nav-item">
-	    <a style="color: blue;" class="nav-link" id="training-tab" data-bs-toggle="tab" data-bs-target="#training" type="button" role="tab" aria-controls="training" aria-selected="false">Training</a>
-	  </li>
-	  <li class="nav-item">
-	    <a style="color: blue;" class="nav-link" id="vet-tab" data-bs-toggle="tab" data-bs-target="#vet" type="button" role="tab" aria-controls="vet" aria-selected="false">Vet</a>
-	  </li>
-	</ul>  -->
-<div class="tab-content" id="v-pills-tabContent">
+    <!-- SEARCH -->
+    <form method="GET" class="flex gap-2 mb-8">
+        <input type="text"
+               name="searchInput"
+               placeholder="Search services..."
+               value="<?= htmlspecialchars($_GET['searchInput'] ?? '') ?>"
+               class="flex-1 p-2 border rounded focus:ring-2 focus:ring-blue-500">
 
-	<div class="tab-pane fade show active" id="grooming" role="tabpanel" aria-labelledby="grooming-tab">
+        <button type="submit"
+                class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            Search
+        </button>
 
-		<br>
-		<div id="header" style="width:100%;">
-    		<div style='float:left;padding-right:20px;'>
-        		<img src="../Images/grooming.jpg"/>
-    		</div>
-		</div>
+        <a href="services.php?page=1"
+           class="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400">
+            Clear
+        </a>
+    </form>
 
-	<table width="420" style="margin-right:30%;float:top;">
-		<?php 
-		$services =$serviceObj->getServices($results_per_page,$page_first_result);
+    <!-- SERVICES GRID -->
+    <div class="grid md:grid-cols-2 gap-6">
 
+        <?php foreach ($services as $service): ?>
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold text-blue-900">
+                    <?= htmlspecialchars($service['name']) ?>
+                </h2>
 
-		if ($services != null)
-		{
-		  foreach ($services as $service) 
-		  {
-		  	
+                <p class="text-gray-600 mt-2">
+                    Type: <?= htmlspecialchars($service['type']) ?><br>
+                    Price: $<?= htmlspecialchars($service['price']) ?>
+                    <?php if (!empty($service['duration'])): ?>
+                        <br>Length: <?= htmlspecialchars($service['duration']) ?> minutes
+                    <?php endif; ?>
+                </p>
 
-		?>      	
-	  <tr style="border-width: 1px;" >
-	   	<td align="center" width="250" class="form-label card-text">
-	   		<?php 
-	   			if($service['service_length'] != '')
-	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
-	   			else
-	   				echo 'Type of service: '.$service['service_type'].'<br>'.$service['service_name'].'<br>Price: $'.$service['service_price'];
-	   		?>
-	   		<br>
-	   	</td>
-	   	<td>
-	   		 <?php
-	   		 	if($service['service_description'] != ''){
-			  ?>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
-			  More info
-			</button>
-			
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel"><?php echo $service['service_name'] ?></h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <?php  
-			        	echo $service['service_description'];
-			       	?>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<br>
-			<?php } else{ ?>
-				<button type="button" class="btn btn-outline-danger btn-sm"  type="submit" onclick="location.href = 'appointment.php'" >
-			  Book Appointment
-			</button>
-			<?php } 
-				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
-					?>
-					<div style="padding-top: 5px;">
-						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
-							Edit Service
-						</button></a>
-					</div>
-				<?php }?>
+                <?php if (!empty($service['description'])): ?>
+                    <p class="mt-3 text-gray-700">
+                        <?= htmlspecialchars($service['description']) ?>
+                    </p>
+                <?php endif; ?>
 
-	   	</td>
-	   	<tr><td><br></td></tr>
-	   	<?php  } } ?>
-	   	<td>	
-	   		<div align="right">
-			<?php 
-				echo $serviceObj->displayPagination($results_per_page);
-			?>
-			</div>
-	   	</td>
-		</tr>
-	</table>
-	
+                <div class="mt-4 flex gap-2">
+                    <a href="appointment.php?service=<?= (int)$service['service_id'] ?>"
+                       class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                        Book Appointment
+                    </a>
 
-</div>
-		<div class="tab-pane fade fade" id="training" role="tabpanel" aria-labelledby="training-tab">
-	
-		<br>
-			<div id="header" style="width:100%;">
-    		<div style='float:right'>
-        		<img src="../Images/training.jpg" width="600" height="350"  alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
-    		</div>
-		</div>
-	<table width="420" style="margin-right:30%;float:top;">
-		<?php 
+                    <?php if (!empty($_SESSION['user']['isAdmin'])): ?>
+                        <a href="edit_service.php?service=<?= (int)$service['service_id'] ?>"
+                           class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">
+                            Edit
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
 
-		$services = $serviceObj->getServices('training',$results_per_page,$page_first_result);
+    </div>
 
+    <!-- PAGINATION (hidden during search) -->
+    <?php if (!$isSearching): ?>
+    <div class="mt-10">
+        <?= $controllerService->displayPagination($resultsPerPage); ?>
+    </div>
+    <?php endif; ?>
 
-		if ($services != null)
-		{
-		  foreach ($services as $service) 
-		  {
-		  	
-		?>      	
-	   <tr style="border-width: 1px;" >
-	   	<td align="center" width="250" class="form-label card-text">
-	   		<?php 
-	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
-	   			else
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
-	   		?>
-	   		<br>
-	   		</td>
-	   	<td>
-	   		
-	   		 <?php
-	   		 	if($service['service_description'] != ''){
-			  ?>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
-			  More info
-			</button>
+</main>
 
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel"><?php echo $service['service_name'] ?></h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <?php  
-			        	echo $service['service_description'];
-			       	?>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<br>
-			<?php } else{ ?>
-				<button type="button" class="btn btn-outline-danger btn-sm" type="submit" onclick="location.href = 'appointment.php'" >
-			  Book Appointment
-			</button>
-
-			<?php } 
-				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
-					?>
-					<div style="padding-top: 5px;">
-						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
-							Edit Service
-						</button></a>
-					</div>
-				<?php }?>
-	   	</td>
-	   	<tr><td><br></td></tr>
-	   	<?php  } } ?>
-	</table>
-	<?php 
-		echo $serviceObj->displayPagination($results_per_page);
-	?>
-
-</div>
-<div  class="tab-pane fade" id="vet" role="tabpanel" aria-labelledby="vet-tab">
-	<br>
-	<div id="header" style="width:100%;">
-    		<div style='float:right'>
-        		<img src="../Images/vet.jpg" width="500" height="350" alt="test" style="padding-top: 16px; margin-right:15%;margin-top:5%"/>
-    		</div>
-		</div>
-		
-	<table width="420" style="margin-right:30%;float:top;">
-		<?php 
-
-		$services = $serviceObj->getServices('vet',$results_per_page,$page_first_result);
-
-
-		if ($services != null)
-		{
-		  foreach ($services as $service) 
-		  {
-		  	
-		?>      	
-	   <tr style="border-width: 1px;">
-	   	<td align="center"  width="250" class="form-label card-text">
-	   		<?php 
-	   			if($service['service_length'] != '')
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'].'<br>Length: '.$service['service_length'].' minutes';
-	   			else
-	   				echo $service['service_name'].'<br>Price: $'.$service['service_price'];
-	   		?>
-	   		<br>
-	   	</td>
-	   	<td>
-
-	   		<?php
-	   		 	if($service['service_description'] != ''){
-			  ?>
-			<!-- Button trigger modal -->
-			<button type="button" class="btn btn-outline-info btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal<?php echo $service['service_id'] ?>">
-			  More info
-			</button>
-
-			<!-- Modal -->
-			<div class="modal fade" id="exampleModal<?php echo $service['service_id'] ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			  <div class="modal-dialog">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <h5 class="modal-title" id="exampleModalLabel"><?php echo $service['service_name'] ?></h5>
-			        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			      </div>
-			      <div class="modal-body">
-			        <?php  
-			        	echo $service['service_description'];
-			       	?>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-			        <button value="appointments"  type="submit" onclick="location.href = 'appointment.php'" class="btn btn-outline-danger btn-sm">Book an appointment</button>
-			      </div>
-			    </div>
-			  </div>
-			</div>
-			<br>
-			<?php } else{ ?>
-				<button type="button"  type="submit" onclick="location.href = 'appointment.php'"  class="btn btn-outline-danger btn-sm">
-			  Book Appointment
-			</button>
-			<?php } 
-				if (isset($_SESSION['isAdmin']) && $_SESSION['isAdmin'] == 1) {  
-					?>
-					<div style="padding-top: 5px;">
-						<a  href= "edit_service.php?service=<?php echo $service['service_id']; ?>"><button type="submit" class="btn btn-outline-danger btn-sm" >
-							Edit Service
-						</button></a>
-					</div>
-			<?php }?>
-	   	</td>
-	   	<tr><td><br></td></tr>
-	   	<?php  } } ?>
-	   </tr>
-	</table>
-	<?php 
-		echo $serviceObj->displayPagination($results_per_page);
-	?>
-	 </div>
-	</div>
-</div>
-</body>
-<footer align="center" style="background-color: lightblue;">
-	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
-	©2021 AnimalMart, Inc. All rights reserved.
+<!-- FOOTER -->
+<footer class="bg-blue-100 text-center p-4">
+    123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
+    ©2026 AnimalMart, Inc. All rights reserved.
 </footer>
+
+</body>
 </html>

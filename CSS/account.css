@@ -1,25 +1,51 @@
-#v-pills-tabContent
-{
-	width: 70%;
+
+
+/* TAB SPECIFIC STYLES */
+.tab-content > div {
+    display: none !important;
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
-.img-thumbnail
-{
-	width: 200px;
-	height: 200px;
+.tab-content > div.active {
+    display: block !important;
+    opacity: 1;
 }
 
-#profilePicture
-{
-	margin-left: calc(var(--bs-gutter-x)/ 2);
+/* Override any conflicting form styles for tabs */
+#account form,
+#pets form,
+#appointments form,
+#password form {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }
 
-#updateButton 
-{
-	margin-top: 2%;
+/* Ensure tab buttons work properly */
+.tab-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-bottom: 2px solid transparent;
+    color: #6b7280;
+    transition: all 0.3s ease;
 }
 
+.tab-button:hover {
+    color: #3b82f6;
+}
 
+.tab-button.active {
+    border-bottom-color: #3b82f6 !important;
+    color: #2563eb !important;
+    font-weight: 600;
+}
 
-
-
+/* Override any conflicting container styles */
+.tab-container {
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+}

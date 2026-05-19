@@ -1,297 +1,341 @@
 <?php
-include '../model/model_services.php';
-
-include '../controller/controller_user.php';
-include '../model/users.php';
-include '../view/view_user.php';
+declare(strict_types=1);
+require_once '../config/session_check.php';
 
 
-include '../view/view_pet.php';
-include '../model/pets.php';
 
-include '../controller/controller_appointments.php';
+if (empty($_SESSION['user']['username'])) {
+    header('Location: login.php');
+    exit;
+}
 
-session_start();
+//Security note for anyone reading: Only rely on session data for the currently logged-in user. 
+// Never trust GET parameters like ?login=GM for security-critical actions, because a malicious user can change them.
+$username = $_SESSION['user']['username'];
 
-// MVC in OOP for Users
-$userObj = new Users();
-$controller_user = new ControllerUser($userObj);
-$userView = new ViewUser($userObj);
-
-// MVC in OOP for Pets
-$petObj = new Pets();
-$petView = new ViewPet($petObj);
-
-$serviceObj = new Service();
+$userId = (int)$_SESSION['user']['id'];
 
 
-if (!isset($_SESSION['username'])) // If it is empty
-{  
+require_once '../config/database.php';
+require_once '../model/UserModel.php';
+require_once '../controller/UserController.php';
+require_once '../view/UserView.php';
 
-	if(isset($_GET['login']) && !empty($_GET['login']))
-	{
+require_once '../model/PetsModel.php';
+require_once '../view/PetView.php';
 
-		$_SESSION['username'] = $_GET['login'];
-		$_SESSION['isAdmin'] = 0;
+require_once '../model/ServiceModel.php';
+require_once '../model/AppointmentModel.php';
+require_once '../controller/AppointmentsController.php';
 
-	}
-	else
-	{
-		header("Location:login.php");
-	}
+
+
+$pdo = Database::getConnection();
+$userModel      = new UserModel($pdo);
+$userController = new UserController($userModel,$pdo);
+$userView       = new UserView($userModel);
+
+$petModel = new PetsModel($pdo);
+$petView  = new PetView($petModel);
+
+$serviceModel = new ServiceModel($pdo);
+
+$appointmentModel = new AppointmentModel($pdo);
+$appointmentController = new AppointmentController($appointmentModel, $pdo);
+$appointments = $appointmentController->getAppointments($username);
+
+
+$updateError   = null;
+$passwordError = null;
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+    $updateError = $userController->verifyUpdate($_POST);
+
+    // After successful update, reload the user from DB
+    if (!empty($updateError) && $updateError['success'] === true) {
+        // Optionally update session username/email if changed
+        $_SESSION['user']['email'] = $_POST['uemail'] ?? $_SESSION['user']['email'];
+    }
+}
+
+// When rendering the form:
+$firstname = $_POST['ufirstname'] ?? $userView->displayField($username,'first_name');
+$lastname  = $_POST['ulastname'] ?? $userView->displayField($username,'last_name');
+$email     = $_POST['uemail'] ?? $userView->displayField($username,'email');
+// ... same for other fields
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+    if (isset($_POST['changePassword'])) {
+        $passwordError = $userController->verifyPasswordChange($_POST);
+    }
+
+    if (isset($_POST['deleteUser'])) {
+        $userController->verifyDelete($_POST);
+
+        session_unset();
+        session_destroy();
+
+        header('Location: Home.php');
+        exit;
+    }
 }
 
 
-$updateError = $controller_user->verify_update($_POST);
-$controller_user->verify_delete($_POST);
-$passwordError = $controller_user->verify_passwordChange($_POST);
-
-$app = new ControllerAppointment();
-$appointments = $app->getAppointments($_SESSION['username']);
-
+function e(string $value): string
+{
+    return htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+}
 ?>
-
- <!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <title>User Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-
-	<link href="../CSS/account.css" rel="stylesheet" >		
-
-	<title>View Account</title>	
 </head>
-<body>
-<nav style="background: darkblue;" class="navbar navbar-expand-md navbar-dark">
-    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-        <ul class="nav">
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="Home.php">Home</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;"  href="services.php?page=1">Services Offered</a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: lightblue;" href="contact.php">Contact</a>
-	  </li>
-	</ul>
+
+<body class="bg-blue-50 min-h-screen flex flex-col">
+
+<!-- NAVBAR -->
+<nav class="bg-blue-900 text-white px-6 py-4 flex flex-col md:flex-row justify-between items-center md:items-center space-y-2 md:space-y-0">
+    <div class="flex space-x-4">
+        <a href="Home.php" class="underline">Home</a>
+        <a href="services.php?page=1" class="hover:text-blue-300">Services</a>
+        <a href="contact.php" class="hover:text-blue-300">Contact</a>
     </div>
-    <div class="mx-auto order-0">
-        <a style="font-size: 30px;" class="navbar-brand mx-auto" color="#fff">Welcome To AnimalMart!</a>
-    </div>
-    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-        <ul class="navbar-nav ms-auto">
-	  <li class="nav-item" >
-	    <a class="nav-link active" style="color: white;" href="user_profile.php?login=<?php echo $_SESSION['username']?>" aria-current="page" tabindex="-1"><?php echo $_SESSION['username']?></a>
-	  </li>
-	  <li class="nav-item">
-	    <a class="nav-link" style="color: red;" href="logout.php" tabindex="-1">Logout</a>
-	  </li>
-	
-        </ul>
+
+    <div class="text-xl font-bold">Welcome To AnimalMart!</div>
+
+    <div class="flex space-x-4">
+        <?php if (!isLoggedIn()): ?>
+            <a href="login.php" class="text-red-400">Login</a>
+            <a href="signup.php" class="text-red-400">Sign Up</a>
+        <?php else: ?>
+                <a href="user_profile.php" class="text-white">
+                    <?= htmlspecialchars(getCurrentUsername()) ?>
+                </a>
+            <a href="logout.php" class="text-red-400">Logout</a>
+        <?php endif; ?>
     </div>
 </nav>
-<div class="container" style="padding-top: 16px;">		
-<div class="d-flex align-items-start">
-  <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    <button class="nav-link active" id="accountDetailsTab" data-bs-toggle="pill" data-bs-target="#accountDetails" type="button" role="tab" aria-controls="accountDetails" aria-selected="true">Account</button>
-    <button class="nav-link" id="petDetailsTab" data-bs-toggle="pill" data-bs-target="#petDetails" type="button" role="tab" aria-controls="petDetails" aria-selected="false">Your Pets</button>
-    <button class="nav-link" id="viewAppointmentsTab" data-bs-toggle="pill" data-bs-target="#viewAppointments" type="button" role="tab" aria-controls="viewAppointments" aria-selected="false">View Appointments</button> 
-    <button class="nav-link" id="passwordEditTab" data-bs-toggle="pill" data-bs-target="#passwordEdit" type="button" role="tab" aria-controls="passwordEdit" aria-selected="false">Change Password</button>
-  <a class="nav-link"  style="color: black;" aria-selected="false" href="change_picture.php?profile=<?php echo $_SESSION['username']; ?>" >Change Profile Picture</a> 
-  
-  </div>
-  <div class="tab-content" id="v-pills-tabContent">
-    <div  class="tab-pane fade show active" id="accountDetails" role="tabpanel" aria-labelledby="accountDetailsTab">
-		<div class="container">		
-		<h3 align="center" style="color: darkblue;">Actions</h3>
-			<table align="center">
-				<tbody>
-					<tr>
-						<td>
-							<button class="btn btn-outline-info" onclick="window.location.href='services.php?page=1'" >View Services</button>		
-						</td>
-						<td>
-							<button class="btn btn-outline-danger" onclick="window.location.href='appointment.php'" >Book appointment</button>		
-						</td>
-						<td>
-							<button class="btn btn-outline-info" onclick="window.location.href='contact.php'">Contact Us</button>		
-						</td>
-					</tr>
-				</tbody>
-			</table>
-			<div>
-				<br><br>
-			</div>	
-			<form id="userProfile"  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST" >
-				<div class="row">
-				    <div class="col-3">
-			      		<?php echo $userView->displayPictureSource($_SESSION['username']); ?>
-			    	</div>	
-				    <div class="col-sm">
-					    <label class="form-label">First Name</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control"  name="ufirstname" required>
-						  <?php echo $userView->displayItem($_SESSION['username'],'first_name'); ?>
-						</div>	
-				    <div class="">
-				    <label class="form-label">Last Name</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control"  name="ulastname" required>
-						  <?php echo $userView->displayItem($_SESSION['username'],'last_name'); ?>      		
-			    	</div>											    		      		
-			    	</div>			    				    				
-				</div>
-			</div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">Email</label>
-					    <div class="form-floating">
-						  <input type="email" class="form-control"  name="uemail" required>
-						  <?php echo $userView->displayItem($_SESSION['username'],'email'); ?>         		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-				    <div class="col-sm">
-				    <label class="form-label">City</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control"   name="ucity" required>
-						  <?php echo $userView->displayItem($_SESSION['username'],'city'); ?>        		
-			    	</div>				    				    				
-				</div>
-			  </div>
-			  <div class="row">
-			  	<div class="col-sm">
-				    <label class="form-label">Phone Number</label>
-					    <div class="form-floating">
-						  <input type="tel" class="form-control"  name="uphone">
-					  	  <?php echo $userView->displayItem($_SESSION['username'],'phone_number'); ?>   	 
-						</div>     		
-			    	</div>				    				    				
-			  </div>
-			  <div class="row">
-			  	<label class="form-label">Enter your current username and password to confirm the changes.</label>
-				    <div class="col-sm">
-				    <label class="form-label">Username</label>
-					    <div class="form-floating">
-						  <input type="text" class="form-control" name="uusername" required>
-						  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?>   	      		
-			    		</div>	
-			    	</div>			    				    				
-				</div>
-				<div class="col-sm">
-				    <label class="form-label">Password</label>
-					    <div class="form-floating">
-						  <input type="password" class="form-control"  name="upassword" required>
-						  <label></label>		      		
-			    		</div>		    									  				  	
-			  </div>
-				  <div class="row">
-			  		<button style="float: left;margin: 2%;" name="update"  value="update" type="submit" class="btn btn-primary updatePicture">Confirm Changes</button>		
-					<?php
-					 								
-						echo $updateError;
-					?>			  						  	
-				  </div>			  		  		  		  		  	
-			</form>
-			<form action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">	
-				<input type="hidden" name="user_id" value="<?php echo $userView->getId($_SESSION['username'],'user_id'); ?>   ">
-				<button style="float: left;margin: 2%;width: 100%;" name="deleteUser" value="deleteUser" type="submit" onclick="confirm('Confirmation to delete your account?');" class="btn btn-danger">Delete Account</button>
-			</form>
-		</div>
-    </div>
-    <div class="tab-pane fade" id="petDetails" role="tabpanel" aria-labelledby="petDetailsTab">
-	<div class = "row">
-		<a class="btn btn-primary" href="add_pet.php?user=<?php echo $_SESSION['username']; ?>">Add Pet</a> 
-	</div>    	
-	 <div class="row row-cols-3">   	
-		<?php 
 
-		echo $petView->displayPets($_SESSION['username']);
 
-		?>	
-	  </div>    				
-    </div>
-    <div class="tab-pane fade" id="passwordEdit" role="tabpanel" aria-labelledby="passwordEditTab">
-		 <form id="changePass"  action="user_profile.php?login=<?php echo $_SESSION['username']?>" method="POST">
-		 	  <div class="row">
-			  	<label class="form-label">Enter your current password and username to add a new password.</label>
-				    <div class="row">
-				    	<div class="col-sm">
-				    	<label class="form-label">Current Username</label>
-						    <div class="form-floating">
-							  <input type="text" class="form-control" name="current_user" required>
-							  <?php echo $userView->displayItem($_SESSION['username'],'username'); ?> 		      		
-				    		</div>
-			    		</div>	
-			    	</div>			  	
-				    <div class="row">
-					    <label class="form-label">Current Password</label>
-						    <div class="form-floating">
-							  <input type="password" class="form-control"  name="current_password" required>
-							  <label for="current_password"></label>		      		
-				    		</div>		      		
-			    	</div>
-			    	<br/>
-				    <div class="row">
-					    <label class="form-label">New Password</label>
-						    <div class="form-floating">
-							  <input type="password" class="form-control"  name="new_password" required>
-							  <label for="new_password"></label>		      		
-				    		</div>		      		
-			    		</div>
-				    <div class="row">
-			      		<button style="float: left;margin-top: 2%;margin-bottom: 2%" value="changePassword" type="submit" class="btn btn-primary">Confirm Changes</button>
+<!-- Main Container -->
+<div class="container mx-auto mt-6 px-4">
 
-					<?php
-					 	echo $passwordError;
-					?>				      				
-			    	</div>	 	    			    			
-			    </div>	
-		 </form>   				    				    				
-		</div>	
-		 <div class="tab-pane fade" id="viewAppointments" role="tabpanel" aria-labelledby="viewAppointmentsTab">  	
-		 <table class="table table-borderless table-hover">
-		  <thead>
-		    <tr>
-		      <th scope="col">Appointment Date</th>
-		      <th scope="col">Pet</th>
-		      <th scope="col">Service</th>
-		      <th scope="col">Actions</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		  	<?php foreach((array)$appointments as $appt) {
-		  		
-		  	 ?> 
-		    <tr style="<?php if(date("Y-m-d H:i") >= $appt['appointment_datetime']){?>color: red;<?php }?>" >
-		      <td scope="row"><?php echo $appt['appointment_datetime']; ?></td>
-		      <td><?php $pet = $petObj->displayPetById($appt['pet_id']); echo $pet['pet_name']; ?></td>
-		      <td><?php $service = $serviceObj->displayServiceById($appt['service_id']); echo $service['service_name']; ?></td>
-		      <?php if(date("Y-m-d H:i") < $appt['appointment_datetime']){?>
-		      <td><a href="edit_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" style="color:green">Edit</a></td>
-		       <?php }?>
-		      <td><a href="delete_appointment.php?appt_id=<?php echo $appt['appointment_id']; ?>" onclick="confirm('Are you sure want to cancel this appointment ?')" style="color:red">
-		      		 <?php if(date("Y-m-d H:i") < $appt['appointment_datetime']){?> Cancel <?php } else { ?> Delete <?php } ?>
-		      	</a>
-		      </td>
-		    </tr>
-		<?php } ?>
-		  </tbody>
-		</table>  				
-    </div>		    				    				
-	</div>		
+    <!-- Tabs -->
+    <div class="flex flex-wrap border-b border-gray-300 mb-6">
+        <button class="tab-button px-4 py-2 text-gray-700 border-b-2 border-blue-500 font-semibold" data-tab="account">Account</button>
+        <button class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500" data-tab="pets">Pets</button>
+        <button class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500" data-tab="appointments">Appointments</button>
+        <button class="tab-button px-4 py-2 text-gray-700 hover:text-blue-500" data-tab="password">Password</button>
     </div>
-  </div>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+      <!-- ACCOUNT -->
+        <div class="tab-panel active" id="account">
+            <!-- ONLY THE EXISTING ACCOUNT CONTENT GOES HERE -->
+            <div class="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6">
+                <img src="<?= $userView->displayPictureSource($username) ?>" alt="Profile Picture" class="w-32 h-32 rounded-full object-cover">
+                
+                <form method="POST" class="flex-1 space-y-2">
+                    <div>
+                        <label class="block text-gray-700">Username</label>
+                        <input type="text" name="uusername" value="<?= $userView->displayField($username,'username') ?>" class="form-control mb-2" required>
+                    </div>                   
+                    <div>
+                        <label class="block text-gray-700">First Name</label>
+                        <input type="text" name="ufirstname" class="w-full p-2 border rounded" value="<?= $userView->displayField($username,'first_name') ?>" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Last Name</label>
+                        <input type="text" name="ulastname" class="w-full p-2 border rounded" value="<?= $userView->displayField($username,'last_name') ?>" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Email</label>
+                        <input type="email" name="uemail" class="w-full p-2 border rounded" value="<?= $userView->displayField($username,'email') ?>" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">City</label>
+                        <input type="text" name="ucity" class="w-full p-2 border rounded" value="<?= $userView->displayField($username,'city') ?>" required>
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Phone</label>
+                        <input type="tel" name="uphone" class="w-full p-2 border rounded" value="<?= $userView->displayField($username,'phone_number') ?>">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700">Password</label>
+                        <input type="password" name="upassword" class="w-full p-2 border rounded" required>
+                    </div>
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" name="update">Update Profile</button>
+                    <?php if (is_array($updateError)): ?>
+                        <div class="<?= $updateError['success'] ? 'text-green-500' : 'text-red-500' ?>">
+                            <?= e($updateError['message'] ?? '') ?>
+                        </div>
+                    <?php endif; ?>
+                </form>
+            </div>               
+        </div>
+        <!-- PETS TAB -->
+        <div class="tab-panel" id="pets">
+            <div class="p-4">
+                <a href="addPet.php" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-4 inline-block">Add Pet</a>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <?php 
+                    // Debug: Check if pets are being loaded
+                    $userPets = $petView->displayPets($username);
+                    if (empty($userPets)) {
+                        echo '<div class="col-span-3 text-center p-8 bg-white rounded shadow">';
+                        echo '<p class="text-gray-600">No pets found. Add your first pet!</p>';
+                        echo '</div>';
+                    } else {
+                        echo $userPets;
+                    }
+                    ?>
+                </div>
+            </div>
+        </div>
+
+        <!-- APPOINTMENTS TAB -->
+        <div class="tab-panel" id="appointments">
+            <div class="p-4">
+                <?php 
+                // Debug: Check appointments
+                if (empty($appointments)) {
+                    echo '<div class="bg-white p-8 rounded shadow text-center">';
+                    echo '<p class="text-gray-600">No appointments found.</p>';
+                    echo '<a href="services.php" class="text-blue-500 hover:underline mt-2 inline-block">Book an appointment</a>';
+                    echo '</div>';
+                } else {
+                ?>
+                <table class="min-w-full bg-white shadow rounded overflow-hidden">
+                    <thead class="bg-gray-200">
+                        <tr>
+                            <th class="py-2 px-4 text-left">Date</th>
+                            <th class="py-2 px-4 text-left">Pet</th>
+                            <th class="py-2 px-4 text-left">Service</th>
+                            <th class="py-2 px-4 text-left">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ((array)$appointments as $appt): ?>
+                            <tr class="border-b">
+                                <td class="py-2 px-4"><?= htmlspecialchars($appt['start_date'] ?? 'N/A') ?></td>
+                                <td class="py-2 px-4"><?= htmlspecialchars($appt['pet_name'] ?? 'Unknown') ?></td>
+                                <td class="py-2 px-4"><?= htmlspecialchars($appt['service_name'] ?? 'Unknown') ?></td>
+                                <td class="py-2 px-4 flex gap-3">
+                                    <a href="editAppointment.php?appointment_id=<?= (int)($appt['appointment_id'] ?? 0) ?>"
+                                       class="text-blue-500 hover:underline">Edit</a>
+                                    <form method="POST" action="deleteAppointment.php" onsubmit="return confirm('Cancel this appointment?')">
+                                        <input type="hidden" name="appointment_id" value="<?= (int)($appt['appointment_id'] ?? 0) ?>">
+                                        <button class="text-red-500 hover:underline">Cancel</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?php } ?>
+            </div>
+        </div>
+
+        <!-- PASSWORD TAB -->
+        <div class="tab-panel" id="password">
+            <div class="p-4 max-w-md">
+                <form method="POST" class="space-y-4">
+                    <input type="hidden" name="current_user" value="<?= $username ?>">
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Current Password</label>
+                        <input type="password" name="current_password" class="w-full p-2 border rounded" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">New Password</label>
+                        <input type="password" name="new_password" class="w-full p-2 border rounded" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-gray-700 mb-2">Confirm New Password</label>
+                        <input type="password" name="confirm_password" class="w-full p-2 border rounded" required>
+                    </div>
+                    
+                    <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" name="changePassword">Change Password</button>
+                    
+                    <?php if (is_array($passwordError)): ?>
+                        <div class="<?= $passwordError['success'] ? 'text-green-500' : 'text-red-500' ?> mt-2">
+                            <?= e($passwordError['message'] ?? '') ?>
+                        </div>
+                    <?php endif; ?>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </div>
-<footer align="center" style="background-color: lightblue;">
-	123 Boul. Ecommerce, Toronto, ON M4A 6L1<br>
-	©2021 AnimalMart, Inc. All rights reserved.
-</footer>
+
+<script>
+$(document).ready(function() {
+    console.log('Document ready - tabs initialized');
+    
+    // Hide all tabs except the active one
+    $('.tab-panel').not('.active').hide();
+    
+    // Set initial active tab button
+    $('.tab-button[data-tab="account"]').addClass('border-blue-500 font-semibold');
+    
+    // Tab click handler
+    $('.tab-button').click(function(e) {
+        e.preventDefault();
+        
+        var tabId = $(this).data('tab');
+        console.log('Switching to tab:', tabId);
+        
+        // Remove active classes from all tabs
+        $('.tab-button').removeClass('border-blue-500 font-semibold text-blue-600')
+                       .addClass('text-gray-700');
+        
+        // Add active class to clicked tab button
+        $(this).removeClass('text-gray-700')
+               .addClass('border-blue-500 font-semibold text-blue-600');
+        
+        // Hide all tab content
+        $('.tab-panel').hide().removeClass('active');
+        
+        // Show selected tab content
+        var $selectedTab = $('#' + tabId);
+        console.log('Selected tab element:', $selectedTab.length ? 'Found' : 'Not found');
+        console.log('Selected tab HTML:', $selectedTab.html() ? 'Has content' : 'Empty');
+        
+        $selectedTab.show().addClass('active');
+        
+        // Update URL hash for bookmarking
+        window.location.hash = tabId;
+    });
+    
+    // Check URL hash on load
+    if (window.location.hash) {
+        var hash = window.location.hash.substring(1);
+        console.log('Found hash in URL:', hash);
+        $('[data-tab="' + hash + '"]').click();
+    }
+    
+    // Debug: Log all tab elements
+    console.log('Tab buttons found:', $('.tab-button').length);
+    console.log('Tab panels found:', $('.tab-panel').length);
+    $('.tab-panel').each(function(index) {
+        console.log('Tab panel #' + index + ' ID:', this.id, 'Visible:', $(this).is(':visible'));
+    });
+});
+</script>
+
 </body>
-</html> 
+</html>
